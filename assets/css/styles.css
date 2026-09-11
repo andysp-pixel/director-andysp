@@ -1999,3 +1999,327 @@ button, .btn, a, input, select, textarea { touch-action: manipulation; }
     --theme-shadow: rgba(0,0,0,.38);
   }
 }
+/* =========================================
+   PRICING PACKAGES
+========================================= */
+
+.andy-pricing {
+  padding: clamp(80px, 10vw, 140px) 0;
+  color: #0b132b;
+  background: #f4f4f8;
+}
+
+.andy-pricing-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(260px, 0.7fr);
+  align-items: end;
+  gap: 40px;
+  margin-bottom: clamp(38px, 6vw, 72px);
+}
+
+.andy-pricing-eyebrow {
+  margin: 0 0 14px;
+  color: #18b7a0;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.andy-pricing-heading h2 {
+  max-width: 760px;
+  margin: 0;
+  font-size: clamp(2.3rem, 5vw, 5rem);
+  line-height: 0.96;
+  letter-spacing: -0.055em;
+}
+
+.andy-pricing-heading > p {
+  max-width: 480px;
+  margin: 0;
+  color: #637083;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.andy-pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(18px, 3vw, 32px);
+}
+
+.andy-price-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 660px;
+  padding: clamp(26px, 4vw, 48px);
+  overflow: hidden;
+  border: 1px solid rgba(11, 19, 43, 0.14);
+  border-radius: 24px;
+  background: #ffffff;
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.andy-price-card:hover {
+  transform: translateY(-7px);
+  border-color: rgba(24, 183, 160, 0.65);
+  box-shadow: 0 28px 60px rgba(11, 19, 43, 0.12);
+}
+
+.andy-price-featured {
+  border-color: #18b7a0;
+  color: #ffffff;
+  background: #0b132b;
+}
+
+.andy-popular-label {
+  position: absolute;
+  top: 0;
+  right: 34px;
+  padding: 10px 17px;
+  border-radius: 0 0 12px 12px;
+  color: #0b132b;
+  background: #18b7a0;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.andy-price-top {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: clamp(42px, 6vw, 70px);
+}
+
+.andy-package-number {
+  display: inline-flex;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(11, 19, 43, 0.18);
+  border-radius: 50%;
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+
+.andy-price-featured .andy-package-number {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.andy-package-name {
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.andy-price {
+  padding-bottom: 28px;
+  border-bottom: 1px solid rgba(11, 19, 43, 0.14);
+}
+
+.andy-price-featured .andy-price {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.andy-from {
+  display: block;
+  margin-bottom: 8px;
+  color: #718093;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.andy-price-featured .andy-from {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.andy-price > div {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+}
+
+.andy-currency {
+  padding-top: 10px;
+  color: #18b7a0;
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
+.andy-price strong {
+  font-size: clamp(3.4rem, 7vw, 6.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.065em;
+}
+
+.andy-price-description {
+  margin: 28px 0;
+  color: #637083;
+  line-height: 1.65;
+}
+
+.andy-price-featured .andy-price-description {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.andy-price-features {
+  display: grid;
+  gap: 16px;
+  margin: 0 0 38px;
+  padding: 0;
+  list-style: none;
+}
+
+.andy-price-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.94rem;
+  line-height: 1.45;
+}
+
+.andy-price-features li span {
+  color: #18b7a0;
+  font-weight: 900;
+}
+
+.andy-price-button {
+  display: flex;
+  width: 100%;
+  min-height: 55px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding: 0 21px;
+  border: 1px solid #0b132b;
+  border-radius: 999px;
+  color: #ffffff;
+  background: #0b132b;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    color 0.25s ease,
+    background-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.andy-price-button:hover {
+  color: #0b132b;
+  background: #18b7a0;
+  transform: translateY(-2px);
+}
+
+.andy-price-featured .andy-price-button {
+  border-color: #18b7a0;
+  color: #0b132b;
+  background: #18b7a0;
+}
+
+.andy-price-featured .andy-price-button:hover {
+  color: #0b132b;
+  background: #ffffff;
+}
+
+.andy-pricing-note {
+  max-width: 850px;
+  margin: 28px auto 0;
+  color: #718093;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* Dark mode */
+
+html[data-theme="dark"] .andy-pricing {
+  color: #ffffff;
+  background: #080d20;
+}
+
+html[data-theme="dark"] .andy-pricing-heading > p,
+html[data-theme="dark"] .andy-pricing-note {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+html[data-theme="dark"] .andy-price-card {
+  border-color: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  background: #101831;
+}
+
+html[data-theme="dark"] .andy-price-featured {
+  border-color: #18b7a0;
+  background: #050918;
+}
+
+html[data-theme="dark"] .andy-price,
+html[data-theme="dark"] .andy-package-number {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+html[data-theme="dark"] .andy-price-description,
+html[data-theme="dark"] .andy-from {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+html[data-theme="dark"] .andy-price-button {
+  border-color: #18b7a0;
+  color: #0b132b;
+  background: #18b7a0;
+}
+
+/* Tablet */
+
+@media (max-width: 850px) {
+  .andy-pricing-heading {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .andy-price-card {
+    min-height: auto;
+  }
+}
+
+/* Phone */
+
+@media (max-width: 680px) {
+  .andy-pricing {
+    padding: 72px 0;
+  }
+
+  .andy-pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .andy-price-card {
+    padding: 28px 22px;
+    border-radius: 18px;
+  }
+
+  .andy-price strong {
+    font-size: 3.8rem;
+  }
+
+  .andy-popular-label {
+    right: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .andy-price-card,
+  .andy-price-button {
+    transition: none;
+  }
+}
