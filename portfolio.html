@@ -37,6 +37,56 @@
     .footer-social-link:hover{border-color:#18b7a0;color:#0b132b!important;background:#18b7a0;transform:translateY(-3px)}
     .footer-social-link:focus-visible{outline:3px solid rgba(255,111,97,.5);outline-offset:3px}
   </style>
+  <style id="portfolio-projects-layout">
+    /* Projects-page layout only. Existing colours and media paths are preserved. */
+    .portfolio-projects-section{padding-top:clamp(40px,6vw,84px)}
+    .portfolio-toolbar{display:flex;align-items:center;justify-content:space-between;gap:22px;margin-bottom:18px}
+    .portfolio-toolbar-title{margin:0;color:var(--navy,#0b132b);font-size:clamp(1.45rem,3vw,2.5rem);line-height:1;letter-spacing:-.04em}
+    .portfolio-view-switch{display:inline-flex;align-items:center;gap:4px;padding:4px;border:1px solid rgba(11,19,43,.14);border-radius:999px;background:rgba(255,255,255,.72)}
+    .view-btn{min-height:36px;padding:0 14px;border:0;border-radius:999px;background:transparent;color:inherit;font:inherit;font-size:.76rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;cursor:pointer}
+    .view-btn.active{color:#fff;background:#0b132b}
+    .portfolio-projects-section .filters{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;padding:8px;margin-bottom:clamp(28px,5vw,58px);border-radius:16px}
+    .portfolio-projects-section .filter-btn{width:100%;padding:0 10px;overflow:hidden;text-overflow:ellipsis}
+    .portfolio-projects-section .portfolio-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(14px,2vw,28px);align-items:start}
+    .portfolio-projects-section .project-card{grid-column:span 4;margin:0;min-width:0;border-radius:clamp(14px,1.7vw,24px);overflow:hidden}
+    .portfolio-projects-section .project-card.wide{grid-column:span 8}
+    .portfolio-projects-section .project-card:nth-child(7n+2),
+    .portfolio-projects-section .project-card:nth-child(7n+5){grid-column:span 5}
+    .portfolio-projects-section .project-card:nth-child(7n+3),
+    .portfolio-projects-section .project-card:nth-child(7n+4){grid-column:span 7}
+    .portfolio-projects-section .media-card video,
+    .portfolio-projects-section .media-card img,
+    .portfolio-projects-section .project-card>img{display:block;width:100%;height:clamp(310px,42vw,620px);object-fit:cover}
+    .portfolio-projects-section .project-card.portrait video{height:clamp(430px,55vw,760px)}
+    .portfolio-projects-section .project-card.square video{aspect-ratio:1;height:auto}
+    .portfolio-projects-section .media-caption{min-height:82px;padding:17px 18px}
+    .portfolio-projects-section .media-caption h3{margin-top:4px}
+    .portfolio-grid.is-list{display:block}
+    .portfolio-grid.is-list .project-card{display:grid;grid-template-columns:minmax(220px,42%) 1fr;width:100%;margin-bottom:18px}
+    .portfolio-grid.is-list .project-card video,
+    .portfolio-grid.is-list .project-card>img{height:clamp(230px,31vw,420px);aspect-ratio:auto}
+    .portfolio-grid.is-list .media-caption{align-self:stretch;align-items:flex-end;padding:clamp(22px,4vw,52px)}
+    html[data-theme="dark"] .portfolio-toolbar-title{color:inherit}
+    html[data-theme="dark"] .portfolio-view-switch{border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.06)}
+    html[data-theme="dark"] .view-btn.active{color:#0b132b;background:#18b7a0}
+    @media(max-width:980px){
+      .portfolio-projects-section .filters{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .portfolio-projects-section .project-card,.portfolio-projects-section .project-card.wide,.portfolio-projects-section .project-card:nth-child(n){grid-column:span 6}
+    }
+    @media(max-width:760px){
+      .portfolio-toolbar{align-items:flex-end}
+      .portfolio-projects-section .filters{display:flex;grid-template-columns:none}
+      .portfolio-projects-section .filter-btn{width:auto}
+      .portfolio-projects-section .portfolio-grid{grid-template-columns:1fr;gap:18px}
+      .portfolio-projects-section .project-card,.portfolio-projects-section .project-card.wide,.portfolio-projects-section .project-card:nth-child(n){grid-column:1}
+      .portfolio-projects-section .media-card video,.portfolio-projects-section .media-card img,.portfolio-projects-section .project-card>img{height:auto;max-height:none;aspect-ratio:4/5}
+      .portfolio-projects-section .project-card.landscape video{aspect-ratio:16/10}
+      .portfolio-grid.is-list .project-card{display:block}
+      .portfolio-grid.is-list .project-card video,.portfolio-grid.is-list .project-card>img{height:auto;aspect-ratio:16/11}
+      .portfolio-grid.is-list .media-caption{padding:17px 18px}
+    }
+    @media(max-width:430px){.portfolio-toolbar-title{font-size:1.35rem}.view-btn{padding:0 11px;font-size:.69rem}}
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -56,8 +106,15 @@
       <div class="container"><div class="orb" aria-hidden="true"></div><p class="eyebrow">Portfolio</p><h1 class="h1">Work that moves.</h1><p class="lede">Real client work across weddings and events, commercial, real estate, behind-the-scenes, music videos and graphic design — plus selected corporate and social work.</p></div>
     </section>
 
-    <section class="section">
+    <section class="section portfolio-projects-section">
       <div class="container">
+        <div class="portfolio-toolbar">
+          <h2 class="portfolio-toolbar-title">Selected projects</h2>
+          <div class="portfolio-view-switch" aria-label="Choose portfolio layout">
+            <button class="view-btn active" type="button" data-view="grid" aria-pressed="true">Grid</button>
+            <button class="view-btn" type="button" data-view="list" aria-pressed="false">List</button>
+          </div>
+        </div>
         <div class="filters" aria-label="Filter portfolio projects">
           <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All Work</button>
           <button class="filter-btn" type="button" data-filter="weddings">Weddings</button>
@@ -250,6 +307,24 @@
         });
       });
     });
+
+    (function(){
+      var grid = document.querySelector('.portfolio-grid');
+      var viewButtons = document.querySelectorAll('.view-btn');
+      if (!grid || !viewButtons.length) return;
+
+      viewButtons.forEach(function(button){
+        button.addEventListener('click', function(){
+          var listView = button.getAttribute('data-view') === 'list';
+          grid.classList.toggle('is-list', listView);
+          viewButtons.forEach(function(item){
+            var selected = item === button;
+            item.classList.toggle('active', selected);
+            item.setAttribute('aria-pressed', selected ? 'true' : 'false');
+          });
+        });
+      });
+    })();
   </script>
 </body>
 </html>
