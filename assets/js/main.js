@@ -84,6 +84,80 @@ if (bookingForm) {
     const url = `https://wa.me/971588118994?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank', 'noopener,noreferrer');
   });
+  <script>
+(() => {
+
+  const accordion =
+    document.querySelector('#servicesAccordion');
+
+  if (!accordion) return;
+
+  const items =
+    [...accordion.querySelectorAll('.svc-item')];
+
+
+  function activate(item) {
+
+    items.forEach(current => {
+
+      const active = current === item;
+
+      current.classList.toggle(
+        'is-active',
+        active
+      );
+
+      current
+        .querySelector('.svc-trigger')
+        .setAttribute(
+          'aria-expanded',
+          String(active)
+        );
+
+    });
+
+  }
+
+
+  items.forEach(item => {
+
+    const trigger =
+      item.querySelector('.svc-trigger');
+
+
+    /* CLICK / MOBILE */
+
+    trigger.addEventListener('click', () => {
+      activate(item);
+    });
+
+
+    /* DESKTOP HOVER */
+
+    item.addEventListener('mouseenter', () => {
+
+      const desktop =
+        window.matchMedia(
+          '(hover:hover) and (pointer:fine)'
+        ).matches;
+
+      if (desktop) {
+        activate(item);
+      }
+
+    });
+
+
+    /* KEYBOARD */
+
+    trigger.addEventListener('focus', () => {
+      activate(item);
+    });
+
+  });
+
+})();
+</script>
 }
 
 document.querySelectorAll('[data-year]').forEach(el => el.textContent = new Date().getFullYear());
