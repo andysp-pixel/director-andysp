@@ -1452,3 +1452,287 @@ textarea { min-height: 140px; resize: vertical; }
     padding: 18px 14px;
   }
 }
+/* =====================================================
+   ANIMATED CLIENT REVIEWS
+===================================================== */
+
+.client-reviews-section {
+  overflow: hidden;
+  background: #f7f8fa;
+}
+
+/*
+  The mask makes the cards disappear smoothly
+  near the left and right edges.
+*/
+.reviews-slider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 12px 0 30px;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 6%,
+    #000 94%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 6%,
+    #000 94%,
+    transparent
+  );
+}
+
+.reviews-track {
+  display: flex;
+  align-items: stretch;
+  width: max-content;
+  animation: moveClientReviews 32s linear infinite;
+}
+
+/* Pause animation when a visitor touches or hovers over it */
+
+.reviews-slider:hover .reviews-track,
+.reviews-slider:focus-within .reviews-track {
+  animation-play-state: paused;
+}
+
+/* Review card */
+
+.client-review-card {
+  position: relative;
+  width: min(420px, calc(100vw - 48px));
+  min-height: 330px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  margin-right: 18px;
+  padding: 30px;
+  overflow: hidden;
+  border: 1px solid rgba(11, 19, 43, 0.12);
+  border-radius: 24px;
+  background: #ffffff;
+  color: #0b132b;
+  box-shadow: 0 18px 45px rgba(11, 19, 43, 0.08);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.client-review-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 25px 55px rgba(11, 19, 43, 0.15);
+}
+
+/* Colored card variations */
+
+.review-card-teal {
+  border-color: transparent;
+  background: #18b7a0;
+  color: #0b132b;
+}
+
+.review-card-lemon {
+  border-color: transparent;
+  background: #efff8a;
+  color: #0b132b;
+}
+
+/* Top part */
+
+.review-card-top {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.review-avatar {
+  width: 54px;
+  height: 54px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 54px;
+  border-radius: 50%;
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.review-avatar-coral {
+  background: #ff6f61;
+  color: #0b132b;
+}
+
+.review-avatar-navy {
+  background: #0b132b;
+  color: #ffffff;
+}
+
+.review-avatar-teal {
+  background: #18b7a0;
+  color: #0b132b;
+}
+
+.review-person {
+  min-width: 0;
+}
+
+.review-person h3 {
+  margin: 0;
+  color: inherit;
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+.review-person p {
+  margin: 4px 0 0;
+  color: inherit;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  opacity: 0.68;
+}
+
+/* Large decorative quote */
+
+.review-quote {
+  position: absolute;
+  top: -27px;
+  right: -8px;
+  color: #ff6f61;
+  font-family: Georgia, serif;
+  font-size: 7.5rem;
+  line-height: 1;
+  opacity: 0.22;
+}
+
+/* Stars */
+
+.review-stars {
+  position: relative;
+  z-index: 2;
+  margin: 27px 0 16px;
+  color: #ff6f61;
+  font-size: 1rem;
+  letter-spacing: 0.16em;
+}
+
+.review-card-teal .review-stars,
+.review-card-lemon .review-stars {
+  color: #0b132b;
+}
+
+/* Review text */
+
+.client-review-card blockquote {
+  position: relative;
+  z-index: 2;
+  flex-grow: 1;
+  margin: 0;
+  color: inherit;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+/* Service label */
+
+.review-service {
+  position: relative;
+  z-index: 2;
+  width: fit-content;
+  display: inline-flex;
+  margin-top: 24px;
+  padding: 8px 13px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  color: inherit;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+/* Small instruction */
+
+.reviews-help {
+  margin: 0;
+  color: #667085;
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+/* Infinite movement */
+
+@keyframes moveClientReviews {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    /*
+      There are 3 original cards followed by
+      3 identical cards. This moves exactly halfway.
+    */
+    transform: translateX(-50%);
+  }
+}
+
+/* Tablet */
+
+@media (max-width: 900px) {
+  .client-review-card {
+    width: min(380px, calc(100vw - 42px));
+    min-height: 320px;
+    padding: 26px;
+  }
+
+  .reviews-track {
+    animation-duration: 27s;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .reviews-slider {
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+
+  .client-review-card {
+    width: calc(100vw - 52px);
+    min-height: 315px;
+    margin-right: 14px;
+    padding: 24px;
+    border-radius: 20px;
+  }
+
+  .reviews-track {
+    animation-duration: 24s;
+  }
+
+  .review-quote {
+    font-size: 6rem;
+  }
+}
+
+/* Accessibility: stop animation if visitor disabled motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .reviews-track {
+    width: 100%;
+    overflow-x: auto;
+    animation: none;
+    scroll-snap-type: x mandatory;
+  }
+
+  .client-review-card {
+    scroll-snap-align: start;
+  }
+}
