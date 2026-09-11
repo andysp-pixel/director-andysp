@@ -4,384 +4,124 @@
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Director Andy SP services: videography, photography, graphic design and social media content."><meta name="theme-color" content="#0B132B"><title>Services — Director Andy SP</title>
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/css/styles.css">
-  <style>
-.svc-accordion {
-  overflow: hidden;
-  border: 1px solid rgba(11,19,43,.12);
-  border-radius: 14px;
-  background: #fff;
-  box-shadow: 0 18px 50px rgba(11,19,43,.08);
-}
-
-.svc-item {
-  background: #fff;
-  border-bottom: 1px solid rgba(11,19,43,.12);
-  transition: background-color .45s cubic-bezier(.2,.7,.2,1);
-}
-
-.svc-item:last-child {
-  border-bottom: 0;
-}
-
-.svc-item.is-active {
-  background: var(--svc-bg);
-}
-
-
-/* TOP ROW */
-
-.svc-trigger {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 90px minmax(0,1fr) 44px;
-  align-items: center;
-  gap: 28px;
-
-  min-height: 112px;
-  padding: 24px 34px;
-
-  border: 0;
-  background: transparent;
-
-  color: #0B132B;
-  text-align: left;
-  font: inherit;
-  cursor: pointer;
-}
-
-.svc-number {
-  align-self: start;
-  padding-top: 8px;
-
-  font-size: .72rem;
-  font-weight: 700;
-  letter-spacing: .12em;
-
-  opacity: .62;
-}
-
-.svc-heading {
-  display: block;
-  min-width: 0;
-}
-
-.svc-title {
-  display: block;
-
-  font-size: clamp(1.55rem,3vw,2.6rem);
-  line-height: 1.02;
-  letter-spacing: -.045em;
-  font-weight: 500;
-}
-
-.svc-tags {
-  display: block;
-  margin-top: 8px;
-
-  font-size: .72rem;
-  line-height: 1.45;
-  letter-spacing: .02em;
-
-  color: rgba(11,19,43,.62);
-}
-
-
-/* ARROW */
-
-.svc-arrow {
-  display: grid;
-  place-items: center;
-
-  width: 40px;
-  height: 40px;
-
-  border: 1px solid rgba(11,19,43,.25);
-  border-radius: 50%;
-
-  font-size: 1rem;
-
-  transition:
-    transform .35s ease,
-    background-color .35s ease;
-}
-
-.svc-item.is-active .svc-arrow {
-  transform: rotate(45deg);
-  background: rgba(255,255,255,.45);
-}
-
-
-/* EXPANDING CONTENT */
-
-.svc-panel {
-  display: grid;
-  grid-template-rows: 0fr;
-  opacity: 0;
-
-  transition:
-    grid-template-rows .5s cubic-bezier(.2,.7,.2,1),
-    opacity .32s ease;
-}
-
-.svc-item.is-active .svc-panel {
-  grid-template-rows: 1fr;
-  opacity: 1;
-}
-
-.svc-panel-inner {
-  min-height: 0;
-  overflow: hidden;
-
-  display: grid;
-  grid-template-columns: 90px minmax(0,1fr) 44px;
-  gap: 28px;
-
-  padding: 0 34px;
-}
-
-.svc-item.is-active .svc-panel-inner {
-  padding-bottom: 32px;
-}
-
-.svc-copy {
-  grid-column: 2;
-  max-width: 760px;
-}
-
-.svc-copy p {
-  margin: 0 0 22px;
-
-  color: rgba(11,19,43,.72);
-
-  font-size: clamp(.95rem,1.35vw,1.08rem);
-  line-height: 1.65;
-}
-
-
-/* BUTTON */
-
-.svc-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 16px;
-
-  padding: 10px 15px;
-
-  border: 1px solid rgba(11,19,43,.45);
-  border-radius: 999px;
-
-  color: #0B132B;
-  text-decoration: none;
-
-  text-transform: uppercase;
-  letter-spacing: .12em;
-
-  font-size: .65rem;
-  font-weight: 700;
-
-  transition:
-    background .25s ease,
-    color .25s ease,
-    transform .25s ease;
-}
-
-.svc-cta:hover {
-  background: #0B132B;
-  color: white;
-  transform: translateY(-2px);
-}
-
-
-/* MOBILE */
-
-@media (max-width: 760px) {
-
-  .svc-trigger {
-    grid-template-columns: 46px minmax(0,1fr) 38px;
-    gap: 14px;
-
-    padding: 22px 18px;
-    min-height: 100px;
-  }
-
-  .svc-panel-inner {
-    grid-template-columns: 46px minmax(0,1fr) 38px;
-    gap: 14px;
-
-    padding: 0 18px;
-  }
-
-  .svc-item.is-active .svc-panel-inner {
-    padding-bottom: 24px;
-  }
-
-  .svc-title {
-    font-size: clamp(1.45rem,8vw,2.15rem);
-  }
-
-  .svc-tags {
-    font-size: .66rem;
-  }
-
-  .svc-arrow {
-    width: 36px;
-    height: 36px;
-  }
-
-  .svc-copy {
-    grid-column: 2 / 4;
-    padding-right: 8px;
-  }
-}
-</style>
 </head>
 <body>
   <header class="site-header"><div class="container nav-wrap"><a class="brand" href="index.html"><span class="brand-mark"></span><span class="brand-name">Director<br>Andy SP</span></a><button class="menu-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">Menu</button><nav class="nav-links"><a href="index.html">Home</a><a href="portfolio.html">Portfolio</a><a class="active" href="services.html">Services</a><a href="about.html">About</a><a class="nav-book" href="book.html">Book a project</a></nav></div></header>
   <main>
     <section class="page-hero"><div class="container"><div class="orb" aria-hidden="true"></div><p class="eyebrow">Services</p><h1 class="h1">Visual production.<br>Without the clutter.</h1><p class="lede">Book one discipline or combine video, photography, design and social content into one coordinated production.</p></div></section>
     <section class="section"><div class="container">
-      <div class="svc-accordion" id="servicesAccordion">
 
-  <!-- VIDEOGRAPHY -->
-  <article class="svc-item is-active" style="--svc-bg:#dceff3;">
-    <button class="svc-trigger" type="button" aria-expanded="true">
-      <span class="svc-number">01</span>
+      <div id="sp-service-accordion">
 
-      <span class="svc-heading">
-        <span class="svc-title">Videography</span>
-        <span class="svc-tags">
-          Commercials · Events · Music Videos · Reels
-        </span>
-      </span>
+  <article class="sp-service active" style="--service-bg:#d9eef2;">
+    <button class="sp-service-head" type="button">
+      <span class="sp-num">01</span>
 
-      <span class="svc-arrow">↗</span>
+      <div class="sp-name">
+        <h3>Videography</h3>
+        <small>Commercials · Events · Music Videos · Reels</small>
+      </div>
+
+      <span class="sp-icon">↗</span>
     </button>
 
-    <div class="svc-panel">
-      <div class="svc-panel-inner">
-        <div class="svc-panel-spacer"></div>
+    <div class="sp-content">
+      <div class="sp-description">
+        <h2>Cinematic stories crafted with purpose.</h2>
 
-        <div class="svc-copy">
-          <p>
-            We turn ideas into cinematic stories — shaping light,
-            movement, sound and color into films that feel intentional,
-            emotional and memorable. From pre-production and shot
-            planning to the final grade, every frame is crafted to give
-            your story a distinct visual identity.
-          </p>
+        <p>
+          We turn ideas into cinematic stories, shaping light,
+          movement, sound and color into films that feel intentional,
+          emotional and memorable. From pre-production to the final
+          grade, every frame is created to give your story a distinct
+          visual identity.
+        </p>
 
-          <a href="book.html" class="svc-cta">
-            Discuss project <span>↗</span>
-          </a>
-        </div>
+        <a href="book.html">Discuss project ↗</a>
       </div>
     </div>
   </article>
 
 
-  <!-- PHOTOGRAPHY -->
-  <article class="svc-item" style="--svc-bg:#f3f2dc;">
-    <button class="svc-trigger" type="button" aria-expanded="false">
-      <span class="svc-number">02</span>
+  <article class="sp-service" style="--service-bg:#ede8d8;">
+    <button class="sp-service-head" type="button">
+      <span class="sp-num">02</span>
 
-      <span class="svc-heading">
-        <span class="svc-title">Photography</span>
-        <span class="svc-tags">
-          Portraits · Products · Events · Lifestyle
-        </span>
-      </span>
+      <div class="sp-name">
+        <h3>Photography</h3>
+        <small>Portraits · Products · Events · Lifestyle</small>
+      </div>
 
-      <span class="svc-arrow">↗</span>
+      <span class="sp-icon">↗</span>
     </button>
 
-    <div class="svc-panel">
-      <div class="svc-panel-inner">
-        <div class="svc-panel-spacer"></div>
+    <div class="sp-content">
+      <div class="sp-description">
+        <h2>Clean stills with strong brand value.</h2>
 
-        <div class="svc-copy">
-          <p>
-            Clean, expressive photography built around your story and brand.
-            From portraits and products to events, campaigns and lifestyle
-            imagery, we create polished stills with strong composition,
-            natural detail and lasting visual value.
-          </p>
+        <p>
+          From portraits and products to events and campaigns,
+          we create polished imagery with thoughtful composition,
+          natural detail and a strong visual character.
+        </p>
 
-          <a href="book.html" class="svc-cta">
-            Discuss project <span>↗</span>
-          </a>
-        </div>
+        <a href="book.html">Discuss project ↗</a>
       </div>
     </div>
   </article>
 
 
-  <!-- GRAPHIC DESIGN -->
-  <article class="svc-item" style="--svc-bg:#efd8dd;">
-    <button class="svc-trigger" type="button" aria-expanded="false">
-      <span class="svc-number">03</span>
+  <article class="sp-service" style="--service-bg:#eedadf;">
+    <button class="sp-service-head" type="button">
+      <span class="sp-num">03</span>
 
-      <span class="svc-heading">
-        <span class="svc-title">Graphic Design</span>
-        <span class="svc-tags">
-          Branding · Posters · Campaigns · Digital
-        </span>
-      </span>
+      <div class="sp-name">
+        <h3>Graphic Design</h3>
+        <small>Branding · Posters · Campaigns · Digital</small>
+      </div>
 
-      <span class="svc-arrow">↗</span>
+      <span class="sp-icon">↗</span>
     </button>
 
-    <div class="svc-panel">
-      <div class="svc-panel-inner">
-        <div class="svc-panel-spacer"></div>
+    <div class="sp-content">
+      <div class="sp-description">
+        <h2>Visual assets that connect the campaign.</h2>
 
-        <div class="svc-copy">
-          <p>
-            Visual systems and campaign assets that make the message feel
-            cohesive. We create posters, key visuals, social templates,
-            digital flyers and presentation assets designed to connect
-            every touchpoint of your campaign.
-          </p>
+        <p>
+          Posters, key visuals, social templates and campaign
+          assets designed to keep your communication visually
+          consistent and memorable.
+        </p>
 
-          <a href="book.html" class="svc-cta">
-            Discuss project <span>↗</span>
-          </a>
-        </div>
+        <a href="book.html">Discuss project ↗</a>
       </div>
     </div>
   </article>
 
 
-  <!-- SOCIAL MEDIA -->
-  <article class="svc-item" style="--svc-bg:#dce9d8;">
-    <button class="svc-trigger" type="button" aria-expanded="false">
-      <span class="svc-number">04</span>
+  <article class="sp-service" style="--service-bg:#dfe9da;">
+    <button class="sp-service-head" type="button">
+      <span class="sp-num">04</span>
 
-      <span class="svc-heading">
-        <span class="svc-title">Social Media</span>
-        <span class="svc-tags">
-          Reels · Strategy · Content Batches · Campaigns
-        </span>
-      </span>
+      <div class="sp-name">
+        <h3>Social Media</h3>
+        <small>Reels · Strategy · Content · Campaigns</small>
+      </div>
 
-      <span class="svc-arrow">↗</span>
+      <span class="sp-icon">↗</span>
     </button>
 
-    <div class="svc-panel">
-      <div class="svc-panel-inner">
-        <div class="svc-panel-spacer"></div>
+    <div class="sp-content">
+      <div class="sp-description">
+        <h2>Content made for the scroll.</h2>
 
-        <div class="svc-copy">
-          <p>
-            Content designed for attention, rhythm and consistency.
-            We produce short-form video, vertical edits, photo sets and
-            campaign-ready content that keeps your brand visually active
-            across social platforms.
-          </p>
+        <p>
+          Short-form video, vertical edits, photography and
+          campaign-ready content designed for a consistent and
+          engaging social presence.
+        </p>
 
-          <a href="book.html" class="svc-cta">
-            Discuss project <span>↗</span>
-          </a>
-        </div>
+        <a href="book.html">Discuss project ↗</a>
       </div>
     </div>
   </article>
