@@ -119,21 +119,143 @@ button { cursor: pointer; }
 .split-head { display: flex; justify-content: space-between; gap: 40px; align-items: end; margin-bottom: 44px; }
 .split-head .lede { margin: 0; max-width: 520px; }
 
-.portfolio-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 18px; }
-.project-card { grid-column: span 4; position: relative; min-height: 430px; border-radius: var(--radius); overflow: hidden; background: var(--navy); color: var(--white); box-shadow: 0 14px 40px rgba(11,19,43,.1); }
-.project-card.wide { grid-column: span 8; }
-.project-card img { height: 100%; object-fit: cover; transition: transform .5s ease; }
-.project-card:hover img { transform: scale(1.035); }
-.project-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 26px; background: linear-gradient(180deg, transparent 28%, rgba(11,19,43,.88)); }
-.project-meta { display: flex; justify-content: space-between; gap: 12px; align-items: end; }
-.project-meta small { text-transform: uppercase; letter-spacing: .12em; color: var(--yellow); font-weight: 900; }
-.project-meta h3 { margin-top: 8px; }
-.project-arrow { width: 42px; aspect-ratio: 1; border-radius: 50%; background: var(--coral); display: grid; place-items: center; font-size: 1.2rem; }
-.filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 34px; }
-.filter-btn { border: 1px solid rgba(11,19,43,.14); background: var(--white); color: var(--navy); padding: 10px 15px; border-radius: 999px; font-weight: 800; }
-.filter-btn.active { background: var(--navy); color: var(--white); }
-.project-card[hidden] { display: none; }
+/* =========================================================
+   SELECTED WORK — CLEAN PORTFOLIO GRID
+   ========================================================= */
 
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  align-items: stretch;
+}
+
+.portfolio-grid .project-card {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Remove old layout differences */
+.portfolio-grid .project-card.wide,
+.portfolio-grid .project-card.portrait,
+.portfolio-grid .project-card.square {
+  grid-column: auto;
+  grid-row: auto;
+}
+
+/* All media gets the same visual frame */
+.portfolio-grid .media-card > video,
+.portfolio-grid .media-card > img {
+  display: block;
+  width: 100%;
+  height: 420px;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center;
+  margin: 0;
+}
+
+/* Graphic design follows the same grid */
+.portfolio-grid .graphic-card img {
+  height: 420px;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+/* Caption stays aligned */
+.portfolio-grid .media-caption {
+  min-height: 92px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.portfolio-grid .media-caption > div {
+  min-width: 0;
+}
+
+.portfolio-grid .media-caption small {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.portfolio-grid .media-caption h3 {
+  margin: 0;
+}
+
+/* Make videos behave nicely */
+.portfolio-grid video {
+  background: #0b132b;
+}
+
+/* Hover */
+.portfolio-grid .project-card {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.portfolio-grid .project-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Buttons below the grid */
+.portfolio-grid + .button-row {
+  margin-top: 36px;
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+  .portfolio-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .portfolio-grid .media-card > video,
+  .portfolio-grid .media-card > img,
+  .portfolio-grid .graphic-card img {
+    height: 400px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .portfolio-grid .project-card.wide,
+  .portfolio-grid .project-card.portrait,
+  .portfolio-grid .project-card.square {
+    grid-column: auto;
+  }
+
+  .portfolio-grid .media-card > video,
+  .portfolio-grid .media-card > img,
+  .portfolio-grid .graphic-card img {
+    height: auto;
+    aspect-ratio: 4 / 5;
+  }
+
+  .portfolio-grid .media-caption {
+    min-height: 82px;
+    padding: 16px;
+  }
+}
 .service-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 .service-card { background: var(--white); min-height: 310px; border-radius: var(--radius); padding: 28px; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid rgba(11,19,43,.06); transition: transform .25s ease, box-shadow .25s ease; }
 .service-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
