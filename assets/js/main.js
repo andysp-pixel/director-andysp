@@ -87,3 +87,51 @@ if (bookingForm) {
 }
 
 document.querySelectorAll('[data-year]').forEach(el => el.textContent = new Date().getFullYear());
+
+// Light / dark theme shared by every page.
+(() => {
+  const storageKey = 'director-andy-theme';
+  const root = document.documentElement;
+  const toggle = document.querySelector('.theme-toggle');
+  const themeColor = document.querySelector('meta[name="theme-color"]');
+  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+  const currentTheme = () => root.getAttribute('data-theme') || (systemTheme.matches ? 'dark' : 'light');
+
+  const updateButton = theme => {
+    if (!toggle) return;
+    const dark = theme === 'dark';
+    const label = dark ? 'Switch to light mode' : 'Switch to dark mode';
+    const text = toggle.querySelector('.theme-toggle-text');
+    toggle.setAttribute('aria-pressed', String(dark));
+    toggle.setAttribute('aria-label', label);
+    toggle.title = label;
+    if (text) text.textContent = dark ? 'Light' : 'Dark';
+  };
+
+  const applyTheme = (theme, save = false) => {
+    const safeTheme = theme === 'dark' ? 'dark' : 'light';
+    root.setAttribute('data-theme', safeTheme);
+    if (themeColor) themeColor.content = safeTheme === 'dark' ? '#080D20' : '#F4F4F8';
+    updateButton(safeTheme);
+    if (save) {
+      try { localStorage.setItem(storageKey, safeTheme); } catch (_) { /* Storage may be disabled. */ }
+    }
+  };
+
+  applyTheme(currentTheme());
+
+  toggle?.addEventListener('click', () => {
+    applyTheme(currentTheme() === 'dark' ? 'light' : 'dark', true);
+  });
+
+  const followSystem = event => {
+    try {
+      if (localStorage.getItem(storageKey)) return;
+    } catch (_) { /* Follow the device preference when storage is unavailable. */ }
+    applyTheme(event.matches ? 'dark' : 'light');
+  };
+
+  if (typeof systemTheme.addEventListener === 'function') systemTheme.addEventListener('change', followSystem);
+  else systemTheme.addListener(followSystem);
+})();

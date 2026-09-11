@@ -2,9 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="Director Andy SP portfolio — weddings and events, commercial, corporate, social media, real estate, BTS, music videos and graphic design.">
   <meta name="theme-color" content="#0B132B">
+  <script id="theme-boot">
+    (function(){
+      try {
+        var saved = localStorage.getItem('director-andy-theme');
+        var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = saved || (dark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#080D20' : '#F4F4F8');
+      } catch (error) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
   <title>Portfolio — Director Andy SP</title>
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/css/styles.css">
@@ -29,7 +43,11 @@
     <div class="container nav-wrap">
       <a class="brand" href="index.html" aria-label="Director Andy SP home"><span class="brand-mark" aria-hidden="true"></span><span class="brand-name">Director<br>Andy SP</span></a>
       <button class="menu-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">Menu</button>
-      <nav class="nav-links" aria-label="Main navigation"><a href="index.html">Home</a><a class="active" href="portfolio.html">Portfolio</a><a href="services.html">Services</a><a href="about.html">About</a><a class="nav-book" href="book.html">Book a project</a></nav>
+      <nav class="nav-links" aria-label="Main navigation"><a href="index.html">Home</a><a class="active" href="portfolio.html">Portfolio</a><a href="services.html">Services</a><a href="about.html">About</a><a class="nav-book" href="book.html">Book a project</a><button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+  <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
+  <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.42"/></svg>
+  <span class="theme-toggle-text">Dark</span>
+</button></nav>
     </div>
   </header>
 
