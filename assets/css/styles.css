@@ -877,3 +877,236 @@ textarea { min-height: 140px; resize: vertical; }
   color: #aaa;
   margin: 0;
 }
+/* =================================================
+   SERVICES ACCORDION ONLY
+   Ntaco ihindura hanze ya #sp-service-accordion
+   ================================================= */
+
+#sp-service-accordion {
+  width: 100%;
+  overflow: hidden;
+}
+
+#sp-service-accordion .sp-service {
+  --service-bg: #eee;
+
+  border-top: 1px solid rgba(11, 19, 43, 0.14);
+  background: transparent;
+
+  transition:
+    background-color 0.45s ease,
+    padding 0.45s ease;
+}
+
+#sp-service-accordion .sp-service:last-child {
+  border-bottom: 1px solid rgba(11, 19, 43, 0.14);
+}
+
+#sp-service-accordion .sp-service.active {
+  background: var(--service-bg);
+}
+
+
+/* row */
+
+#sp-service-accordion .sp-service-head {
+  appearance: none;
+
+  width: 100%;
+  min-height: 125px;
+
+  display: grid;
+  grid-template-columns: 120px 1fr 50px;
+  align-items: center;
+  gap: 30px;
+
+  padding: 25px 35px;
+
+  border: 0;
+  background: transparent;
+
+  color: #0b132b;
+  text-align: left;
+  font-family: inherit;
+
+  cursor: pointer;
+}
+
+
+/* number */
+
+#sp-service-accordion .sp-num {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+
+  opacity: 0.55;
+}
+
+
+/* service name */
+
+#sp-service-accordion .sp-name h3 {
+  margin: 0;
+
+  font-size: clamp(28px, 3vw, 45px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+
+  font-weight: 500;
+}
+
+#sp-service-accordion .sp-name small {
+  display: block;
+
+  margin-top: 10px;
+
+  color: rgba(11, 19, 43, 0.58);
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+
+/* arrow */
+
+#sp-service-accordion .sp-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(11, 19, 43, 0.24);
+  border-radius: 50%;
+
+  transition:
+    transform 0.35s ease,
+    background-color 0.35s ease;
+}
+
+#sp-service-accordion .sp-service.active .sp-icon {
+  transform: rotate(45deg);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+
+/* hidden content */
+
+#sp-service-accordion .sp-content {
+  display: grid;
+  grid-template-rows: 0fr;
+
+  opacity: 0;
+
+  transition:
+    grid-template-rows 0.5s cubic-bezier(.2,.7,.2,1),
+    opacity 0.35s ease;
+}
+
+#sp-service-accordion .sp-service.active .sp-content {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+#sp-service-accordion .sp-description {
+  overflow: hidden;
+
+  margin-left: 150px;
+  max-width: 760px;
+
+  padding: 0 35px;
+}
+
+#sp-service-accordion .sp-service.active .sp-description {
+  padding-bottom: 40px;
+}
+
+
+/* expanded text */
+
+#sp-service-accordion .sp-description h2 {
+  margin: 0 0 15px;
+
+  color: #0b132b;
+
+  font-size: clamp(24px, 2.3vw, 36px);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+#sp-service-accordion .sp-description p {
+  margin: 0 0 25px;
+
+  color: rgba(11, 19, 43, 0.7);
+
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+
+/* button/link */
+
+#sp-service-accordion .sp-description a {
+  display: inline-flex;
+
+  padding: 11px 17px;
+
+  border: 1px solid #0b132b;
+  border-radius: 100px;
+
+  color: #0b132b;
+
+  text-decoration: none;
+  text-transform: uppercase;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease;
+}
+
+#sp-service-accordion .sp-description a:hover {
+  background: #0b132b;
+  color: white;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+  #sp-service-accordion .sp-service-head {
+    grid-template-columns: 38px 1fr 38px;
+
+    min-height: 105px;
+
+    gap: 12px;
+
+    padding: 20px 15px;
+  }
+
+  #sp-service-accordion .sp-name h3 {
+    font-size: 28px;
+  }
+
+  #sp-service-accordion .sp-description {
+    margin-left: 50px;
+
+    padding-left: 15px;
+    padding-right: 20px;
+  }
+
+  #sp-service-accordion .sp-service.active .sp-description {
+    padding-bottom: 28px;
+  }
+
+  #sp-service-accordion .sp-icon {
+    width: 36px;
+    height: 36px;
+  }
+}
