@@ -1736,3 +1736,101 @@ textarea { min-height: 140px; resize: vertical; }
     scroll-snap-align: start;
   }
 }
+/* =====================================================
+   DIRECTOR ANDY SP — THREEUI SELECTED WORK
+
+   All classes are scoped with "andy-filmstrip-"
+   so they do not affect the rest of the website.
+===================================================== */
+
+.andy-filmstrip-wrapper {
+  position: relative;
+  width: 100%;
+  margin-top: clamp(28px, 5vw, 60px);
+  margin-bottom: clamp(24px, 4vw, 45px);
+  overflow: hidden;
+  border: 1px solid rgba(11, 19, 43, 0.12);
+  border-radius: 24px;
+  background: #0b132b;
+  box-shadow:
+    0 30px 70px rgba(11, 19, 43, 0.18),
+    0 8px 20px rgba(11, 19, 43, 0.08);
+}
+
+.andy-filmstrip-frame {
+  display: block;
+  width: 100%;
+  height: clamp(480px, 60vw, 720px);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: #0b132b;
+}
+
+.andy-filmstrip-instructions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 4vw, 45px);
+  min-height: 54px;
+  padding: 12px 20px;
+  color: rgba(255, 255, 255, 0.68);
+  background: #0b132b;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.andy-filmstrip-instructions span {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.andy-filmstrip-instructions i {
+  color: #18b7a0;
+  font-size: 0.9rem;
+}
+
+/* Tablet */
+
+@media (max-width: 900px) {
+  .andy-filmstrip-wrapper {
+    border-radius: 20px;
+  }
+
+  .andy-filmstrip-frame {
+    height: 620px;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 650px) {
+  .andy-filmstrip-wrapper {
+    margin-top: 25px;
+    border-radius: 18px;
+  }
+
+  .andy-filmstrip-frame {
+    height: 620px;
+  }
+
+  .andy-filmstrip-instructions {
+    min-height: 70px;
+    flex-direction: column;
+    gap: 7px;
+    padding: 13px 16px;
+    font-size: 0.65rem;
+  }
+}
+
+/* Small phones */
+
+@media (max-width: 400px) {
+  .andy-filmstrip-frame {
+    height: 570px;
+  }
+}
