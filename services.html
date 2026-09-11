@@ -1,42 +1,29 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="Director Andy SP services: videography, photography, graphic design and social media content."><meta name="theme-color" content="#0B132B">
-  <script id="theme-boot">
-    (function(){
-      try {
-        var saved = localStorage.getItem('director-andy-theme');
-        var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        var theme = saved || (dark ? 'dark' : 'light');
-        document.documentElement.setAttribute('data-theme', theme);
-        var meta = document.querySelector('meta[name="theme-color"]');
-        if (meta) meta.setAttribute('content', theme === 'dark' ? '#080D20' : '#F4F4F8');
-      } catch (error) {
-        document.documentElement.setAttribute('data-theme', 'light');
-      }
-    })();
-  </script><title>Services — Director Andy SP</title>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Director Andy SP services: videography, photography, graphic design and social media content."><meta name="theme-color" content="#0B132B"><title>Services — Director Andy SP</title>
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/css/styles.css">
-
-  <style id="footer-unified-styles">
-    .footer-contact-link{display:flex!important;align-items:center;gap:9px}
-    .footer-contact-link svg{width:17px;height:17px;flex:0 0 17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-    .footer-socials{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
-    .footer-social-link{width:43px;height:43px;display:inline-flex!important;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.22);border-radius:50%;color:#fff!important;background:rgba(255,255,255,.06);transition:color .2s ease,background-color .2s ease,border-color .2s ease,transform .2s ease}
-    .footer-social-link svg{width:19px;height:19px;fill:currentColor}
-    .footer-social-link:hover{border-color:#18b7a0;color:#0b132b!important;background:#18b7a0;transform:translateY(-3px)}
-    .footer-social-link:focus-visible{outline:3px solid rgba(255,111,97,.5);outline-offset:3px}
+  <style id="services-hero-animation">
+    .services-animated-hero{position:relative;isolation:isolate}
+    .services-animated-hero .container{position:relative;z-index:2}
+    .services-animated-hero .eyebrow,.services-animated-hero .h1,.services-animated-hero .lede{opacity:0;transform:translateY(28px);animation:servicesHeroEnter .85s cubic-bezier(.22,1,.36,1) forwards}
+    .services-animated-hero .eyebrow{animation-delay:.08s}
+    .services-animated-hero .h1{animation-delay:.2s}
+    .services-animated-hero .lede{animation-delay:.36s}
+    .services-animated-hero .orb{animation:servicesOrbFloat 7s ease-in-out infinite;will-change:transform}
+    .services-animated-hero::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(105deg,transparent 20%,rgba(255,255,255,.34) 46%,transparent 72%);transform:translateX(-120%);animation:servicesLightSweep 5.8s 1s ease-in-out infinite}
+    @keyframes servicesHeroEnter{to{opacity:1;transform:translateY(0)}}
+    @keyframes servicesOrbFloat{0%,100%{transform:translate3d(0,0,0) rotate(0)}50%{transform:translate3d(-18px,14px,0) rotate(7deg)}}
+    @keyframes servicesLightSweep{0%,58%{transform:translateX(-120%);opacity:0}70%{opacity:.65}100%{transform:translateX(120%);opacity:0}}
+    @media(max-width:700px){.services-animated-hero .eyebrow,.services-animated-hero .h1,.services-animated-hero .lede{transform:translateY(20px)}.services-animated-hero::after{opacity:.45}}
+    @media(prefers-reduced-motion:reduce){.services-animated-hero .eyebrow,.services-animated-hero .h1,.services-animated-hero .lede{opacity:1;transform:none;animation:none}.services-animated-hero .orb,.services-animated-hero::after{animation:none}}
   </style>
 </head>
 <body>
-  <header class="site-header"><div class="container nav-wrap"><a class="brand" href="index.html"><span class="brand-mark"></span><span class="brand-name">Director<br>Andy SP</span></a><button class="menu-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">Menu</button><nav class="nav-links"><a href="index.html">Home</a><a href="portfolio.html">Portfolio</a><a class="active" href="services.html">Services</a><a href="about.html">About</a><a class="nav-book" href="book.html">Book a project</a><button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
-  <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
-  <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.42"/></svg>
-  <span class="theme-toggle-text">Dark</span>
-</button></nav></div></header>
+  <header class="site-header"><div class="container nav-wrap"><a class="brand" href="index.html"><span class="brand-mark"></span><span class="brand-name">Director<br>Andy SP</span></a><button class="menu-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">Menu</button><nav class="nav-links"><a href="index.html">Home</a><a href="portfolio.html">Portfolio</a><a class="active" href="services.html">Services</a><a href="about.html">About</a><a class="nav-book" href="book.html">Book a project</a></nav></div></header>
   <main>
-    <section class="page-hero"><div class="container"><div class="orb" aria-hidden="true"></div><p class="eyebrow">Services</p><h1 class="h1">Visual production.<br>Without the clutter.</h1><p class="lede">Book one discipline or combine video, photography, design and social content into one coordinated production.</p></div></section>
+    <section class="page-hero services-animated-hero"><div class="container"><div class="orb" aria-hidden="true"></div><p class="eyebrow">Services</p><h1 class="h1">Visual production.<br>Without the clutter.</h1><p class="lede">Book one discipline or combine video, photography, design and social content into one coordinated production.</p></div></section>
     <section class="section"><div class="container">
 
       <div id="sp-service-accordion">
