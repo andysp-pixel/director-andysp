@@ -213,6 +213,52 @@
   </div>
 </footer>
   <script src="assets/js/main.js"></script>
+      <script src="assets/js/main.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const accordion = document.querySelector("#sp-service-accordion");
+    if (!accordion) return;
+
+    const services = Array.from(
+      accordion.querySelectorAll(".sp-service")
+    );
+
+    services.forEach(function (service, index) {
+      const button = service.querySelector(".sp-service-head");
+      const content = service.querySelector(".sp-content");
+
+      if (!button || !content) return;
+
+      const contentId = "service-content-" + (index + 1);
+
+      content.id = contentId;
+      button.setAttribute("aria-controls", contentId);
+      button.setAttribute(
+        "aria-expanded",
+        service.classList.contains("active") ? "true" : "false"
+      );
+
+      button.addEventListener("click", function () {
+        if (service.classList.contains("active")) return;
+
+        services.forEach(function (otherService) {
+          const otherButton =
+            otherService.querySelector(".sp-service-head");
+
+          otherService.classList.remove("active");
+
+          if (otherButton) {
+            otherButton.setAttribute("aria-expanded", "false");
+          }
+        });
+
+        service.classList.add("active");
+        button.setAttribute("aria-expanded", "true");
+      });
+    });
+  });
+</script>
   <script>
     document.querySelectorAll('.filter-btn').forEach(function(button){
       button.setAttribute('aria-pressed', button.classList.contains('active') ? 'true' : 'false');
