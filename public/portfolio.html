@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Director Andy SP portfolio — weddings and events, commercial, corporate, social media, real estate, BTS, music videos and graphic design.">
+  <meta name="theme-color" content="#0B132B">
+  <script id="theme-boot">
+    (function(){
+      try {
+        var saved = localStorage.getItem('director-andy-theme');
+        var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = saved || (dark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#080D20' : '#F4F4F8');
+      } catch (error) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+  <title>Portfolio — Director Andy SP</title>
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <style id="portfolio-filter-polish">
+    .filters{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 clamp(26px,4vw,44px);padding:10px;border:1px solid rgba(11,19,43,.10);border-radius:18px;background:#fff;box-shadow:0 12px 32px rgba(11,19,43,.06)}
+    .filter-btn{min-height:44px;margin:0;padding:0 17px;border:1px solid transparent;border-radius:12px;color:#0b132b;background:transparent;font:inherit;font-size:.78rem;font-weight:800;line-height:1;letter-spacing:.045em;text-transform:uppercase;white-space:nowrap;cursor:pointer;transition:color .2s ease,background-color .2s ease,border-color .2s ease,transform .2s ease,box-shadow .2s ease}
+    .filter-btn:hover{border-color:rgba(24,183,160,.42);background:rgba(24,183,160,.09);transform:translateY(-2px)}
+    .filter-btn.active{border-color:#18b7a0;color:#fff;background:#0b132b;box-shadow:0 8px 20px rgba(11,19,43,.18)}
+    .filter-btn:focus-visible{outline:3px solid rgba(255,111,97,.4);outline-offset:2px}
+    @media(max-width:760px){.filters{flex-wrap:nowrap;margin-right:calc(50% - 50vw);margin-left:calc(50% - 50vw);padding:10px max(18px,calc((100vw - 100%)/2));overflow-x:auto;border-right:0;border-left:0;border-radius:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}.filters::-webkit-scrollbar{display:none}.filter-btn{flex:0 0 auto;min-height:42px;padding:0 15px;font-size:.72rem}}
+    .footer-contact-link{display:flex!important;align-items:center;gap:9px}
+    .footer-contact-link svg{width:17px;height:17px;flex:0 0 17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .footer-socials{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+    .footer-social-link{width:43px;height:43px;display:inline-flex!important;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.22);border-radius:50%;color:#fff!important;background:rgba(255,255,255,.06);transition:color .2s ease,background-color .2s ease,border-color .2s ease,transform .2s ease}
+    .footer-social-link svg{width:19px;height:19px;fill:currentColor}
+    .footer-social-link:hover{border-color:#18b7a0;color:#0b132b!important;background:#18b7a0;transform:translateY(-3px)}
+    .footer-social-link:focus-visible{outline:3px solid rgba(255,111,97,.5);outline-offset:3px}
+    .portfolio-taxonomy{display:grid;grid-template-columns:1fr;gap:clamp(54px,8vw,96px);margin:0 0 clamp(30px,5vw,58px)}
+    .portfolio-discipline{padding:0;background:transparent}
+    .portfolio-discipline-head{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid rgba(11,19,43,.11)}
+    .portfolio-discipline-head span{color:#18b7a0;font-size:.72rem;font-weight:900;letter-spacing:.12em}
+    .portfolio-discipline-head h2{margin:0;color:#0b132b;font-size:clamp(1.65rem,3.4vw,3rem);line-height:1;letter-spacing:-.045em}
+    .portfolio-category-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.6vw,22px)}
+    .portfolio-category-link{position:relative;display:block;aspect-ratio:4/3;overflow:hidden;border-radius:14px;color:#fff;background:#0b132b;text-decoration:none}
+    .portfolio-category-link::after{content:"";position:absolute;inset:42% 0 0;z-index:1;background:linear-gradient(transparent,rgba(4,8,20,.86));pointer-events:none}
+    .portfolio-category-link img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.2,.65,.25,1)}
+    .portfolio-category-link span{position:absolute;right:18px;bottom:17px;left:18px;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;color:#fff;font-size:clamp(.95rem,1.3vw,1.18rem);font-weight:850;line-height:1.15}
+    .portfolio-category-link span::after{content:"↗";color:#18b7a0;font-size:1rem}
+    .portfolio-category-link:hover img{transform:scale(1.045)}
+    .portfolio-empty{margin:22px 0 0;padding:38px 24px;border:1px dashed rgba(11,19,43,.22);border-radius:18px;color:#637083;text-align:center;background:rgba(255,255,255,.55)}
+    .portfolio-empty strong{display:block;margin-bottom:7px;color:#0b132b;font-size:1.15rem}
+    .portfolio-empty[hidden],.portfolio-grid[hidden],.youtube-callout[hidden]{display:none!important}
+    html[data-theme="dark"] .portfolio-discipline-head{border-color:rgba(255,255,255,.13)}
+    html[data-theme="dark"] .portfolio-discipline-head h2{color:#fff}
+    html[data-theme="dark"] .portfolio-empty{border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.65);background:rgba(255,255,255,.04)}
+    html[data-theme="dark"] .portfolio-empty strong{color:#fff}
+    @media(max-width:900px){.portfolio-category-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:580px){.portfolio-category-list{grid-template-columns:1fr}.portfolio-category-link{border-radius:12px}}
+  </style>
+  <style id="portfolio-projects-layout">
+    /* Uniform three-column project cards, matching the supplied reference layout. */
+    .portfolio-projects-section{padding-top:clamp(38px,5vw,72px)}
+    .portfolio-projects-section .filters{margin-bottom:clamp(30px,4vw,50px)}
+    .portfolio-projects-section .portfolio-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.4vw,20px);align-items:stretch}
+    .portfolio-projects-section .project-card,
+    .portfolio-projects-section .project-card.wide,
+    .portfolio-projects-section .project-card:nth-child(n){position:relative;display:block;grid-column:auto;width:100%;min-width:0;aspect-ratio:4/3;margin:0;border:0;border-radius:14px;overflow:hidden;background:#0b132b;box-shadow:none}
+    .portfolio-projects-section .project-card>video,
+    .portfolio-projects-section .project-card>img,
+    .portfolio-projects-section .project-card.portrait>video,
+    .portfolio-projects-section .project-card.square>video{display:block;width:100%;height:100%;aspect-ratio:auto;object-fit:cover;transition:transform .55s cubic-bezier(.2,.65,.25,1)}
+    .portfolio-projects-section .project-card::after{content:"";position:absolute;inset:38% 0 0;z-index:1;pointer-events:none;background:linear-gradient(to bottom,transparent,rgba(4,8,20,.82))}
+    .portfolio-projects-section .media-caption,
+    .portfolio-projects-section .project-overlay{position:absolute;right:0;bottom:0;left:0;z-index:2;display:flex;align-items:flex-end;justify-content:space-between;min-height:0;padding:20px;color:#fff;background:transparent;pointer-events:none}
+    .portfolio-projects-section .project-overlay{top:0}
+    .portfolio-projects-section .project-meta{width:100%;display:flex;align-items:flex-end;justify-content:space-between}
+    .portfolio-projects-section .media-caption small,
+    .portfolio-projects-section .project-meta small{display:block;margin-bottom:5px;color:rgba(255,255,255,.82);font-size:.74rem;line-height:1.2}
+    .portfolio-projects-section .media-caption h3,
+    .portfolio-projects-section .project-meta h3{margin:0;color:#fff;font-size:clamp(1rem,1.35vw,1.25rem);line-height:1.12;letter-spacing:-.025em;text-shadow:0 2px 18px rgba(0,0,0,.34)}
+    .portfolio-projects-section .media-type,
+    .portfolio-projects-section .play-label,
+    .portfolio-projects-section .project-arrow{flex:0 0 auto;margin-left:12px;color:#fff;font-size:.73rem;font-weight:800}
+    .portfolio-projects-section .project-card:hover>video,
+    .portfolio-projects-section .project-card:hover>img{transform:scale(1.035)}
+    .portfolio-projects-section video::-webkit-media-controls-panel{position:relative;z-index:4}
+    html[data-theme="dark"] .portfolio-projects-section .project-card{background:#080d20}
+    @media(max-width:960px){.portfolio-projects-section .portfolio-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:620px){
+      .portfolio-projects-section .portfolio-grid{grid-template-columns:1fr;gap:16px}
+      .portfolio-projects-section .project-card,.portfolio-projects-section .project-card.wide,.portfolio-projects-section .project-card:nth-child(n){aspect-ratio:4/3;border-radius:12px}
+      .portfolio-projects-section .media-caption,.portfolio-projects-section .project-overlay{padding:17px}
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html" aria-label="Director Andy SP home"><span class="brand-mark" aria-hidden="true"></span><span class="brand-name">Director<br>Andy SP</span></a>
+      <button class="menu-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">Menu</button>
+      <nav class="nav-links" aria-label="Main navigation"><a href="index.html">Home</a><a class="active" href="portfolio.html">Portfolio</a><a href="services.html">Services</a><a href="about.html">About</a><a class="nav-book" href="book.html">Book a project</a><button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+  <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
+  <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.42"/></svg>
+  <span class="theme-toggle-text">Dark</span>
+</button></nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container"><div class="orb" aria-hidden="true"></div><p class="eyebrow">Portfolio</p><h1 class="h1">Work that moves.</h1><p class="lede">Real client work across weddings and events, commercial, real estate, behind-the-scenes, music videos and graphic design — plus selected corporate and social work.</p></div>
+    </section>
+
+    <section class="section portfolio-projects-section">
+      <div class="container">
+        <div class="portfolio-taxonomy" aria-label="Portfolio categories">
+          <section class="portfolio-discipline" aria-labelledby="videography-title">
+            <div class="portfolio-discipline-head">
+              <span>01</span>
+              <h2 id="videography-title">Videography</h2>
+            </div>
+            <div class="portfolio-category-list" aria-label="Videography categories">
+              <a class="portfolio-category-link" href="portfolio-category.html?category=video-events"><img src="assets/media/posters/wedding-01.jpg" alt="Events videography"><span>Events</span></a>
+              <a class="portfolio-category-link" href="portfolio-category.html?category=video-corporate"><img src="assets/img/corporate-01.svg" alt="Corporate videography"><span>Corporate</span></a>
+              <a class="portfolio-category-link" href="portfolio-category.html?category=video-real-estate"><img src="assets/media/posters/real-estate.jpg" alt="Real estate videography"><span>Real Estate</span></a>
+              <a class="portfolio-category-link" href="portfolio-category.html?category=video-commercial"><img src="assets/media/posters/commercial.jpg" alt="Commercial videography"><span>Commercial</span></a>
+              <a class="portfolio-category-link" href="portfolio-category.html?category=video-music"><img src="assets/media/posters/music-video-trailer.jpg" alt="Music videos"><span>Music Videos</span></a>
+              <a class="portfolio-category-link" href="portfolio-category.html?category=video-social"><img src="assets/media/posters/bts.jpg" alt="Social media videography"><span>Social Media</span></a>
+              <a class="portfolio-category-link" href="portfolio-category.html?category=video-bts"><img src="assets/media/posters/bts.jpg" alt="Behind the scenes videography"><span>Behind the Scenes</span></a>
+              <a class="portfolio-category-link" href="portfolio-category.html?category=video-podcast"><img src="assets/img/corporate-02.svg" alt="Podcast production"><span>Podcast</span></a>
+              <a class="portfolio-category-link" href="portfolio-category.html?category=video-ai"><img src="assets/img/social-02.svg" alt="AI video production"><span>AI</span></a>
+            </div>
+          </section>
+
+          <section class="portfolio-discipline" aria-labelledby="photography-title">
+            <div class="portfolio-discipline-head">
+              <span>02</span>
+              <h2 id="photography-title">Photography</h2>
+            </div>
+            <div class="portfolio-category-list" aria-label="Photography categories">
+              <a class="portfolio-category-link" href="portfolio-category.html?category=photo-events"><img src="assets/media/graphics/graphic-design-01.webp" alt="Events photography"><span>Events</span></a>
+              <a class="portfolio-category-link" href="portfolio-category.html?category=photo-corporate"><img src="assets/img/corporate-01.svg" alt="Corporate photography"><span>Corporate</span></a>
+              <a class="portfolio-category-link" href="portfolio-category.html?category=photo-fashion"><img src="assets/media/graphics/graphic-design-03.jpg" alt="Fashion photography"><span>Fashion</span></a>
+              <a class="portfolio-category-link" href="portfolio-category.html?category=photo-product"><img src="assets/media/graphics/graphic-design-05.jpg" alt="Product photography"><span>Product</span></a>
+              <a class="portfolio-category-link" href="portfolio-category.html?category=photo-real-estate"><img src="assets/media/posters/real-estate.jpg" alt="Real estate photography"><span>Real Estate</span></a>
+              <a class="portfolio-category-link" href="portfolio-category.html?category=photo-street"><img src="assets/img/social-01.svg" alt="Street photography"><span>Street</span></a>
+            </div>
+          </section>
+        </div>
+
+        <div class="portfolio-grid" hidden>
+          <article class="project-card media-card landscape wide reveal" data-category="video-commercial">
+            <video controls preload="none" playsinline poster="assets/media/posters/commercial.jpg" aria-label="Commercial video"><source src="assets/media/videos/commercial.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
+            <div class="media-caption"><div><small>Commercial · Video</small><h3>Commercial</h3></div><span class="media-type">MP4</span></div>
+          </article>
+
+          <article class="project-card media-card portrait reveal" data-category="video-real-estate">
+            <video controls preload="none" playsinline poster="assets/media/posters/real-estate.jpg" aria-label="Real estate video"><source src="assets/media/videos/real-estate.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
+            <div class="media-caption"><div><small>Real Estate · Video</small><h3>Property Showcase</h3></div><span class="media-type">MP4</span></div>
+          </article>
+
+          <article class="project-card media-card portrait reveal" data-category="video-social">
+            <video controls preload="none" playsinline poster="assets/media/posters/bts.jpg" aria-label="Behind the scenes video"><source src="assets/media/videos/bts.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
+            <div class="media-caption"><div><small>BTS · Video</small><h3>Behind The Scenes</h3></div><span class="media-type">MP4</span></div>
+          </article>
+
+          <article class="project-card media-card square reveal trailer-card-local" data-category="video-music">
+            <video controls preload="none" playsinline poster="assets/media/posters/music-video-trailer.jpg" aria-label="Music video trailer"><source src="assets/media/videos/music-video-trailer.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
+            <div class="media-caption"><div><small>Music Videos · Trailer</small><h3>Music Video Trailer</h3></div><span class="play-label">▶ Trailer</span></div>
+          </article>
+
+          <article class="project-card media-card square reveal" data-category="video-music">
+            <video controls preload="none" playsinline poster="assets/media/posters/music-video-01.jpg" aria-label="Music video 1"><source src="assets/media/videos/music-video-01.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
+            <div class="media-caption"><div><small>Music Videos · Video</small><h3>Music Video 01</h3></div><span class="media-type">MP4</span></div>
+          </article>
+
+          <article class="project-card media-card square reveal" data-category="video-music">
+            <video controls preload="none" playsinline poster="assets/media/posters/music-video-02.jpg" aria-label="Music video 2"><source src="assets/media/videos/music-video-02.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
+            <div class="media-caption"><div><small>Music Videos · Video</small><h3>Music Video 02</h3></div><span class="media-type">MP4</span></div>
+          </article>
+
+          <article class="project-card media-card square reveal" data-category="video-music">
+            <video controls preload="none" playsinline poster="assets/media/posters/music-video-03.jpg" aria-label="Music video 3"><source src="assets/media/videos/music-video-03.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
+            <div class="media-caption"><div><small>Music Videos · Video</small><h3>Music Video 03</h3></div><span class="media-type">MP4</span></div>
+          </article>
+
+          <article class="project-card media-card landscape wide reveal" data-category="video-events">
+            <video controls preload="none" playsinline poster="assets/media/posters/wedding-01.jpg" aria-label="Wedding film 1"><source src="assets/media/videos/wedding-01.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
+            <div class="media-caption"><div><small>Weddings · Events</small><h3>Wedding Film 01</h3></div><span class="media-type">MP4</span></div>
+          </article>
+
+          <article class="project-card media-card landscape wide reveal" data-category="video-events">
+            <video controls preload="none" playsinline poster="assets/media/posters/wedding-02.jpg" aria-label="Wedding film 2"><source src="assets/media/videos/wedding-02.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
+            <div class="media-caption"><div><small>Weddings · Events</small><h3>Wedding Film 02</h3></div><span class="media-type">MP4</span></div>
+          </article>
+
+          <article class="project-card media-card portrait reveal" data-category="video-events">
+            <video controls preload="none" playsinline poster="assets/media/posters/wedding-03.jpg" aria-label="Wedding film 3"><source src="assets/media/videos/wedding-03.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
+            <div class="media-caption"><div><small>Weddings · Events</small><h3>Wedding Film 03</h3></div><span class="media-type">MP4</span></div>
+          </article>
+
+          <article class="project-card media-card landscape wide reveal" data-category="video-events">
+            <video controls preload="none" playsinline poster="assets/media/posters/wedding-04.jpg" aria-label="Wedding film 4"><source src="assets/media/videos/wedding-04.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
+            <div class="media-caption"><div><small>Weddings · Events</small><h3>Wedding Film 04</h3></div><span class="media-type">MP4</span></div>
+          </article>
+
+          <article class="project-card media-card landscape wide reveal" data-category="video-events">
+            <video controls preload="none" playsinline poster="assets/media/posters/wedding-05.jpg" aria-label="Wedding film 5"><source src="assets/media/videos/wedding-05.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
+            <div class="media-caption"><div><small>Weddings · Events</small><h3>Wedding Film 05</h3></div><span class="media-type">MP4</span></div>
+          </article>
+
+          <article class="project-card media-card portrait reveal" data-category="video-events">
+            <video controls preload="none" playsinline poster="assets/media/posters/wedding-06.jpg" aria-label="Wedding film 6"><source src="assets/media/videos/wedding-06.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
+            <div class="media-caption"><div><small>Weddings · Events</small><h3>Wedding Film 06</h3></div><span class="media-type">MP4</span></div>
+          </article>
+
+          <article class="project-card media-card portrait reveal" data-category="video-events">
+            <video controls preload="none" playsinline poster="assets/media/posters/wedding-07.jpg" aria-label="Wedding film 7"><source src="assets/media/videos/wedding-07.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
+            <div class="media-caption"><div><small>Weddings · Events</small><h3>Wedding Film 07</h3></div><span class="media-type">MP4</span></div>
+          </article>
+
+          <article class="project-card media-card portrait reveal" data-category="video-events">
+            <video controls preload="none" playsinline poster="assets/media/posters/wedding-08.jpg" aria-label="Wedding film 8"><source src="assets/media/videos/wedding-08.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
+            <div class="media-caption"><div><small>Weddings · Events</small><h3>Wedding Film 08</h3></div><span class="media-type">MP4</span></div>
+          </article>
+
+          <article class="project-card media-card landscape wide reveal" data-category="video-events">
+            <video controls preload="none" playsinline poster="assets/media/posters/wedding-10.jpg" aria-label="Wedding film 10"><source src="assets/media/videos/wedding-10.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
+            <div class="media-caption"><div><small>Weddings · Events</small><h3>Wedding Film 10</h3></div><span class="media-type">MP4</span></div>
+          </article>
+
+          <article class="project-card media-card portrait reveal" data-category="video-events">
+            <video controls preload="none" playsinline poster="assets/media/posters/wedding-11.jpg" aria-label="Wedding film 11"><source src="assets/media/videos/wedding-11.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
+            <div class="media-caption"><div><small>Weddings · Events</small><h3>Wedding Film 11</h3></div><span class="media-type">MP4</span></div>
+          </article>
+
+          <article class="project-card media-card graphic-card reveal" data-category="photo-events">
+            <!-- Replace this src with your event photography image. -->
+            <img loading="lazy" src="assets/media/graphics/graphic-design-01.webp" alt="Event photography by Director Andy SP">
+            <div class="media-caption"><div><small>Photography · Events</small><h3>Event Photography</h3></div><span class="media-type">Photo</span></div>
+          </article>
+
+          <article class="project-card media-card graphic-card reveal" data-category="photo-fashion">
+            <!-- Replace this src with your fashion photography image. -->
+            <img loading="lazy" src="assets/media/graphics/graphic-design-03.jpg" alt="Fashion photography by Director Andy SP">
+            <div class="media-caption"><div><small>Photography · Fashion</small><h3>Fashion Photography</h3></div><span class="media-type">Photo</span></div>
+          </article>
+
+          <article class="project-card media-card graphic-card reveal" data-category="photo-product">
+            <!-- Replace this src with your product photography image. -->
+            <img loading="lazy" src="assets/media/graphics/graphic-design-05.jpg" alt="Product photography by Director Andy SP">
+            <div class="media-caption"><div><small>Photography · Product</small><h3>Product Photography</h3></div><span class="media-type">Photo</span></div>
+          </article>
+
+          <article class="project-card reveal" data-category="video-corporate photo-corporate"><img src="assets/img/corporate-01.svg" alt="Corporate project visual"><div class="project-overlay"><div class="project-meta"><div><small>Corporate</small><h3>Brand Stories</h3></div><span class="project-arrow">↗</span></div></div></article>
+          <article class="project-card wide reveal" data-category="video-corporate photo-corporate"><img src="assets/img/corporate-02.svg" alt="Corporate project visual"><div class="project-overlay"><div class="project-meta"><div><small>Corporate</small><h3>People + Purpose</h3></div><span class="project-arrow">↗</span></div></div></article>
+          <article class="project-card reveal" data-category="video-social"><img src="assets/img/social-01.svg" alt="Social media project visual"><div class="project-overlay"><div class="project-meta"><div><small>Social Media</small><h3>Vertical Content</h3></div><span class="project-arrow">↗</span></div></div></article>
+          <article class="project-card wide reveal" data-category="video-social"><img src="assets/img/social-02.svg" alt="Social media project visual"><div class="project-overlay"><div class="project-meta"><div><small>Social Media</small><h3>Fast + Sharp</h3></div><span class="project-arrow">↗</span></div></div></article>
+        </div>
+
+        <div class="portfolio-empty" id="portfolio-empty" hidden>
+          <strong>Projects coming soon.</strong>
+          <span>New work will be added to this category.</span>
+        </div>
+
+        <div class="youtube-callout reveal" hidden>
+          <div><p class="eyebrow">Watch more</p><h2 class="h3">Full video playlists on YouTube</h2><p>The website now hosts your uploaded videos directly. Your YouTube playlists remain available for additional work and longer-form viewing.</p></div>
+          <a class="btn btn-dark" href="https://www.youtube.com/@andyspdirector/playlists" target="_blank" rel="noopener">Open YouTube Playlists ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-band"><div class="container"><h2 class="h2">Need this kind of content for your brand, property, artist, wedding or event?</h2><a class="btn" href="book.html">Start a project ↗</a></div></section>
+  </main>
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h2>Director<br>Andy SP</h2>
+        <p>Videography, photography, design and social media content with a bold, modern visual approach.</p>
+      </div>
+
+      <div class="footer-col">
+        <h3>Explore</h3>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="services.html">Services</a>
+        <a href="about.html">About</a>
+        <a href="book.html">Book</a>
+      </div>
+
+      <div class="footer-col">
+        <h3>Contact</h3>
+        <a class="footer-contact-link" href="tel:+971588118994">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.69 2.8a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.33 1.85.56 2.81.69A2 2 0 0 1 22 16.92z"/></svg>
+          <span>+971 58 811 8994</span>
+        </a>
+        <a class="footer-contact-link" href="mailto:info@directorandysp.com">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><path d="m22 6-10 7L2 6"/></svg>
+          <span>info@directorandysp.com</span>
+        </a>
+      </div>
+
+      <div class="footer-col">
+        <h3>Follow us</h3>
+        <div class="footer-socials">
+          <a class="footer-social-link" href="https://www.instagram.com/director_andysp/" target="_blank" rel="noopener noreferrer" aria-label="Follow Director Andy SP on Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm5 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm6.5-.8a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4ZM12 9a3 3 0 1 1 0 6 3 3 0 0 1 0-6Z"/></svg>
+          </a>
+          <a class="footer-social-link" href="https://www.tiktok.com/@director_andysp" target="_blank" rel="noopener noreferrer" aria-label="Follow Director Andy SP on TikTok">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.7 2c.3 2.6 1.8 4.1 4.3 4.3v3.1a8.9 8.9 0 0 1-4.3-1v6.1a7.5 7.5 0 1 1-6.5-7.4v3.3a4.2 4.2 0 1 0 3.3 4.1V2h3.2Z"/></svg>
+          </a>
+          <a class="footer-social-link" href="https://www.linkedin.com/in/dushime-amory-andy-125b943b4" target="_blank" rel="noopener noreferrer" aria-label="Connect with Director Andy SP on LinkedIn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.8 3.5A2.3 2.3 0 1 1 .2 3.5a2.3 2.3 0 0 1 4.6 0ZM.6 8h4.3v13.5H.6V8Zm6.9 0h4.1v1.8h.1c.6-1.1 2-2.3 4.1-2.3 4.4 0 5.2 2.9 5.2 6.7v7.3h-4.3V15c0-1.6 0-3.7-2.3-3.7-2.3 0-2.6 1.8-2.6 3.6v6.6H7.5V8Z"/></svg>
+          </a>
+          <a class="footer-social-link" href="https://www.youtube.com/@andyspdirector/playlists" target="_blank" rel="noopener noreferrer" aria-label="Watch Director Andy SP on YouTube">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© <span data-year></span> DIRECTOR ANDY SP. All rights reserved.</span>
+      <span>Jesus is King</span>
+    </div>
+  </div>
+</footer>
+  <script src="assets/js/main.js"></script>
+  <script>
+    document.querySelectorAll('.filter-btn').forEach(function(button){
+      button.setAttribute('aria-pressed', button.classList.contains('active') ? 'true' : 'false');
+      button.addEventListener('click', function(){
+        document.querySelectorAll('.filter-btn').forEach(function(item){
+          item.setAttribute('aria-pressed', item === button ? 'true' : 'false');
+        });
+
+        var emptyState = document.querySelector('#portfolio-empty');
+        if (!emptyState) return;
+
+        var visibleProjects = Array.from(document.querySelectorAll('.project-card')).some(function(card){
+          return !card.classList.contains('filtered-out');
+        });
+
+        emptyState.hidden = visibleProjects;
+      });
+    });
+  </script>
+</body>
+</html>

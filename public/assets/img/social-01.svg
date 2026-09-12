@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-label="SOCIAL MEDIA portfolio placeholder">
+<rect width="1200" height="900" fill="#009FB7"/>
+<circle cx="690" cy="220" r="220" fill="#FE4A49" opacity=".88"/>
+<rect x="385" y="180" width="490" height="490" rx="52" fill="#FED766" opacity=".92" transform="rotate(6 800 400)"/>
+<path d="M0 594 L1200 574 L1200 900 L0 900Z" fill="#FE4A49" opacity=".72"/>
+<rect x="58" y="58" width="1084" height="784" rx="28" fill="none" stroke="#FBFFFE" stroke-opacity=".55" stroke-width="3"/>
+<g fill="#FBFFFE" font-family="Arial, Helvetica, sans-serif">
+<text x="82" y="115" font-size="26" font-weight="700" letter-spacing="5">DIRECTOR ANDY SP</text>
+<text x="82" y="720" font-size="26" font-weight="700" letter-spacing="6">SOCIAL MEDIA</text>
+<text x="82" y="790" font-size="74" font-weight="900" letter-spacing="-3">VERTICAL CONTENT</text>
+<text x="1080" y="790" text-anchor="end" font-size="34" font-weight="700">07</text>
+</g>
+</svg>
