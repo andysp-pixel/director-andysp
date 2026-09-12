@@ -44,10 +44,11 @@
     .portfolio-category-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.6vw,22px)}
     .portfolio-category-link{position:relative;display:block;aspect-ratio:4/3;overflow:hidden;border-radius:14px;color:#fff;background:#0b132b;text-decoration:none}
     .portfolio-category-link::after{content:"";position:absolute;inset:42% 0 0;z-index:1;background:linear-gradient(transparent,rgba(4,8,20,.86));pointer-events:none}
-    .portfolio-category-link img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.2,.65,.25,1)}
+    .portfolio-category-link img,.portfolio-category-link video{display:block;width:100%;height:100%;object-fit:cover;object-position:center;background:#0b132b;transition:transform .5s cubic-bezier(.2,.65,.25,1)}
+    .portfolio-category-link video{pointer-events:none}
     .portfolio-category-link span{position:absolute;right:18px;bottom:17px;left:18px;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;color:#fff;font-size:clamp(.95rem,1.3vw,1.18rem);font-weight:850;line-height:1.15}
     .portfolio-category-link span::after{content:"↗";color:#18b7a0;font-size:1rem}
-    .portfolio-category-link:hover img{transform:scale(1.045)}
+    .portfolio-category-link:hover img,.portfolio-category-link:hover video{transform:scale(1.045)}
     .portfolio-empty{margin:22px 0 0;padding:38px 24px;border:1px dashed rgba(11,19,43,.22);border-radius:18px;color:#637083;text-align:center;background:rgba(255,255,255,.55)}
     .portfolio-empty strong{display:block;margin-bottom:7px;color:#0b132b;font-size:1.15rem}
     .portfolio-empty[hidden],.portfolio-grid[hidden],.youtube-callout[hidden]{display:none!important}
@@ -121,15 +122,15 @@
               <h2 id="videography-title">Videography</h2>
             </div>
             <div class="portfolio-category-list" aria-label="Videography categories">
-              <a class="portfolio-category-link" href="portfolio-category.html?category=video-events"><img src="assets/media/posters/wedding-01.jpg" alt="Events videography"><span>Events</span></a>
-              <a class="portfolio-category-link" href="portfolio-category.html?category=video-corporate"><img src="assets/img/corporate-01.svg" alt="Corporate videography"><span>Corporate</span></a>
-              <a class="portfolio-category-link" href="portfolio-category.html?category=video-real-estate"><img src="assets/media/posters/real-estate.jpg" alt="Real estate videography"><span>Real Estate</span></a>
-              <a class="portfolio-category-link" href="portfolio-category.html?category=video-commercial"><img src="assets/media/posters/commercial.jpg" alt="Commercial videography"><span>Commercial</span></a>
-              <a class="portfolio-category-link" href="portfolio-category.html?category=video-music"><img src="assets/media/posters/music-video-trailer.jpg" alt="Music videos"><span>Music Videos</span></a>
-              <a class="portfolio-category-link" href="portfolio-category.html?category=video-social"><img src="assets/media/posters/bts.jpg" alt="Social media videography"><span>Social Media</span></a>
-              <a class="portfolio-category-link" href="portfolio-category.html?category=video-bts"><img src="assets/media/posters/bts.jpg" alt="Behind the scenes videography"><span>Behind the Scenes</span></a>
-              <a class="portfolio-category-link" href="portfolio-category.html?category=video-podcast"><img src="assets/img/corporate-02.svg" alt="Podcast production"><span>Podcast</span></a>
-              <a class="portfolio-category-link" href="portfolio-category.html?category=video-ai"><img src="assets/img/social-02.svg" alt="AI video production"><span>AI</span></a>
+              <a class="portfolio-category-link" data-category="video-events" href="portfolio-category.html?category=video-events"><img loading="lazy" decoding="async" src="assets/media/posters/wedding-01.jpg" alt="Events videography"><span>Events</span></a>
+              <a class="portfolio-category-link" data-category="video-corporate" href="portfolio-category.html?category=video-corporate"><img loading="lazy" decoding="async" src="assets/img/corporate-01.svg" alt="Corporate videography"><span>Corporate</span></a>
+              <a class="portfolio-category-link" data-category="video-real-estate" href="portfolio-category.html?category=video-real-estate"><img loading="lazy" decoding="async" src="assets/media/posters/real-estate.jpg" alt="Real estate videography"><span>Real Estate</span></a>
+              <a class="portfolio-category-link" data-category="video-commercial" href="portfolio-category.html?category=video-commercial"><img loading="lazy" decoding="async" src="assets/media/posters/commercial.jpg" alt="Commercial videography"><span>Commercial</span></a>
+              <a class="portfolio-category-link" data-category="video-music" href="portfolio-category.html?category=video-music"><img loading="lazy" decoding="async" src="assets/media/posters/music-video-trailer.jpg" alt="Music videos"><span>Music Videos</span></a>
+              <a class="portfolio-category-link" data-category="video-social" href="portfolio-category.html?category=video-social"><img loading="lazy" decoding="async" src="assets/media/posters/bts.jpg" alt="Social media videography"><span>Social Media</span></a>
+              <a class="portfolio-category-link" data-category="video-bts" href="portfolio-category.html?category=video-bts"><img loading="lazy" decoding="async" src="assets/media/posters/bts.jpg" alt="Behind the scenes videography"><span>Behind the Scenes</span></a>
+              <a class="portfolio-category-link" data-category="video-podcast" href="portfolio-category.html?category=video-podcast"><img loading="lazy" decoding="async" src="assets/img/corporate-02.svg" alt="Podcast production"><span>Podcast</span></a>
+              <a class="portfolio-category-link" data-category="video-ai" href="portfolio-category.html?category=video-ai"><img loading="lazy" decoding="async" src="assets/img/social-02.svg" alt="AI video production"><span>AI</span></a>
             </div>
           </section>
 
@@ -139,12 +140,12 @@
               <h2 id="photography-title">Photography</h2>
             </div>
             <div class="portfolio-category-list" aria-label="Photography categories">
-              <a class="portfolio-category-link" href="portfolio-category.html?category=photo-events"><img src="assets/media/graphics/graphic-design-01.webp" alt="Events photography"><span>Events</span></a>
-              <a class="portfolio-category-link" href="portfolio-category.html?category=photo-corporate"><img src="assets/img/corporate-01.svg" alt="Corporate photography"><span>Corporate</span></a>
-              <a class="portfolio-category-link" href="portfolio-category.html?category=photo-fashion"><img src="assets/media/graphics/graphic-design-03.jpg" alt="Fashion photography"><span>Fashion</span></a>
-              <a class="portfolio-category-link" href="portfolio-category.html?category=photo-product"><img src="assets/media/graphics/graphic-design-05.jpg" alt="Product photography"><span>Product</span></a>
-              <a class="portfolio-category-link" href="portfolio-category.html?category=photo-real-estate"><img src="assets/media/posters/real-estate.jpg" alt="Real estate photography"><span>Real Estate</span></a>
-              <a class="portfolio-category-link" href="portfolio-category.html?category=photo-street"><img src="assets/img/social-01.svg" alt="Street photography"><span>Street</span></a>
+              <a class="portfolio-category-link" data-category="photo-events" href="portfolio-category.html?category=photo-events"><img loading="lazy" decoding="async" src="assets/media/graphics/graphic-design-01.webp" alt="Events photography"><span>Events</span></a>
+              <a class="portfolio-category-link" data-category="photo-corporate" href="portfolio-category.html?category=photo-corporate"><img loading="lazy" decoding="async" src="assets/img/corporate-01.svg" alt="Corporate photography"><span>Corporate</span></a>
+              <a class="portfolio-category-link" data-category="photo-fashion" href="portfolio-category.html?category=photo-fashion"><img loading="lazy" decoding="async" src="assets/media/graphics/graphic-design-03.jpg" alt="Fashion photography"><span>Fashion</span></a>
+              <a class="portfolio-category-link" data-category="photo-product" href="portfolio-category.html?category=photo-product"><img loading="lazy" decoding="async" src="assets/media/graphics/graphic-design-05.jpg" alt="Product photography"><span>Product</span></a>
+              <a class="portfolio-category-link" data-category="photo-real-estate" href="portfolio-category.html?category=photo-real-estate"><img loading="lazy" decoding="async" src="assets/media/posters/real-estate.jpg" alt="Real estate photography"><span>Real Estate</span></a>
+              <a class="portfolio-category-link" data-category="photo-street" href="portfolio-category.html?category=photo-street"><img loading="lazy" decoding="async" src="assets/img/social-01.svg" alt="Street photography"><span>Street</span></a>
             </div>
           </section>
         </div>
@@ -328,6 +329,37 @@
 </footer>
   <script src="assets/js/main.js"></script>
   <script>
+    fetch('/api/projects')
+      .then(function(response){return response.ok?response.json():Promise.reject();})
+      .then(function(data){
+        var firstProjectByCategory={};
+        (data.projects||[]).forEach(function(project){
+          if(!firstProjectByCategory[project.category_key]) firstProjectByCategory[project.category_key]=project;
+        });
+        document.querySelectorAll('.portfolio-category-link[data-category]').forEach(function(link){
+          var project=firstProjectByCategory[link.dataset.category];
+          if(!project) return;
+          var oldMedia=link.querySelector('img,video');
+          var media;
+          if(project.media_type==='video'){
+            media=document.createElement('video');
+            media.src=project.media_url;
+            media.muted=true;
+            media.playsInline=true;
+            media.preload='metadata';
+            media.setAttribute('aria-hidden','true');
+          }else{
+            media=document.createElement('img');
+            media.src=project.media_url;
+            media.alt=oldMedia&&oldMedia.alt?oldMedia.alt:'Portfolio category thumbnail';
+            media.loading='lazy';
+            media.decoding='async';
+          }
+          if(oldMedia) oldMedia.replaceWith(media);
+        });
+      })
+      .catch(function(){});
+
     document.querySelectorAll('.filter-btn').forEach(function(button){
       button.setAttribute('aria-pressed', button.classList.contains('active') ? 'true' : 'false');
       button.addEventListener('click', function(){
@@ -348,3 +380,4 @@
   </script>
 </body>
 </html>
+
