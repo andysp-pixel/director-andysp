@@ -171,7 +171,7 @@
     const empty = document.querySelector('#category-empty');
     empty.hidden = category.items.length > 0;
 
-    category.items.forEach(function(item){
+    function renderPortfolioItem(item){
       const card=document.createElement('article');
       card.className='category-card';
       let media;
@@ -185,7 +185,26 @@
         media=document.createElement('img'); media.src=item.src; media.loading='lazy'; media.alt=category.title+' photography by Director Andy SP';
       }
       card.appendChild(media); grid.appendChild(card);
-    });
+    }
+
+    category.items.forEach(renderPortfolioItem);
+
+    /* Projects uploaded from the admin dashboard are added after the built-in work. */
+    fetch('/api/projects?category=' + encodeURIComponent(categoryKey))
+      .then(function(response){ return response.ok ? response.json() : Promise.reject(); })
+      .then(function(data){
+        (data.projects || []).forEach(function(project){
+          renderPortfolioItem({
+            type: project.media_type,
+            src: project.media_url,
+            title: project.title
+          });
+        });
+        empty.hidden = grid.children.length > 0;
+      })
+      .catch(function(){
+        /* Static portfolio remains available if the API has not been deployed yet. */
+      });
   </script>
   <script src="assets/js/main.js"></script>
 </body>
