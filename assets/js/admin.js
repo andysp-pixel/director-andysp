@@ -1,144 +1,20 @@
-const sidebar = document.querySelector('#sidebar');
-const menuButton = document.querySelector('.mobile-menu');
-const navButtons = [...document.querySelectorAll('.nav-item[data-view]')];
-const views = [...document.querySelectorAll('.view')];
-const uploadTemplate = document.querySelector('#upload-template');
-const uploadSlot = document.querySelector('#upload-form-slot');
-const toast = document.querySelector('#toast');
-let projects = [];
-
-function showToast(message, error = false) {
-  toast.textContent = message;
-  toast.style.background = error ? '#b42318' : '#0b132b';
-  toast.classList.add('show');
-  window.setTimeout(() => toast.classList.remove('show'), 3600);
-}
-
-async function api(path, options = {}) {
-  const response = await fetch(path, options);
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(data.error || 'Request failed.');
-  return data;
-}
-
-async function loadProjects() {
-  try {
-    const data = await api('/admin/api/projects');
-    projects = data.projects || [];
-    renderDashboard();
-    renderProjects();
-  } catch (error) { showToast(error.message, true); }
-}
-
-function renderDashboard() {
-  const stats = document.querySelectorAll('.stat-card strong');
-  if (stats.length >= 4) {
-    stats[0].textContent = projects.length;
-    stats[1].textContent = projects.filter(project => project.status === 'published').length;
-    stats[2].textContent = projects.filter(project => project.status === 'draft').length;
-    stats[3].textContent = new Set(projects.map(project => project.category_key)).size;
-  }
-  const table = document.querySelector('#view-dashboard .project-table');
-  if (table) renderTable(table, projects.slice(0, 3), false);
-}
-
-function renderProjects() {
-  const panel = document.querySelector('#view-projects .empty-panel, #view-projects .recent-panel');
-  if (!panel) return;
-  if (!projects.length) {
-    panel.className = 'empty-panel';
-    panel.innerHTML = '<span>▦</span><h2>No uploaded projects yet.</h2><p>Use “Add project” to upload your first image or video.</p>';
-    return;
-  }
-  panel.className = 'panel recent-panel';
-  panel.innerHTML = '<div class="project-table" aria-label="All portfolio projects"></div>';
-  renderTable(panel.querySelector('.project-table'), projects, true);
-}
-
-function renderTable(table, items, actions) {
-  table.innerHTML = '<div class="table-row table-head"><span>Project</span><span>Category</span><span>Status</span><span>Updated</span><span></span></div>';
-  if (!items.length) { table.insertAdjacentHTML('beforeend', '<div class="table-row"><span>No projects uploaded yet.</span></div>'); return; }
-  items.forEach(project => {
-    const row = document.createElement('div');
-    row.className = 'table-row';
-    const media = project.media_type === 'image' ? `<img src="${escapeAttribute(project.media_url)}" alt="">` : `<video src="${escapeAttribute(project.media_url)}" muted preload="metadata"></video>`;
-    row.innerHTML = `<span class="project-name">${media}<strong>${escapeHtml(project.title)}</strong></span><span>${escapeHtml(project.category_name)}</span><span><i class="status ${project.status}">${project.status === 'published' ? 'Published' : 'Draft'}</i></span><span>${formatDate(project.updated_at)}</span><span class="project-actions"><button type="button" aria-label="Project actions">•••</button></span>`;
-    if (actions) {
-      const actionsCell = row.querySelector('.project-actions');
-      const statusButton = actionsCell.querySelector('button');
-      statusButton.textContent = project.status === 'published' ? 'Unpublish' : 'Publish';
-      statusButton.className = 'text-button';
-      statusButton.addEventListener('click', () => toggleStatus(project));
-      const remove = document.createElement('button');
-      remove.type = 'button'; remove.className = 'text-button'; remove.textContent = 'Delete';
-      remove.addEventListener('click', () => removeProject(project));
-      actionsCell.appendChild(remove);
-    }
-    table.appendChild(row);
-  });
-}
-
-async function toggleStatus(project) {
-  try {
-    const status = project.status === 'published' ? 'draft' : 'published';
-    await api(`/admin/api/projects/${project.id}`, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ status }) });
-    showToast(status === 'published' ? 'Project published.' : 'Project moved to drafts.');
-    await loadProjects();
-  } catch (error) { showToast(error.message, true); }
-}
-
-async function removeProject(project) {
-  if (!window.confirm(`Delete “${project.title}”? This also removes its media file.`)) return;
-  try {
-    await api(`/admin/api/projects/${project.id}`, { method: 'DELETE' });
-    showToast('Project deleted.');
-    await loadProjects();
-  } catch (error) { showToast(error.message, true); }
-}
-
-function mountUploadForm() {
-  if (uploadSlot.children.length) return;
-  uploadSlot.append(uploadTemplate.content.cloneNode(true));
-  const form = uploadSlot.querySelector('form');
-  const fileInput = form.querySelector('#project-file');
-  const selectedFile = form.querySelector('#selected-file');
-  fileInput.addEventListener('change', () => { selectedFile.textContent = fileInput.files[0]?.name || 'JPG, PNG, WEBP, GIF, MP4 or WEBM'; });
-  form.addEventListener('submit', async event => {
-    event.preventDefault();
-    const button = form.querySelector('[type="submit"]');
-    button.disabled = true; button.textContent = 'Uploading…';
-    const body = new FormData(form);
-    body.set('publish', form.elements.publish.checked ? 'true' : 'false');
-    try {
-      await api('/admin/api/projects', { method: 'POST', body });
-      form.reset(); selectedFile.textContent = 'JPG, PNG, WEBP, GIF, MP4 or WEBM';
-      showToast('Project uploaded successfully.');
-      await loadProjects(); changeView('projects');
-    } catch (error) { showToast(error.message, true); }
-    finally { button.disabled = false; button.textContent = 'Save project →'; }
-  });
-}
-
-function changeView(name) {
-  views.forEach(view => view.classList.toggle('active', view.id === `view-${name}`));
-  navButtons.forEach(button => button.classList.toggle('active', button.dataset.view === name));
-  if (name === 'upload') mountUploadForm();
-  sidebar.classList.remove('open'); menuButton.setAttribute('aria-expanded', 'false');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function escapeHtml(value) { const node = document.createElement('span'); node.textContent = value || ''; return node.innerHTML; }
-function escapeAttribute(value) { return String(value || '').replace(/["'<>]/g, ''); }
-function formatDate(value) { return new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric' }).format(new Date(value)); }
-
-navButtons.forEach(button => button.addEventListener('click', () => changeView(button.dataset.view)));
-document.querySelectorAll('[data-view-link]').forEach(button => button.addEventListener('click', () => changeView(button.dataset.viewLink)));
-document.querySelectorAll('[data-open-upload]').forEach(button => button.addEventListener('click', () => changeView('upload')));
-menuButton.addEventListener('click', () => { const open = sidebar.classList.toggle('open'); menuButton.setAttribute('aria-expanded', String(open)); });
-document.addEventListener('keydown', event => { if (event.key === 'Escape') { sidebar.classList.remove('open'); menuButton.setAttribute('aria-expanded', 'false'); } });
-
-const categories = [
-  ['Videography · Events', 'Video'], ['Videography · Corporate', 'Video'], ['Videography · Real Estate', 'Video'], ['Videography · Commercial', 'Video'], ['Videography · Music Videos', 'Video'], ['Videography · Social Media', 'Video'], ['Videography · Podcast', 'Video'], ['Videography · AI', 'Video'], ['Videography · Behind the Scenes', 'Video'], ['Photography · Events', 'Photo'], ['Photography · Corporate', 'Photo'], ['Photography · Fashion', 'Photo'], ['Photography · Product', 'Photo'], ['Photography · Real Estate', 'Photo'], ['Photography · Street', 'Photo']
-];
-document.querySelector('#category-list').innerHTML = categories.map(([name, type]) => `<article><span><strong>${name}</strong><small>${type} category</small></span><button type="button" aria-label="Edit ${name}">✎</button></article>`).join('');
-loadProjects();
+const sidebar=document.querySelector('#sidebar'),menuButton=document.querySelector('.mobile-menu'),navButtons=[...document.querySelectorAll('.nav-item[data-view]')],views=[...document.querySelectorAll('.view')],uploadTemplate=document.querySelector('#upload-template'),uploadSlot=document.querySelector('#upload-form-slot'),toast=document.querySelector('#toast'),searchInput=document.querySelector('#project-search'),statusFilter=document.querySelector('#project-status');
+let projects=[],analytics={views:0,visitors:null};
+function showToast(message,error=false){toast.textContent=message;toast.style.background=error?'#b42318':'#0b132b';toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),3600)}
+async function api(path,options={}){const response=await fetch(path,options),data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(data.error||`Request failed (${response.status}).`);return data}
+async function loadData(){const [p,a]=await Promise.allSettled([api('/admin/api/projects'),api('/admin/api/analytics?period=30d')]);if(p.status==='fulfilled')projects=p.value.projects||[];else showToast(p.reason.message,true);if(a.status==='fulfilled')analytics=a.value;renderDashboard();renderProjects()}
+function renderDashboard(){const stats=document.querySelectorAll('.stat-card strong');stats[0].textContent=projects.length;stats[1].textContent=projects.filter(x=>x.status==='published').length;stats[2].textContent=projects.filter(x=>x.status==='draft').length;stats[3].textContent=new Set(projects.map(x=>x.category_key)).size;document.querySelector('#stat-views').textContent=compact(analytics.views??sumViews(projects));document.querySelector('#stat-visitors').textContent=analytics.visitors==null?'—':compact(analytics.visitors);renderTable(document.querySelector('#view-dashboard .project-table'),projects.slice(0,5),false)}
+function filteredProjects(){const q=(searchInput?.value||'').trim().toLowerCase(),status=statusFilter?.value||'all';return projects.filter(p=>(!q||`${p.title||''} ${p.category_name||''}`.toLowerCase().includes(q))&&(status==='all'||p.status===status))}
+function renderProjects(){const panel=document.querySelector('#view-projects .empty-panel, #view-projects .recent-panel');if(!panel)return;const items=filteredProjects();if(!projects.length){panel.className='empty-panel';panel.innerHTML='<span>▦</span><h2>No uploaded projects yet.</h2><p>Use “Add project” to upload your first image or video.</p>';return}panel.className='panel recent-panel';panel.innerHTML=items.length?'<div class="project-table" aria-label="All portfolio projects"></div>':'<div class="empty-panel"><span>⌕</span><h2>No matching projects.</h2><p>Try another search or status.</p></div>';if(items.length)renderTable(panel.querySelector('.project-table'),items,true)}
+function renderTable(table,items,actions){if(!table)return;table.innerHTML='<div class="table-row table-head"><span>Project</span><span>Category</span><span>Status</span><span>Views</span><span></span></div>';items.forEach(project=>{const row=document.createElement('div'),url=attr(project.thumbnail_url||project.media_url),media=project.media_type==='video'&&!project.thumbnail_url?`<video src="${url}" muted preload="metadata"></video>`:`<img src="${url}" alt="">`;row.className='table-row';row.innerHTML=`<span class="project-name">${media}<strong>${html(project.title||'Untitled')}</strong></span><span>${html(project.category_name||project.category_key)}</span><span><i class="status ${project.status}">${project.status==='published'?'Published':'Draft'}</i></span><span>${compact(project.views||0)}</span><span class="project-actions"></span>`;if(actions)addActions(row.querySelector('.project-actions'),project);table.appendChild(row)})}
+function addActions(cell,project){const toggle=document.createElement('button'),remove=document.createElement('button');toggle.type=remove.type='button';toggle.className=remove.className='text-button';toggle.textContent=project.status==='published'?'Unpublish':'Publish';remove.textContent='Delete';remove.setAttribute('aria-label',`Delete ${project.title||'project'}`);toggle.onclick=()=>toggleStatus(project);remove.onclick=()=>removeProject(project);cell.append(toggle,remove)}
+async function toggleStatus(project){try{const status=project.status==='published'?'draft':'published';await api(`/admin/api/projects/${encodeURIComponent(project.id)}`,{method:'PATCH',headers:{'content-type':'application/json'},body:JSON.stringify({status})});showToast(status==='published'?'Project published.':'Project moved to drafts.');await loadData()}catch(error){showToast(error.message,true)}}
+async function removeProject(project){if(!confirm(`Delete “${project.title||'this project'}”? The image/video will also be permanently removed.`))return;try{await api(`/admin/api/projects/${encodeURIComponent(project.id)}`,{method:'DELETE'});showToast('Project and media deleted.');await loadData()}catch(error){showToast(error.message,true)}}
+function mountUploadForm(){if(uploadSlot.children.length)return;uploadSlot.append(uploadTemplate.content.cloneNode(true));const form=uploadSlot.querySelector('form'),input=form.querySelector('#project-file'),label=form.querySelector('#selected-file'),previews=form.querySelector('#media-previews'),progress=form.querySelector('#upload-progress');let urls=[];
+ input.onchange=()=>{urls.forEach(URL.revokeObjectURL);urls=[];previews.innerHTML='';if(input.files.length>5){input.value='';label.textContent='Choose no more than 5 files.';return showToast('You can upload a maximum of 5 files at once.',true)}[...input.files].forEach(file=>{const url=URL.createObjectURL(file),box=document.createElement('div'),visual=file.type.startsWith('video/')?document.createElement('video'):document.createElement('img'),size=document.createElement('span');urls.push(url);box.className='media-preview';visual.src=url;if(visual.tagName==='VIDEO')visual.muted=true;size.textContent=formatBytes(file.size);box.append(visual,size);previews.appendChild(box)});label.textContent=input.files.length?`${input.files.length} file${input.files.length>1?'s':''} selected`:'JPG, PNG, WEBP, GIF, MP4 or WEBM'};
+ form.onsubmit=async event=>{event.preventDefault();const files=[...input.files],button=form.querySelector('[type="submit"]');if(!files.length||files.length>5)return showToast('Choose between 1 and 5 files.',true);button.disabled=true;progress.hidden=false;try{for(let i=0;i<files.length;i++){button.textContent=`Uploading ${i+1} of ${files.length}…`;progress.querySelector('span').style.width=`${i/files.length*100}%`;progress.querySelector('p').textContent=`Uploading ${files[i].name}`;const body=new FormData();body.set('file',files[i]);body.set('title',files.length===1?form.elements.title.value:`${form.elements.title.value} ${i+1}`);body.set('category',form.elements.category.value);body.set('description',form.elements.description.value);body.set('publish',form.elements.publish.checked?'true':'false');await api('/admin/api/projects',{method:'POST',body});progress.querySelector('span').style.width=`${(i+1)/files.length*100}%`}showToast(`${files.length} project${files.length>1?'s':''} uploaded successfully.`);form.reset();previews.innerHTML='';label.textContent='JPG, PNG, WEBP, GIF, MP4 or WEBM';await loadData();changeView('projects')}catch(error){showToast(error.message,true)}finally{button.disabled=false;button.textContent='Upload & save →';progress.hidden=true}}}
+function changeView(name){views.forEach(v=>v.classList.toggle('active',v.id===`view-${name}`));navButtons.forEach(b=>b.classList.toggle('active',b.dataset.view===name));if(name==='upload')mountUploadForm();sidebar.classList.remove('open');menuButton.setAttribute('aria-expanded','false');scrollTo({top:0,behavior:'smooth'})}
+const compact=value=>new Intl.NumberFormat('en',{notation:'compact',maximumFractionDigits:1}).format(Number(value)||0),sumViews=items=>items.reduce((n,x)=>n+Number(x.views||0),0),html=value=>{const n=document.createElement('span');n.textContent=value||'';return n.innerHTML},attr=value=>String(value||'').replace(/["'<>]/g,''),formatBytes=bytes=>{if(!bytes)return'0 B';const units=['B','KB','MB','GB'],i=Math.min(Math.floor(Math.log(bytes)/Math.log(1024)),3);return`${(bytes/1024**i).toFixed(i?1:0)} ${units[i]}`};
+navButtons.forEach(b=>b.onclick=()=>changeView(b.dataset.view));document.querySelectorAll('[data-view-link]').forEach(b=>b.onclick=()=>changeView(b.dataset.viewLink));document.querySelectorAll('[data-open-upload]').forEach(b=>b.onclick=()=>changeView('upload'));menuButton.onclick=()=>{const open=sidebar.classList.toggle('open');menuButton.setAttribute('aria-expanded',String(open))};document.addEventListener('keydown',e=>{if(e.key==='Escape'){sidebar.classList.remove('open');menuButton.setAttribute('aria-expanded','false')}});searchInput?.addEventListener('input',renderProjects);statusFilter?.addEventListener('change',renderProjects);
+const categories=[['Videography · Events','Video'],['Videography · Corporate','Video'],['Videography · Real Estate','Video'],['Videography · Commercial','Video'],['Videography · Music Videos','Video'],['Videography · Social Media','Video'],['Videography · Podcast','Video'],['Videography · AI','Video'],['Videography · Behind the Scenes','Video'],['Photography · Events','Photo'],['Photography · Corporate','Photo'],['Photography · Fashion','Photo'],['Photography · Product','Photo'],['Photography · Real Estate','Photo'],['Photography · Street','Photo']];document.querySelector('#category-list').innerHTML=categories.map(([name,type])=>`<article><span><strong>${name}</strong><small>${type} category</small></span><button type="button" aria-label="Edit ${name}">✎</button></article>`).join('');
+loadData();
