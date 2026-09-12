@@ -36,6 +36,27 @@
     .footer-social-link svg{width:19px;height:19px;fill:currentColor}
     .footer-social-link:hover{border-color:#18b7a0;color:#0b132b!important;background:#18b7a0;transform:translateY(-3px)}
     .footer-social-link:focus-visible{outline:3px solid rgba(255,111,97,.5);outline-offset:3px}
+    .portfolio-taxonomy{display:grid;grid-template-columns:1fr;gap:clamp(54px,8vw,96px);margin:0 0 clamp(30px,5vw,58px)}
+    .portfolio-discipline{padding:0;background:transparent}
+    .portfolio-discipline-head{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid rgba(11,19,43,.11)}
+    .portfolio-discipline-head span{color:#18b7a0;font-size:.72rem;font-weight:900;letter-spacing:.12em}
+    .portfolio-discipline-head h2{margin:0;color:#0b132b;font-size:clamp(1.65rem,3.4vw,3rem);line-height:1;letter-spacing:-.045em}
+    .portfolio-category-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.6vw,22px)}
+    .portfolio-category-link{position:relative;display:block;aspect-ratio:4/3;overflow:hidden;border-radius:14px;color:#fff;background:#0b132b;text-decoration:none}
+    .portfolio-category-link::after{content:"";position:absolute;inset:42% 0 0;z-index:1;background:linear-gradient(transparent,rgba(4,8,20,.86));pointer-events:none}
+    .portfolio-category-link img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.2,.65,.25,1)}
+    .portfolio-category-link span{position:absolute;right:18px;bottom:17px;left:18px;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;color:#fff;font-size:clamp(.95rem,1.3vw,1.18rem);font-weight:850;line-height:1.15}
+    .portfolio-category-link span::after{content:"↗";color:#18b7a0;font-size:1rem}
+    .portfolio-category-link:hover img{transform:scale(1.045)}
+    .portfolio-empty{margin:22px 0 0;padding:38px 24px;border:1px dashed rgba(11,19,43,.22);border-radius:18px;color:#637083;text-align:center;background:rgba(255,255,255,.55)}
+    .portfolio-empty strong{display:block;margin-bottom:7px;color:#0b132b;font-size:1.15rem}
+    .portfolio-empty[hidden],.portfolio-grid[hidden],.youtube-callout[hidden]{display:none!important}
+    html[data-theme="dark"] .portfolio-discipline-head{border-color:rgba(255,255,255,.13)}
+    html[data-theme="dark"] .portfolio-discipline-head h2{color:#fff}
+    html[data-theme="dark"] .portfolio-empty{border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.65);background:rgba(255,255,255,.04)}
+    html[data-theme="dark"] .portfolio-empty strong{color:#fff}
+    @media(max-width:900px){.portfolio-category-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:580px){.portfolio-category-list{grid-template-columns:1fr}.portfolio-category-link{border-radius:12px}}
   </style>
   <style id="portfolio-projects-layout">
     /* Uniform three-column project cards, matching the supplied reference layout. */
@@ -93,127 +114,156 @@
 
     <section class="section portfolio-projects-section">
       <div class="container">
-        <div class="filters" aria-label="Filter portfolio projects">
-          <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All Work</button>
-          <button class="filter-btn" type="button" data-filter="weddings">Weddings</button>
-          <button class="filter-btn" type="button" data-filter="events">Events</button>
-          <button class="filter-btn" type="button" data-filter="corporate">Corporate</button>
-          <button class="filter-btn" type="button" data-filter="commercial">Commercial</button>
-          <button class="filter-btn" type="button" data-filter="social">Social Content</button>
-          <button class="filter-btn" type="button" data-filter="real-estate">Real Estate</button>
-          <button class="filter-btn" type="button" data-filter="bts">Behind the Scenes</button>
-          <button class="filter-btn" type="button" data-filter="music">Music Videos</button>
-          <button class="filter-btn" type="button" data-filter="graphic-design">Graphic Design</button>
+        <div class="portfolio-taxonomy" aria-label="Portfolio categories">
+          <section class="portfolio-discipline" aria-labelledby="videography-title">
+            <div class="portfolio-discipline-head">
+              <span>01</span>
+              <h2 id="videography-title">Videography</h2>
+            </div>
+            <div class="portfolio-category-list" aria-label="Videography categories">
+              <a class="portfolio-category-link" href="portfolio-category.html?category=video-events"><img src="assets/media/posters/wedding-01.jpg" alt="Events videography"><span>Events</span></a>
+              <a class="portfolio-category-link" href="portfolio-category.html?category=video-corporate"><img src="assets/img/corporate-01.svg" alt="Corporate videography"><span>Corporate</span></a>
+              <a class="portfolio-category-link" href="portfolio-category.html?category=video-real-estate"><img src="assets/media/posters/real-estate.jpg" alt="Real estate videography"><span>Real Estate</span></a>
+              <a class="portfolio-category-link" href="portfolio-category.html?category=video-commercial"><img src="assets/media/posters/commercial.jpg" alt="Commercial videography"><span>Commercial</span></a>
+              <a class="portfolio-category-link" href="portfolio-category.html?category=video-music"><img src="assets/media/posters/music-video-trailer.jpg" alt="Music videos"><span>Music Videos</span></a>
+              <a class="portfolio-category-link" href="portfolio-category.html?category=video-social"><img src="assets/media/posters/bts.jpg" alt="Social media videography"><span>Social Media</span></a>
+              <a class="portfolio-category-link" href="portfolio-category.html?category=video-podcast"><img src="assets/img/corporate-02.svg" alt="Podcast production"><span>Podcast</span></a>
+              <a class="portfolio-category-link" href="portfolio-category.html?category=video-ai"><img src="assets/img/social-02.svg" alt="AI video production"><span>AI</span></a>
+            </div>
+          </section>
+
+          <section class="portfolio-discipline" aria-labelledby="photography-title">
+            <div class="portfolio-discipline-head">
+              <span>02</span>
+              <h2 id="photography-title">Photography</h2>
+            </div>
+            <div class="portfolio-category-list" aria-label="Photography categories">
+              <a class="portfolio-category-link" href="portfolio-category.html?category=photo-events"><img src="assets/media/graphics/graphic-design-01.webp" alt="Events photography"><span>Events</span></a>
+              <a class="portfolio-category-link" href="portfolio-category.html?category=photo-corporate"><img src="assets/img/corporate-01.svg" alt="Corporate photography"><span>Corporate</span></a>
+              <a class="portfolio-category-link" href="portfolio-category.html?category=photo-fashion"><img src="assets/media/graphics/graphic-design-03.jpg" alt="Fashion photography"><span>Fashion</span></a>
+              <a class="portfolio-category-link" href="portfolio-category.html?category=photo-product"><img src="assets/media/graphics/graphic-design-05.jpg" alt="Product photography"><span>Product</span></a>
+              <a class="portfolio-category-link" href="portfolio-category.html?category=photo-real-estate"><img src="assets/media/posters/real-estate.jpg" alt="Real estate photography"><span>Real Estate</span></a>
+              <a class="portfolio-category-link" href="portfolio-category.html?category=photo-street"><img src="assets/img/social-01.svg" alt="Street photography"><span>Street</span></a>
+            </div>
+          </section>
         </div>
 
-        <div class="portfolio-grid">
-          <article class="project-card media-card landscape wide reveal" data-category="commercial">
+        <div class="portfolio-grid" hidden>
+          <article class="project-card media-card landscape wide reveal" data-category="video-commercial">
             <video controls preload="none" playsinline poster="assets/media/posters/commercial.jpg" aria-label="Commercial video"><source src="assets/media/videos/commercial.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
             <div class="media-caption"><div><small>Commercial · Video</small><h3>Commercial</h3></div><span class="media-type">MP4</span></div>
           </article>
 
-          <article class="project-card media-card portrait reveal" data-category="real-estate">
+          <article class="project-card media-card portrait reveal" data-category="video-real-estate">
             <video controls preload="none" playsinline poster="assets/media/posters/real-estate.jpg" aria-label="Real estate video"><source src="assets/media/videos/real-estate.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
             <div class="media-caption"><div><small>Real Estate · Video</small><h3>Property Showcase</h3></div><span class="media-type">MP4</span></div>
           </article>
 
-          <article class="project-card media-card portrait reveal" data-category="bts">
+          <article class="project-card media-card portrait reveal" data-category="video-social">
             <video controls preload="none" playsinline poster="assets/media/posters/bts.jpg" aria-label="Behind the scenes video"><source src="assets/media/videos/bts.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
             <div class="media-caption"><div><small>BTS · Video</small><h3>Behind The Scenes</h3></div><span class="media-type">MP4</span></div>
           </article>
 
-          <article class="project-card media-card square reveal trailer-card-local" data-category="music">
+          <article class="project-card media-card square reveal trailer-card-local" data-category="video-music">
             <video controls preload="none" playsinline poster="assets/media/posters/music-video-trailer.jpg" aria-label="Music video trailer"><source src="assets/media/videos/music-video-trailer.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
             <div class="media-caption"><div><small>Music Videos · Trailer</small><h3>Music Video Trailer</h3></div><span class="play-label">▶ Trailer</span></div>
           </article>
 
-          <article class="project-card media-card square reveal" data-category="music">
+          <article class="project-card media-card square reveal" data-category="video-music">
             <video controls preload="none" playsinline poster="assets/media/posters/music-video-01.jpg" aria-label="Music video 1"><source src="assets/media/videos/music-video-01.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
             <div class="media-caption"><div><small>Music Videos · Video</small><h3>Music Video 01</h3></div><span class="media-type">MP4</span></div>
           </article>
 
-          <article class="project-card media-card square reveal" data-category="music">
+          <article class="project-card media-card square reveal" data-category="video-music">
             <video controls preload="none" playsinline poster="assets/media/posters/music-video-02.jpg" aria-label="Music video 2"><source src="assets/media/videos/music-video-02.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
             <div class="media-caption"><div><small>Music Videos · Video</small><h3>Music Video 02</h3></div><span class="media-type">MP4</span></div>
           </article>
 
-          <article class="project-card media-card square reveal" data-category="music">
+          <article class="project-card media-card square reveal" data-category="video-music">
             <video controls preload="none" playsinline poster="assets/media/posters/music-video-03.jpg" aria-label="Music video 3"><source src="assets/media/videos/music-video-03.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
             <div class="media-caption"><div><small>Music Videos · Video</small><h3>Music Video 03</h3></div><span class="media-type">MP4</span></div>
           </article>
 
-          <article class="project-card media-card landscape wide reveal" data-category="events weddings">
+          <article class="project-card media-card landscape wide reveal" data-category="video-events">
             <video controls preload="none" playsinline poster="assets/media/posters/wedding-01.jpg" aria-label="Wedding film 1"><source src="assets/media/videos/wedding-01.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
             <div class="media-caption"><div><small>Weddings · Events</small><h3>Wedding Film 01</h3></div><span class="media-type">MP4</span></div>
           </article>
 
-          <article class="project-card media-card landscape wide reveal" data-category="events weddings">
+          <article class="project-card media-card landscape wide reveal" data-category="video-events">
             <video controls preload="none" playsinline poster="assets/media/posters/wedding-02.jpg" aria-label="Wedding film 2"><source src="assets/media/videos/wedding-02.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
             <div class="media-caption"><div><small>Weddings · Events</small><h3>Wedding Film 02</h3></div><span class="media-type">MP4</span></div>
           </article>
 
-          <article class="project-card media-card portrait reveal" data-category="events weddings">
+          <article class="project-card media-card portrait reveal" data-category="video-events">
             <video controls preload="none" playsinline poster="assets/media/posters/wedding-03.jpg" aria-label="Wedding film 3"><source src="assets/media/videos/wedding-03.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
             <div class="media-caption"><div><small>Weddings · Events</small><h3>Wedding Film 03</h3></div><span class="media-type">MP4</span></div>
           </article>
 
-          <article class="project-card media-card landscape wide reveal" data-category="events weddings">
+          <article class="project-card media-card landscape wide reveal" data-category="video-events">
             <video controls preload="none" playsinline poster="assets/media/posters/wedding-04.jpg" aria-label="Wedding film 4"><source src="assets/media/videos/wedding-04.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
             <div class="media-caption"><div><small>Weddings · Events</small><h3>Wedding Film 04</h3></div><span class="media-type">MP4</span></div>
           </article>
 
-          <article class="project-card media-card landscape wide reveal" data-category="events weddings">
+          <article class="project-card media-card landscape wide reveal" data-category="video-events">
             <video controls preload="none" playsinline poster="assets/media/posters/wedding-05.jpg" aria-label="Wedding film 5"><source src="assets/media/videos/wedding-05.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
             <div class="media-caption"><div><small>Weddings · Events</small><h3>Wedding Film 05</h3></div><span class="media-type">MP4</span></div>
           </article>
 
-          <article class="project-card media-card portrait reveal" data-category="events weddings">
+          <article class="project-card media-card portrait reveal" data-category="video-events">
             <video controls preload="none" playsinline poster="assets/media/posters/wedding-06.jpg" aria-label="Wedding film 6"><source src="assets/media/videos/wedding-06.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
             <div class="media-caption"><div><small>Weddings · Events</small><h3>Wedding Film 06</h3></div><span class="media-type">MP4</span></div>
           </article>
 
-          <article class="project-card media-card portrait reveal" data-category="events weddings">
+          <article class="project-card media-card portrait reveal" data-category="video-events">
             <video controls preload="none" playsinline poster="assets/media/posters/wedding-07.jpg" aria-label="Wedding film 7"><source src="assets/media/videos/wedding-07.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
             <div class="media-caption"><div><small>Weddings · Events</small><h3>Wedding Film 07</h3></div><span class="media-type">MP4</span></div>
           </article>
 
-          <article class="project-card media-card portrait reveal" data-category="events weddings">
+          <article class="project-card media-card portrait reveal" data-category="video-events">
             <video controls preload="none" playsinline poster="assets/media/posters/wedding-08.jpg" aria-label="Wedding film 8"><source src="assets/media/videos/wedding-08.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
             <div class="media-caption"><div><small>Weddings · Events</small><h3>Wedding Film 08</h3></div><span class="media-type">MP4</span></div>
           </article>
 
-          <article class="project-card media-card landscape wide reveal" data-category="events weddings">
+          <article class="project-card media-card landscape wide reveal" data-category="video-events">
             <video controls preload="none" playsinline poster="assets/media/posters/wedding-10.jpg" aria-label="Wedding film 10"><source src="assets/media/videos/wedding-10.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
             <div class="media-caption"><div><small>Weddings · Events</small><h3>Wedding Film 10</h3></div><span class="media-type">MP4</span></div>
           </article>
 
-          <article class="project-card media-card portrait reveal" data-category="events weddings">
+          <article class="project-card media-card portrait reveal" data-category="video-events">
             <video controls preload="none" playsinline poster="assets/media/posters/wedding-11.jpg" aria-label="Wedding film 11"><source src="assets/media/videos/wedding-11.mp4" type="video/mp4">Your browser does not support HTML5 video.</video>
             <div class="media-caption"><div><small>Weddings · Events</small><h3>Wedding Film 11</h3></div><span class="media-type">MP4</span></div>
           </article>
 
-          <article class="project-card media-card graphic-card reveal" data-category="graphic-design">
-            <img loading="lazy" src="assets/media/graphics/graphic-design-01.webp" alt="Graphic design event poster by Director Andy SP">
-            <div class="media-caption"><div><small>Graphic Design</small><h3>Event Poster 01</h3></div><span class="media-type">Design</span></div>
+          <article class="project-card media-card graphic-card reveal" data-category="photo-events">
+            <!-- Replace this src with your event photography image. -->
+            <img loading="lazy" src="assets/media/graphics/graphic-design-01.webp" alt="Event photography by Director Andy SP">
+            <div class="media-caption"><div><small>Photography · Events</small><h3>Event Photography</h3></div><span class="media-type">Photo</span></div>
           </article>
 
-          <article class="project-card media-card graphic-card reveal" data-category="graphic-design">
-            <img loading="lazy" src="assets/media/graphics/graphic-design-03.jpg" alt="Graphic design event poster by Director Andy SP">
-            <div class="media-caption"><div><small>Graphic Design</small><h3>Event Poster 03</h3></div><span class="media-type">Design</span></div>
+          <article class="project-card media-card graphic-card reveal" data-category="photo-fashion">
+            <!-- Replace this src with your fashion photography image. -->
+            <img loading="lazy" src="assets/media/graphics/graphic-design-03.jpg" alt="Fashion photography by Director Andy SP">
+            <div class="media-caption"><div><small>Photography · Fashion</small><h3>Fashion Photography</h3></div><span class="media-type">Photo</span></div>
           </article>
 
-          <article class="project-card media-card graphic-card reveal" data-category="graphic-design">
-            <img loading="lazy" src="assets/media/graphics/graphic-design-05.jpg" alt="Graphic design event poster by Director Andy SP">
-            <div class="media-caption"><div><small>Graphic Design</small><h3>Event Poster 05</h3></div><span class="media-type">Design</span></div>
+          <article class="project-card media-card graphic-card reveal" data-category="photo-product">
+            <!-- Replace this src with your product photography image. -->
+            <img loading="lazy" src="assets/media/graphics/graphic-design-05.jpg" alt="Product photography by Director Andy SP">
+            <div class="media-caption"><div><small>Photography · Product</small><h3>Product Photography</h3></div><span class="media-type">Photo</span></div>
           </article>
 
-          <article class="project-card reveal" data-category="corporate"><img src="assets/img/corporate-01.svg" alt="Corporate project visual"><div class="project-overlay"><div class="project-meta"><div><small>Corporate</small><h3>Brand Stories</h3></div><span class="project-arrow">↗</span></div></div></article>
-          <article class="project-card wide reveal" data-category="corporate"><img src="assets/img/corporate-02.svg" alt="Corporate project visual"><div class="project-overlay"><div class="project-meta"><div><small>Corporate</small><h3>People + Purpose</h3></div><span class="project-arrow">↗</span></div></div></article>
-          <article class="project-card reveal" data-category="social"><img src="assets/img/social-01.svg" alt="Social media project visual"><div class="project-overlay"><div class="project-meta"><div><small>Social Media</small><h3>Vertical Content</h3></div><span class="project-arrow">↗</span></div></div></article>
-          <article class="project-card wide reveal" data-category="social"><img src="assets/img/social-02.svg" alt="Social media project visual"><div class="project-overlay"><div class="project-meta"><div><small>Social Media</small><h3>Fast + Sharp</h3></div><span class="project-arrow">↗</span></div></div></article>
+          <article class="project-card reveal" data-category="video-corporate photo-corporate"><img src="assets/img/corporate-01.svg" alt="Corporate project visual"><div class="project-overlay"><div class="project-meta"><div><small>Corporate</small><h3>Brand Stories</h3></div><span class="project-arrow">↗</span></div></div></article>
+          <article class="project-card wide reveal" data-category="video-corporate photo-corporate"><img src="assets/img/corporate-02.svg" alt="Corporate project visual"><div class="project-overlay"><div class="project-meta"><div><small>Corporate</small><h3>People + Purpose</h3></div><span class="project-arrow">↗</span></div></div></article>
+          <article class="project-card reveal" data-category="video-social"><img src="assets/img/social-01.svg" alt="Social media project visual"><div class="project-overlay"><div class="project-meta"><div><small>Social Media</small><h3>Vertical Content</h3></div><span class="project-arrow">↗</span></div></div></article>
+          <article class="project-card wide reveal" data-category="video-social"><img src="assets/img/social-02.svg" alt="Social media project visual"><div class="project-overlay"><div class="project-meta"><div><small>Social Media</small><h3>Fast + Sharp</h3></div><span class="project-arrow">↗</span></div></div></article>
         </div>
 
-        <div class="youtube-callout reveal">
+        <div class="portfolio-empty" id="portfolio-empty" hidden>
+          <strong>Projects coming soon.</strong>
+          <span>New work will be added to this category.</span>
+        </div>
+
+        <div class="youtube-callout reveal" hidden>
           <div><p class="eyebrow">Watch more</p><h2 class="h3">Full video playlists on YouTube</h2><p>The website now hosts your uploaded videos directly. Your YouTube playlists remain available for additional work and longer-form viewing.</p></div>
           <a class="btn btn-dark" href="https://www.youtube.com/@andyspdirector/playlists" target="_blank" rel="noopener">Open YouTube Playlists ↗</a>
         </div>
@@ -283,6 +333,15 @@
         document.querySelectorAll('.filter-btn').forEach(function(item){
           item.setAttribute('aria-pressed', item === button ? 'true' : 'false');
         });
+
+        var emptyState = document.querySelector('#portfolio-empty');
+        if (!emptyState) return;
+
+        var visibleProjects = Array.from(document.querySelectorAll('.project-card')).some(function(card){
+          return !card.classList.contains('filtered-out');
+        });
+
+        emptyState.hidden = visibleProjects;
       });
     });
   </script>
