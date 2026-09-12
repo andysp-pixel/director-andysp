@@ -24,12 +24,22 @@ export default {
         await ensureSchema(env);
         return listProjects(env, url, false);
       }
+      if (url.pathname === '/api/visit' && request.method === 'POST') {
+        await ensureSchema(env);
+        return recordVisit(request, env);
+      }
+      const viewMatch = url.pathname.match(/^\/api\/projects\/([a-f0-9-]+)\/view$/i);
+      if (viewMatch && request.method === 'POST') {
+        await ensureSchema(env);
+        return recordProjectView(request, env, viewMatch[1]);
+      }
       if (url.pathname.startsWith('/admin/api/')) {
         const identity = await authorize(request, env);
         if (!identity.ok) return json({ error: identity.error }, identity.status);
         await ensureSchema(env);
         if (url.pathname === '/admin/api/session' && request.method === 'GET') return json({ email: identity.email });
         if (url.pathname === '/admin/api/projects' && request.method === 'GET') return listProjects(env, url, true);
+        if (url.pathname === '/admin/api/analytics' && request.method === 'GET') return getAnalytics(env);
         if (url.pathname === '/admin/api/projects' && request.method === 'POST') return createProject(request, env);
         const match = url.pathname.match(/^\/admin\/api\/projects\/([a-f0-9-]+)$/i);
         if (match && request.method === 'PATCH') return updateProject(request, env, match[1]);
@@ -46,11 +56,17 @@ export default {
 
 async function ensureSchema(env) {
   if (!schemaReady) {
-    schemaReady = env.DB.batch([
-      env.DB.prepare("CREATE TABLE IF NOT EXISTS projects (id TEXT PRIMARY KEY, title TEXT NOT NULL, discipline TEXT NOT NULL CHECK (discipline IN ('Videography','Photography')), category_key TEXT NOT NULL, category_name TEXT NOT NULL, description TEXT NOT NULL DEFAULT '', media_key TEXT NOT NULL UNIQUE, media_type TEXT NOT NULL CHECK (media_type IN ('image','video')), mime_type TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'draft' CHECK (status IN ('draft','published')), featured INTEGER NOT NULL DEFAULT 0 CHECK (featured IN (0,1)), created_at TEXT NOT NULL, updated_at TEXT NOT NULL)"),
-      env.DB.prepare('CREATE INDEX IF NOT EXISTS idx_projects_category_status ON projects(category_key, status, created_at DESC)'),
-      env.DB.prepare('CREATE INDEX IF NOT EXISTS idx_projects_updated ON projects(updated_at DESC)')
-    ]).catch(error => { schemaReady = null; throw error; });
+    schemaReady = (async () => {
+      await env.DB.batch([
+        env.DB.prepare("CREATE TABLE IF NOT EXISTS projects (id TEXT PRIMARY KEY, title TEXT NOT NULL, discipline TEXT NOT NULL CHECK (discipline IN ('Videography','Photography')), category_key TEXT NOT NULL, category_name TEXT NOT NULL, description TEXT NOT NULL DEFAULT '', media_key TEXT NOT NULL UNIQUE, media_type TEXT NOT NULL CHECK (media_type IN ('image','video')), mime_type TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'draft' CHECK (status IN ('draft','published')), featured INTEGER NOT NULL DEFAULT 0 CHECK (featured IN (0,1)), views INTEGER NOT NULL DEFAULT 0, created_at TEXT NOT NULL, updated_at TEXT NOT NULL)"),
+        env.DB.prepare('CREATE TABLE IF NOT EXISTS site_visits (id INTEGER PRIMARY KEY AUTOINCREMENT, visitor_id TEXT NOT NULL, path TEXT NOT NULL, visited_at TEXT NOT NULL)'),
+        env.DB.prepare('CREATE INDEX IF NOT EXISTS idx_projects_category_status ON projects(category_key, status, created_at DESC)'),
+        env.DB.prepare('CREATE INDEX IF NOT EXISTS idx_projects_updated ON projects(updated_at DESC)'),
+        env.DB.prepare('CREATE INDEX IF NOT EXISTS idx_site_visits_time ON site_visits(visited_at DESC)')
+      ]);
+      try { await env.DB.prepare('ALTER TABLE projects ADD COLUMN views INTEGER NOT NULL DEFAULT 0').run(); }
+      catch (error) { if (!String(error.message).includes('duplicate column')) throw error; }
+    })().catch(error => { schemaReady = null; throw error; });
   }
   return schemaReady;
 }
@@ -61,7 +77,7 @@ async function listProjects(env, url, admin) {
   const values = [];
   if (!admin) where.push("status = 'published'");
   if (category && CATEGORIES[category]) { where.push('category_key = ?'); values.push(category); }
-  const sql = `SELECT id,title,discipline,category_key,category_name,description,media_key,media_type,mime_type,status,featured,created_at,updated_at FROM projects ${where.length ? `WHERE ${where.join(' AND ')}` : ''} ORDER BY featured DESC, created_at DESC`;
+  const sql = `SELECT id,title,discipline,category_key,category_name,description,media_key,media_type,mime_type,status,featured,views,created_at,updated_at FROM projects ${where.length ? `WHERE ${where.join(' AND ')}` : ''} ORDER BY featured DESC, created_at DESC`;
   const result = await env.DB.prepare(sql).bind(...values).all();
   return json({ projects: result.results.map(publicProject) }, 200, admin ? 'no-store' : 'public, max-age=30');
 }
@@ -119,6 +135,40 @@ async function deleteProject(env, id) {
   await env.DB.prepare('DELETE FROM projects WHERE id = ?').bind(id).run();
   await env.MEDIA.delete(project.media_key);
   return json({ deleted: true });
+}
+
+async function recordVisit(request, env) {
+  const body = await request.json().catch(() => ({}));
+  const path = clean(body.path || '/', 180);
+  const cookie = request.headers.get('cookie') || '';
+  let visitorId = cookie.match(/(?:^|;\s*)andy_visitor=([a-f0-9-]{36})/i)?.[1];
+  const headers = {};
+  if (!visitorId) {
+    visitorId = crypto.randomUUID();
+    headers['set-cookie'] = `andy_visitor=${visitorId}; Path=/; Max-Age=31536000; Secure; HttpOnly; SameSite=Lax`;
+  }
+  await env.DB.prepare('INSERT INTO site_visits (visitor_id,path,visited_at) VALUES (?,?,?)')
+    .bind(visitorId, path, new Date().toISOString()).run();
+  return new Response(null, { status: 204, headers });
+}
+
+async function recordProjectView(request, env, id) {
+  const changed = await env.DB.prepare("UPDATE projects SET views = views + 1 WHERE id = ? AND status = 'published'").bind(id).run();
+  return changed.meta.changes ? json({ counted: true }) : json({ error: 'Project not found.' }, 404);
+}
+
+async function getAnalytics(env) {
+  const since = new Date(Date.now() - 30 * 86400000).toISOString();
+  const [visits, projectViews] = await env.DB.batch([
+    env.DB.prepare('SELECT COUNT(*) AS page_views, COUNT(DISTINCT visitor_id) AS visitors FROM site_visits WHERE visited_at >= ?').bind(since),
+    env.DB.prepare('SELECT COALESCE(SUM(views),0) AS views FROM projects')
+  ]);
+  return json({
+    page_views: Number(visits.results[0]?.page_views || 0),
+    visitors: Number(visits.results[0]?.visitors || 0),
+    views: Number(projectViews.results[0]?.views || 0),
+    period: '30d'
+  });
 }
 
 async function serveMedia(request, env, encodedKey) {

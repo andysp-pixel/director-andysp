@@ -103,15 +103,21 @@ if (bookingForm) {
 
 document.querySelectorAll('[data-year]').forEach(el => el.textContent = new Date().getFullYear());
 
+// Count one first-party page visit. Cloudflare stores only a random visitor ID.
+fetch('/api/visit', {
+  method: 'POST',
+  headers: { 'content-type': 'application/json' },
+  body: JSON.stringify({ path: location.pathname }),
+  keepalive: true
+}).catch(() => {});
+
 // Light / dark theme shared by every page.
 (() => {
   const storageKey = 'director-andy-theme';
   const root = document.documentElement;
   const toggle = document.querySelector('.theme-toggle');
   const themeColor = document.querySelector('meta[name="theme-color"]');
-  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
-
-  const currentTheme = () => root.getAttribute('data-theme') || (systemTheme.matches ? 'dark' : 'light');
+  const currentTheme = () => root.getAttribute('data-theme') || 'light';
 
   const updateButton = theme => {
     if (!toggle) return;
@@ -140,13 +146,4 @@ document.querySelectorAll('[data-year]').forEach(el => el.textContent = new Date
     applyTheme(currentTheme() === 'dark' ? 'light' : 'dark', true);
   });
 
-  const followSystem = event => {
-    try {
-      if (localStorage.getItem(storageKey)) return;
-    } catch (_) { /* Follow the device preference when storage is unavailable. */ }
-    applyTheme(event.matches ? 'dark' : 'light');
-  };
-
-  if (typeof systemTheme.addEventListener === 'function') systemTheme.addEventListener('change', followSystem);
-  else systemTheme.addListener(followSystem);
 })();

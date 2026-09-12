@@ -9,8 +9,7 @@
     (function(){
       try {
         var saved = localStorage.getItem('director-andy-theme');
-        var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        var theme = saved || (dark ? 'dark' : 'light');
+        var theme = saved || 'light';
         document.documentElement.setAttribute('data-theme', theme);
         var meta = document.querySelector('meta[name="theme-color"]');
         if (meta) meta.setAttribute('content', theme === 'dark' ? '#080D20' : '#F4F4F8');

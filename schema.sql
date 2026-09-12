@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS projects (
   mime_type TEXT NOT NULL,
   status TEXT NOT NULL DEFAULT 'draft' CHECK (status IN ('draft', 'published')),
   featured INTEGER NOT NULL DEFAULT 0 CHECK (featured IN (0, 1)),
+  views INTEGER NOT NULL DEFAULT 0,
   created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL
 );
@@ -19,3 +20,13 @@ ON projects(category_key, status, created_at DESC);
 
 CREATE INDEX IF NOT EXISTS idx_projects_updated
 ON projects(updated_at DESC);
+
+CREATE TABLE IF NOT EXISTS site_visits (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  visitor_id TEXT NOT NULL,
+  path TEXT NOT NULL,
+  visited_at TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_site_visits_time
+ON site_visits(visited_at DESC);

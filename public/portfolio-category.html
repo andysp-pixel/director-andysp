@@ -9,8 +9,7 @@
     (function(){
       try{
         var saved=localStorage.getItem('director-andy-theme');
-        var dark=window.matchMedia('(prefers-color-scheme: dark)').matches;
-        document.documentElement.setAttribute('data-theme',saved||(dark?'dark':'light'));
+        document.documentElement.setAttribute('data-theme',saved||'light');
       }catch(error){document.documentElement.setAttribute('data-theme','light');}
     })();
   </script>
@@ -174,6 +173,7 @@
     function renderPortfolioItem(item){
       const card=document.createElement('article');
       card.className='category-card';
+      if(item.id) card.dataset.projectId=item.id;
       let media;
       if(item.type==='video'){
         media=document.createElement('video');
@@ -195,12 +195,25 @@
       .then(function(data){
         (data.projects || []).forEach(function(project){
           renderPortfolioItem({
+            id: project.id,
             type: project.media_type,
             src: project.media_url,
             title: project.title
           });
         });
         empty.hidden = grid.children.length > 0;
+        const counted = new Set();
+        const observer = new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){
+            const id=entry.target.dataset.projectId;
+            if(entry.isIntersecting && id && !counted.has(id)){
+              counted.add(id);
+              fetch('/api/projects/'+encodeURIComponent(id)+'/view',{method:'POST',keepalive:true}).catch(function(){});
+              observer.unobserve(entry.target);
+            }
+          });
+        },{threshold:.6});
+        grid.querySelectorAll('[data-project-id]').forEach(function(card){observer.observe(card)});
       })
       .catch(function(){
         /* Static portfolio remains available if the API has not been deployed yet. */
