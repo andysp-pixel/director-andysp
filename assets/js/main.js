@@ -12,6 +12,21 @@ if (menuToggle && navLinks) {
     document.body.classList.remove('menu-open');
     menuToggle.setAttribute('aria-expanded', 'false');
   }));
+
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape' || !navLinks.classList.contains('open')) return;
+    navLinks.classList.remove('open');
+    document.body.classList.remove('menu-open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.focus();
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth <= 980 || !navLinks.classList.contains('open')) return;
+    navLinks.classList.remove('open');
+    document.body.classList.remove('menu-open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  });
 }
 
 const revealObserver = new IntersectionObserver((entries) => {
