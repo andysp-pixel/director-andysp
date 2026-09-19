@@ -9,7 +9,8 @@
     (function(){
       try{
         var saved=localStorage.getItem('director-andy-theme');
-        document.documentElement.setAttribute('data-theme',saved||'light');
+        var dark=window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-theme',saved||(dark?'dark':'light'));
       }catch(error){document.documentElement.setAttribute('data-theme','light');}
     })();
   </script>
@@ -24,9 +25,23 @@
     .category-title{max-width:900px;margin:0;color:#0b132b;font-size:clamp(2.45rem,6vw,5.25rem);line-height:.94;letter-spacing:-.055em}
     .category-intro{max-width:650px;margin:18px 0 0;color:#637083;font-size:clamp(.96rem,1.35vw,1.1rem);line-height:1.6}
     .category-work{padding:clamp(56px,8vw,110px) 0;background:#fff}
-    .category-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.6vw,22px)}
-    .category-card{position:relative;aspect-ratio:4/3;overflow:hidden;border-radius:14px;background:#0b132b}
-    .category-card video,.category-card img{display:block;width:100%;height:100%;object-fit:cover}
+    .category-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.6vw,22px);align-items:start}
+    .category-card{position:relative;overflow:hidden;border:0;border-radius:14px;background:#0b132b;box-shadow:0 12px 35px rgba(11,19,43,.1);cursor:zoom-in}
+    .category-card video,.category-card img{display:block;width:100%;aspect-ratio:16/10;object-fit:contain;background:#0b132b}
+    .category-card video{pointer-events:none}
+    .category-open{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;border:0;background:linear-gradient(180deg,transparent 55%,rgba(4,8,22,.42));color:#fff;cursor:pointer}
+    .category-open::after{content:'\2197';display:grid;place-items:center;width:48px;height:48px;border:1px solid rgba(255,255,255,.65);border-radius:50%;background:rgba(11,19,43,.72);font-size:1.15rem;opacity:0;transform:translateY(8px);transition:opacity .2s ease,transform .2s ease,background-color .2s ease}
+    .category-card[data-media-type="video"] .category-open::after{content:'\25B6';padding-left:3px}
+    .category-card:hover .category-open::after,.category-open:focus-visible::after{opacity:1;transform:none}
+    .category-open:focus-visible{outline:3px solid #18b7a0;outline-offset:-4px}
+    .media-lightbox{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:clamp(16px,3vw,42px);background:rgba(3,7,18,.94);backdrop-filter:blur(12px)}
+    .media-lightbox[hidden]{display:none}
+    .media-lightbox-stage{display:grid;place-items:center;width:min(1200px,100%);height:min(82vh,820px)}
+    .media-lightbox-stage img,.media-lightbox-stage video{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;border-radius:10px;background:#000;box-shadow:0 24px 70px rgba(0,0,0,.45)}
+    .media-lightbox-stage video{width:100%;height:100%}
+    .media-lightbox-close{position:absolute;top:max(16px,env(safe-area-inset-top));right:max(16px,env(safe-area-inset-right));z-index:2;display:grid;place-items:center;width:48px;height:48px;border:1px solid rgba(255,255,255,.4);border-radius:50%;background:rgba(11,19,43,.82);color:#fff;font-size:1.6rem;cursor:pointer}
+    .media-lightbox-close:hover,.media-lightbox-close:focus-visible{background:#18b7a0;color:#0b132b}
+    body.media-viewer-open{overflow:hidden}
     .category-empty{padding:clamp(50px,8vw,90px) 25px;border:1px dashed rgba(11,19,43,.22);border-radius:20px;text-align:center;background:#f4f4f8}
     .category-empty h2{margin:0 0 10px;color:#0b132b;font-size:clamp(1.8rem,4vw,3.5rem)}
     .category-empty p{margin:0;color:#637083}
@@ -45,7 +60,7 @@
     .footer-social-link:hover{border-color:#18b7a0;color:#0b132b!important;background:#18b7a0;transform:translateY(-3px)}
     .footer-social-link:focus-visible{outline:3px solid rgba(255,111,97,.5);outline-offset:3px}
     @media(max-width:900px){.category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    @media(max-width:580px){.category-grid{grid-template-columns:1fr}.category-card{border-radius:12px}}
+    @media(max-width:580px){.category-grid{grid-template-columns:1fr}.category-card{border-radius:12px}.category-open::after{opacity:1;transform:none}.media-lightbox{padding:12px}.media-lightbox-stage{height:78vh}}
   </style>
 </head>
 <body>
@@ -86,6 +101,11 @@
 
     <section class="cta-band"><div class="container"><h2 class="h2">Have a project in mind?</h2><a class="btn" href="book.html">Start a project ↗</a></div></section>
   </main>
+
+  <div class="media-lightbox" id="media-lightbox" role="dialog" aria-modal="true" aria-label="Portfolio media viewer" hidden>
+    <button class="media-lightbox-close" id="media-lightbox-close" type="button" aria-label="Close media viewer">&times;</button>
+    <div class="media-lightbox-stage" id="media-lightbox-stage"></div>
+  </div>
 
   <footer class="site-footer">
     <div class="container">
@@ -168,23 +188,68 @@
 
     const grid = document.querySelector('#category-grid');
     const empty = document.querySelector('#category-empty');
+    const lightbox = document.querySelector('#media-lightbox');
+    const lightboxStage = document.querySelector('#media-lightbox-stage');
+    const lightboxClose = document.querySelector('#media-lightbox-close');
+    let lastMediaTrigger = null;
     empty.hidden = category.items.length > 0;
+
+    function closeMediaViewer(){
+      const video=lightboxStage.querySelector('video');
+      if(video) video.pause();
+      lightboxStage.replaceChildren();
+      lightbox.hidden=true;
+      document.body.classList.remove('media-viewer-open');
+      if(lastMediaTrigger) lastMediaTrigger.focus();
+    }
+
+    function openMediaViewer(item,trigger){
+      let fullMedia;
+      lastMediaTrigger=trigger;
+      if(item.type==='video'){
+        fullMedia=document.createElement('video');
+        fullMedia.src=item.src;
+        fullMedia.controls=true;
+        fullMedia.autoplay=true;
+        fullMedia.playsInline=true;
+        fullMedia.preload='metadata';
+        if(item.poster) fullMedia.poster=item.poster;
+      }else{
+        fullMedia=document.createElement('img');
+        fullMedia.src=item.src;
+        fullMedia.alt=category.title+' photography by Director Andy SP';
+      }
+      lightboxStage.replaceChildren(fullMedia);
+      lightbox.hidden=false;
+      document.body.classList.add('media-viewer-open');
+      lightboxClose.focus();
+      if(item.type==='video') fullMedia.play().catch(function(){});
+    }
+
+    lightboxClose.addEventListener('click',closeMediaViewer);
+    lightbox.addEventListener('click',function(event){if(event.target===lightbox) closeMediaViewer();});
+    document.addEventListener('keydown',function(event){if(event.key==='Escape'&&!lightbox.hidden) closeMediaViewer();});
 
     function renderPortfolioItem(item){
       const card=document.createElement('article');
       card.className='category-card';
-      if(item.id) card.dataset.projectId=item.id;
+      card.dataset.mediaType=item.type;
       let media;
       if(item.type==='video'){
         media=document.createElement('video');
-        media.controls=true; media.preload='none'; media.playsInline=true;
+        media.muted=true; media.preload='metadata'; media.playsInline=true;
         media.setAttribute('aria-label',category.title+' video');
         if(item.poster) media.poster=item.poster;
-        const source=document.createElement('source'); source.src=item.src; source.type='video/mp4'; media.appendChild(source);
+        const source=document.createElement('source'); source.src=item.src; source.type=item.mimeType||'video/mp4'; media.appendChild(source);
       }else{
         media=document.createElement('img'); media.src=item.src; media.loading='lazy'; media.alt=category.title+' photography by Director Andy SP';
       }
-      card.appendChild(media); grid.appendChild(card);
+      const openButton=document.createElement('button');
+      openButton.className='category-open';
+      openButton.type='button';
+      openButton.setAttribute('aria-label','Open '+category.title+' '+item.type);
+      openButton.addEventListener('click',function(){openMediaViewer(item,openButton);});
+      card.append(media,openButton); grid.appendChild(card);
     }
 
     category.items.forEach(renderPortfolioItem);
@@ -195,25 +260,13 @@
       .then(function(data){
         (data.projects || []).forEach(function(project){
           renderPortfolioItem({
-            id: project.id,
             type: project.media_type,
             src: project.media_url,
-            title: project.title
+            title: project.title,
+            mimeType: project.mime_type
           });
         });
         empty.hidden = grid.children.length > 0;
-        const counted = new Set();
-        const observer = new IntersectionObserver(function(entries){
-          entries.forEach(function(entry){
-            const id=entry.target.dataset.projectId;
-            if(entry.isIntersecting && id && !counted.has(id)){
-              counted.add(id);
-              fetch('/api/projects/'+encodeURIComponent(id)+'/view',{method:'POST',keepalive:true}).catch(function(){});
-              observer.unobserve(entry.target);
-            }
-          });
-        },{threshold:.6});
-        grid.querySelectorAll('[data-project-id]').forEach(function(card){observer.observe(card)});
       })
       .catch(function(){
         /* Static portfolio remains available if the API has not been deployed yet. */
@@ -222,3 +275,5 @@
   <script src="assets/js/main.js"></script>
 </body>
 </html>
+
+
