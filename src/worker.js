@@ -16,18 +16,12 @@ const CATEGORIES = {
 
 const BOOKING_EMAIL = 'damoryandy@gmail.com';
 
-let accessKeys;
 let schemaReady;
 
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     try {
-      const adminHost = url.hostname.toLowerCase() === 'admin.directorandysp.com';
-      if (adminHost && (url.pathname === '/' || url.pathname === '/index.html')) {
-        const assetUrl = new URL('/admin/index.html', url);
-        return env.ASSETS.fetch(new Request(assetUrl, request));
-      }
       if (url.pathname.startsWith('/media/')) return serveMedia(request, env, url.pathname.slice(7));
       if (url.pathname === '/api/projects' && request.method === 'GET') {
         await ensureSchema(env);
@@ -46,36 +40,10 @@ export default {
         await ensureSchema(env);
         return downloadBookingPdf(env, bookingPdf[1], url.searchParams.get('token'));
       }
-      if (url.pathname === '/api/content' && request.method === 'GET') {
-        await ensureSchema(env);
-        return listContent(env, url, false);
-      }
       const viewMatch = url.pathname.match(/^\/api\/projects\/([a-f0-9-]+)\/view$/i);
       if (viewMatch && request.method === 'POST') {
         await ensureSchema(env);
         return recordProjectView(request, env, viewMatch[1]);
-      }
-      if (url.pathname.startsWith('/admin/api/')) {
-        const identity = await authorize(request, env);
-        if (!identity.ok) return json({ error: identity.error }, identity.status);
-        await ensureSchema(env);
-        if (url.pathname === '/admin/api/session' && request.method === 'GET') return json({ email: identity.email });
-        if (url.pathname === '/admin/api/projects' && request.method === 'GET') return listProjects(env, url, true);
-        if (url.pathname === '/admin/api/analytics' && request.method === 'GET') return getAnalytics(env);
-        if (url.pathname === '/admin/api/bookings' && request.method === 'GET') return listBookings(env);
-        if (url.pathname === '/admin/api/content' && request.method === 'GET') return listContent(env, url, true);
-        if (url.pathname === '/admin/api/content' && request.method === 'POST') return createContent(request, env);
-        if (url.pathname === '/admin/api/projects' && request.method === 'POST') return createProject(request, env);
-        const match = url.pathname.match(/^\/admin\/api\/projects\/([a-f0-9-]+)$/i);
-        if (match && request.method === 'PATCH') return updateProject(request, env, match[1]);
-        if (match && request.method === 'DELETE') return deleteProject(env, match[1]);
-        const bookingMatch = url.pathname.match(/^\/admin\/api\/bookings\/([a-f0-9-]+)$/i);
-        if (bookingMatch && request.method === 'PATCH') return updateBooking(request, env, bookingMatch[1]);
-        if (bookingMatch && request.method === 'DELETE') return deleteBooking(env, bookingMatch[1]);
-        const contentMatch = url.pathname.match(/^\/admin\/api\/content\/([a-f0-9-]+)$/i);
-        if (contentMatch && request.method === 'PATCH') return updateContent(request, env, contentMatch[1]);
-        if (contentMatch && request.method === 'DELETE') return deleteContent(env, contentMatch[1]);
-        return json({ error: 'Not found' }, 404);
       }
       return env.ASSETS.fetch(request);
     } catch (error) {
