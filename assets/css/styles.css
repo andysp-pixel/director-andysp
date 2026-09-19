@@ -2689,3 +2689,23 @@ html[data-theme="dark"] .music-package>a{color:#0b132b;background:#f58b2a}
 html[data-theme="dark"] .music-platforms span,html[data-theme="dark"] .music-distribution-prices article{border-color:rgba(255,255,255,.16)}
 @media(max-width:850px){.music-services-head,.music-distribution{grid-template-columns:1fr}.music-book-bar{align-items:flex-start;flex-direction:column}}
 @media(max-width:680px){.music-services{padding:72px 0}.music-edit-grid{grid-template-columns:1fr}.music-package{min-height:auto;padding:28px 22px;border-radius:18px}.music-distribution{padding:28px 22px}.music-distribution-prices article{align-items:flex-start;flex-direction:column}.music-book-bar{padding:24px 20px}.music-book-actions{width:100%}.music-book-actions a{width:100%;text-align:center}}
+
+/* Three-card music offer */
+.music-offer-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
+.music-promise{display:flex;flex-wrap:wrap;gap:8px;margin:-20px 0 28px}.music-promise span{padding:9px 13px;border-left:3px solid #f58b2a;background:rgba(255,255,255,.7);font-size:.65rem;font-weight:900;letter-spacing:.13em;text-transform:uppercase}
+html[data-theme="dark"] .music-promise span{background:rgba(255,255,255,.06)}
+.music-offer-grid .music-package{min-height:650px}
+.music-offer-grid .music-package-price b{font-size:clamp(3.8rem,6vw,6.3rem)}
+.music-distribution-card h3{margin:34px 0 0;font-size:clamp(2rem,3.4vw,3.5rem);line-height:.96;letter-spacing:-.045em}
+.music-distribution-card .music-platforms{margin:25px 0}
+.music-distribution-card .music-platforms span{background:#f7f7f7}
+.music-distribution-card .music-distribution-prices{display:grid;gap:10px;margin-bottom:20px}
+.music-distribution-card .music-distribution-prices>div{display:grid;gap:8px;padding:18px;border:1px solid #e2e3e6;border-radius:15px}
+.music-distribution-card .music-distribution-prices span{width:max-content}
+.music-distribution-card .music-distribution-prices strong{font-size:1.4rem}
+.music-distribution-note{margin:0 0 26px!important;color:#6d7583!important;font-size:.78rem!important;font-weight:500!important;letter-spacing:0!important;line-height:1.6;text-transform:none!important}
+html[data-theme="dark"] .music-distribution-card .music-platforms span{color:#fff;background:rgba(255,255,255,.07)}
+html[data-theme="dark"] .music-distribution-card .music-distribution-prices>div{border-color:rgba(255,255,255,.16)}
+html[data-theme="dark"] .music-distribution-note{color:rgba(255,255,255,.7)!important}
+@media(max-width:1080px){.music-offer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.music-distribution-card{grid-column:1/-1;min-height:auto!important}}
+@media(max-width:680px){.music-offer-grid{grid-template-columns:1fr}.music-offer-grid .music-package,.music-distribution-card{grid-column:auto;min-height:auto}}
