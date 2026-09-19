@@ -30,3 +30,21 @@ CREATE TABLE IF NOT EXISTS site_visits (
 
 CREATE INDEX IF NOT EXISTS idx_site_visits_time
 ON site_visits(visited_at DESC);
+
+CREATE TABLE IF NOT EXISTS bookings (
+  id TEXT PRIMARY KEY, pdf_token TEXT NOT NULL, offer_key TEXT NOT NULL,
+  offer_name TEXT NOT NULL, price TEXT NOT NULL, client_name TEXT NOT NULL,
+  client_email TEXT NOT NULL, phone TEXT NOT NULL, project_date TEXT NOT NULL DEFAULT '',
+  footage_link TEXT NOT NULL DEFAULT '', notes TEXT NOT NULL DEFAULT '',
+  status TEXT NOT NULL DEFAULT 'new', created_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_bookings_created ON bookings(created_at DESC);
+
+CREATE TABLE IF NOT EXISTS content_items (
+  id TEXT PRIMARY KEY, content_type TEXT NOT NULL CHECK (content_type IN ('service','offer')),
+  title TEXT NOT NULL, subtitle TEXT NOT NULL DEFAULT '', price TEXT NOT NULL DEFAULT '',
+  description TEXT NOT NULL DEFAULT '', features_json TEXT NOT NULL DEFAULT '[]',
+  status TEXT NOT NULL DEFAULT 'published', display_order INTEGER NOT NULL DEFAULT 0,
+  created_at TEXT NOT NULL, updated_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_content_type_order ON content_items(content_type, display_order, created_at);

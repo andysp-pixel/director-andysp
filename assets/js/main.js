@@ -1,6 +1,9 @@
 const menuToggle = document.querySelector('.menu-toggle');
 const navLinks = document.querySelector('.nav-links');
 
+// The public website intentionally uses one consistent light theme.
+document.documentElement.setAttribute('data-theme', 'light');
+
 if (menuToggle && navLinks) {
   menuToggle.addEventListener('click', () => {
     const isOpen = navLinks.classList.toggle('open');
@@ -38,7 +41,11 @@ const revealObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.12 });
 
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+document.querySelectorAll('.reveal, main section > .container > *, .project-card, .service-card, .music-package').forEach((el, index) => {
+  el.classList.add('cinema-reveal');
+  el.style.animationDelay = `${Math.min(index % 5, 4) * 70}ms`;
+  revealObserver.observe(el);
+});
 
 const projectCards = [...document.querySelectorAll('.project-card[data-category]')];
 const filterButtons = [...document.querySelectorAll('.filter-btn')];
@@ -103,50 +110,10 @@ if (bookingForm) {
 
 document.querySelectorAll('[data-year]').forEach(el => el.textContent = new Date().getFullYear());
 
-// Light / dark theme shared by every page.
-(() => {
-  const storageKey = 'director-andy-theme';
-  const root = document.documentElement;
-  const toggle = document.querySelector('.theme-toggle');
-  const themeColor = document.querySelector('meta[name="theme-color"]');
-  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
-
-  const currentTheme = () => root.getAttribute('data-theme') || (systemTheme.matches ? 'dark' : 'light');
-
-  const updateButton = theme => {
-    if (!toggle) return;
-    const dark = theme === 'dark';
-    const label = dark ? 'Switch to light mode' : 'Switch to dark mode';
-    const text = toggle.querySelector('.theme-toggle-text');
-    toggle.setAttribute('aria-pressed', String(dark));
-    toggle.setAttribute('aria-label', label);
-    toggle.title = label;
-    if (text) text.textContent = dark ? 'Light' : 'Dark';
-  };
-
-  const applyTheme = (theme, save = false) => {
-    const safeTheme = theme === 'dark' ? 'dark' : 'light';
-    root.setAttribute('data-theme', safeTheme);
-    if (themeColor) themeColor.content = safeTheme === 'dark' ? '#080D20' : '#F4F4F8';
-    updateButton(safeTheme);
-    if (save) {
-      try { localStorage.setItem(storageKey, safeTheme); } catch (_) { /* Storage may be disabled. */ }
-    }
-  };
-
-  applyTheme(currentTheme());
-
-  toggle?.addEventListener('click', () => {
-    applyTheme(currentTheme() === 'dark' ? 'light' : 'dark', true);
-  });
-
-  const followSystem = event => {
-    try {
-      if (localStorage.getItem(storageKey)) return;
-    } catch (_) { /* Follow the device preference when storage is unavailable. */ }
-    applyTheme(event.matches ? 'dark' : 'light');
-  };
-
-  if (typeof systemTheme.addEventListener === 'function') systemTheme.addEventListener('change', followSystem);
-  else systemTheme.addListener(followSystem);
-})();
+// Count one first-party page visit. Cloudflare stores only a random visitor ID.
+fetch('/api/visit', {
+  method: 'POST',
+  headers: { 'content-type': 'application/json' },
+  body: JSON.stringify({ path: location.pathname }),
+  keepalive: true
+}).catch(() => {});

@@ -1,3 +1,5 @@
+import { EmailMessage } from 'cloudflare:email';
+
 const JSON_HEADERS = { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' };
 const MAX_UPLOAD_BYTES = 100 * 1024 * 1024;
 const ALLOWED_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'video/mp4', 'video/webm']);
@@ -12,6 +14,8 @@ const CATEGORIES = {
   'photo-street': ['Photography', 'Street']
 };
 
+const BOOKING_EMAIL = 'damoryandy@gmail.com';
+
 let accessKeys;
 let schemaReady;
 
@@ -19,6 +23,11 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     try {
+      const adminHost = url.hostname.toLowerCase() === 'admin.directorandysp.com';
+      if (adminHost && (url.pathname === '/' || url.pathname === '/index.html')) {
+        const assetUrl = new URL('/admin/index.html', url);
+        return env.ASSETS.fetch(new Request(assetUrl, request));
+      }
       if (url.pathname.startsWith('/media/')) return serveMedia(request, env, url.pathname.slice(7));
       if (url.pathname === '/api/projects' && request.method === 'GET') {
         await ensureSchema(env);
@@ -27,6 +36,19 @@ export default {
       if (url.pathname === '/api/visit' && request.method === 'POST') {
         await ensureSchema(env);
         return recordVisit(request, env);
+      }
+      if (url.pathname === '/api/bookings' && request.method === 'POST') {
+        await ensureSchema(env);
+        return createBooking(request, env);
+      }
+      const bookingPdf = url.pathname.match(/^\/api\/bookings\/([a-f0-9-]+)\/pdf$/i);
+      if (bookingPdf && request.method === 'GET') {
+        await ensureSchema(env);
+        return downloadBookingPdf(env, bookingPdf[1], url.searchParams.get('token'));
+      }
+      if (url.pathname === '/api/content' && request.method === 'GET') {
+        await ensureSchema(env);
+        return listContent(env, url, false);
       }
       const viewMatch = url.pathname.match(/^\/api\/projects\/([a-f0-9-]+)\/view$/i);
       if (viewMatch && request.method === 'POST') {
@@ -40,10 +62,19 @@ export default {
         if (url.pathname === '/admin/api/session' && request.method === 'GET') return json({ email: identity.email });
         if (url.pathname === '/admin/api/projects' && request.method === 'GET') return listProjects(env, url, true);
         if (url.pathname === '/admin/api/analytics' && request.method === 'GET') return getAnalytics(env);
+        if (url.pathname === '/admin/api/bookings' && request.method === 'GET') return listBookings(env);
+        if (url.pathname === '/admin/api/content' && request.method === 'GET') return listContent(env, url, true);
+        if (url.pathname === '/admin/api/content' && request.method === 'POST') return createContent(request, env);
         if (url.pathname === '/admin/api/projects' && request.method === 'POST') return createProject(request, env);
         const match = url.pathname.match(/^\/admin\/api\/projects\/([a-f0-9-]+)$/i);
         if (match && request.method === 'PATCH') return updateProject(request, env, match[1]);
         if (match && request.method === 'DELETE') return deleteProject(env, match[1]);
+        const bookingMatch = url.pathname.match(/^\/admin\/api\/bookings\/([a-f0-9-]+)$/i);
+        if (bookingMatch && request.method === 'PATCH') return updateBooking(request, env, bookingMatch[1]);
+        if (bookingMatch && request.method === 'DELETE') return deleteBooking(env, bookingMatch[1]);
+        const contentMatch = url.pathname.match(/^\/admin\/api\/content\/([a-f0-9-]+)$/i);
+        if (contentMatch && request.method === 'PATCH') return updateContent(request, env, contentMatch[1]);
+        if (contentMatch && request.method === 'DELETE') return deleteContent(env, contentMatch[1]);
         return json({ error: 'Not found' }, 404);
       }
       return env.ASSETS.fetch(request);
@@ -60,9 +91,13 @@ async function ensureSchema(env) {
       await env.DB.batch([
         env.DB.prepare("CREATE TABLE IF NOT EXISTS projects (id TEXT PRIMARY KEY, title TEXT NOT NULL, discipline TEXT NOT NULL CHECK (discipline IN ('Videography','Photography')), category_key TEXT NOT NULL, category_name TEXT NOT NULL, description TEXT NOT NULL DEFAULT '', media_key TEXT NOT NULL UNIQUE, media_type TEXT NOT NULL CHECK (media_type IN ('image','video')), mime_type TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'draft' CHECK (status IN ('draft','published')), featured INTEGER NOT NULL DEFAULT 0 CHECK (featured IN (0,1)), views INTEGER NOT NULL DEFAULT 0, created_at TEXT NOT NULL, updated_at TEXT NOT NULL)"),
         env.DB.prepare('CREATE TABLE IF NOT EXISTS site_visits (id INTEGER PRIMARY KEY AUTOINCREMENT, visitor_id TEXT NOT NULL, path TEXT NOT NULL, visited_at TEXT NOT NULL)'),
+        env.DB.prepare("CREATE TABLE IF NOT EXISTS bookings (id TEXT PRIMARY KEY, pdf_token TEXT NOT NULL, offer_key TEXT NOT NULL, offer_name TEXT NOT NULL, price TEXT NOT NULL, client_name TEXT NOT NULL, client_email TEXT NOT NULL, phone TEXT NOT NULL, project_date TEXT NOT NULL DEFAULT '', footage_link TEXT NOT NULL DEFAULT '', notes TEXT NOT NULL DEFAULT '', status TEXT NOT NULL DEFAULT 'new', created_at TEXT NOT NULL)"),
+        env.DB.prepare("CREATE TABLE IF NOT EXISTS content_items (id TEXT PRIMARY KEY, content_type TEXT NOT NULL CHECK (content_type IN ('service','offer')), title TEXT NOT NULL, subtitle TEXT NOT NULL DEFAULT '', price TEXT NOT NULL DEFAULT '', description TEXT NOT NULL DEFAULT '', features_json TEXT NOT NULL DEFAULT '[]', status TEXT NOT NULL DEFAULT 'published', display_order INTEGER NOT NULL DEFAULT 0, created_at TEXT NOT NULL, updated_at TEXT NOT NULL)"),
         env.DB.prepare('CREATE INDEX IF NOT EXISTS idx_projects_category_status ON projects(category_key, status, created_at DESC)'),
         env.DB.prepare('CREATE INDEX IF NOT EXISTS idx_projects_updated ON projects(updated_at DESC)'),
-        env.DB.prepare('CREATE INDEX IF NOT EXISTS idx_site_visits_time ON site_visits(visited_at DESC)')
+        env.DB.prepare('CREATE INDEX IF NOT EXISTS idx_site_visits_time ON site_visits(visited_at DESC)'),
+        env.DB.prepare('CREATE INDEX IF NOT EXISTS idx_bookings_created ON bookings(created_at DESC)'),
+        env.DB.prepare('CREATE INDEX IF NOT EXISTS idx_content_type_order ON content_items(content_type, display_order, created_at)')
       ]);
       try { await env.DB.prepare('ALTER TABLE projects ADD COLUMN views INTEGER NOT NULL DEFAULT 0').run(); }
       catch (error) { if (!String(error.message).includes('duplicate column')) throw error; }
@@ -170,6 +205,169 @@ async function getAnalytics(env) {
     period: '30d'
   });
 }
+
+async function createBooking(request, env) {
+  const body = await request.json().catch(() => ({}));
+  const booking = {
+    id: crypto.randomUUID(), pdf_token: crypto.randomUUID(),
+    offer_key: clean(body.offer_key, 80), offer_name: clean(body.offer_name, 140),
+    price: clean(body.price, 80), client_name: clean(body.client_name, 120),
+    client_email: clean(body.client_email, 180), phone: clean(body.phone, 60),
+    project_date: clean(body.project_date, 40), footage_link: clean(body.footage_link, 500),
+    notes: clean(body.notes, 1200), created_at: new Date().toISOString()
+  };
+  if (!booking.offer_name || !booking.client_name || !booking.client_email || !booking.phone) {
+    return json({ error: 'Offer, name, email and phone are required.' }, 400);
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(booking.client_email)) return json({ error: 'Enter a valid email address.' }, 400);
+  await env.DB.prepare('INSERT INTO bookings (id,pdf_token,offer_key,offer_name,price,client_name,client_email,phone,project_date,footage_link,notes,status,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)')
+    .bind(booking.id, booking.pdf_token, booking.offer_key, booking.offer_name, booking.price, booking.client_name, booking.client_email, booking.phone, booking.project_date, booking.footage_link, booking.notes, 'new', booking.created_at).run();
+
+  let emailSent = false;
+  if (env.BOOKING_EMAIL?.send) {
+    try { await sendBookingEmail(env, booking); emailSent = true; }
+    catch (error) { console.error('Booking email failed', error); }
+  }
+  return json({
+    booking_id: booking.id,
+    pdf_url: `/api/bookings/${booking.id}/pdf?token=${encodeURIComponent(booking.pdf_token)}`,
+    email_sent: emailSent,
+    message: 'Your booking request has been received.'
+  }, 201);
+}
+
+async function listBookings(env) {
+  const result = await env.DB.prepare('SELECT id,offer_name,price,client_name,client_email,phone,project_date,footage_link,notes,status,created_at FROM bookings ORDER BY created_at DESC').all();
+  return json({ bookings: result.results });
+}
+
+async function updateBooking(request, env, id) {
+  const body = await request.json().catch(() => ({}));
+  const status = clean(body.status, 20);
+  if (!['new', 'contacted', 'confirmed', 'completed', 'cancelled'].includes(status)) return json({ error: 'Invalid booking status.' }, 400);
+  const result = await env.DB.prepare('UPDATE bookings SET status=? WHERE id=?').bind(status, id).run();
+  return result.meta.changes ? json({ updated: true }) : json({ error: 'Booking not found.' }, 404);
+}
+
+async function deleteBooking(env, id) {
+  const result = await env.DB.prepare('DELETE FROM bookings WHERE id=?').bind(id).run();
+  return result.meta.changes ? json({ deleted: true }) : json({ error: 'Booking not found.' }, 404);
+}
+
+async function downloadBookingPdf(env, id, token) {
+  const row = await env.DB.prepare('SELECT * FROM bookings WHERE id=? AND pdf_token=?').bind(id, token || '').first();
+  if (!row) return new Response('Not found', { status: 404 });
+  return new Response(makeBookingPdf(row), {
+    headers: {
+      'content-type': 'application/pdf',
+      'content-disposition': `attachment; filename="director-andy-booking-${id.slice(0, 8)}.pdf"`,
+      'cache-control': 'private, no-store'
+    }
+  });
+}
+
+async function sendBookingEmail(env, booking) {
+  const pdf = makeBookingPdf(booking);
+  const boundary = `andy-${crypto.randomUUID()}`;
+  const lines = [
+    `From: Director Andy SP Website <bookings@directorandysp.com>`,
+    `To: ${BOOKING_EMAIL}`,
+    `Reply-To: ${booking.client_email}`,
+    `Subject: New booking: ${booking.offer_name} — ${booking.client_name}`,
+    'MIME-Version: 1.0',
+    `Content-Type: multipart/mixed; boundary="${boundary}"`, '',
+    `--${boundary}`, 'Content-Type: text/plain; charset=UTF-8', '',
+    bookingEmailText(booking), '',
+    `--${boundary}`, 'Content-Type: application/pdf',
+    'Content-Transfer-Encoding: base64',
+    `Content-Disposition: attachment; filename="booking-${booking.id.slice(0, 8)}.pdf"`, '',
+    bytesToBase64(pdf), '', `--${boundary}--`
+  ];
+  const message = new EmailMessage('bookings@directorandysp.com', BOOKING_EMAIL, lines.join('\r\n'));
+  await env.BOOKING_EMAIL.send(message);
+}
+
+function bookingEmailText(b) {
+  return [`New website booking`, ``, `Offer: ${b.offer_name}`, `Price: ${b.price || 'Quote required'}`, `Name: ${b.client_name}`, `Email: ${b.client_email}`, `Phone: ${b.phone}`, `Preferred date: ${b.project_date || '-'}`, `Footage link: ${b.footage_link || '-'}`, `Notes: ${b.notes || '-'}`, `Reference: ${b.id}`].join('\n');
+}
+
+function makeBookingPdf(b) {
+  const values = [
+    'DIRECTOR ANDY SP - BOOKING REQUEST', '',
+    `Reference: ${b.id}`, `Created: ${b.created_at}`, '',
+    `Offer: ${b.offer_name}`, `Price: ${b.price || 'Quote required'}`, '',
+    `Client: ${b.client_name}`, `Email: ${b.client_email}`, `Phone: ${b.phone}`,
+    `Preferred date: ${b.project_date || '-'}`, `Footage link: ${b.footage_link || '-'}`, '',
+    `Notes: ${b.notes || '-'}`, '',
+    'This document confirms that the booking request was received.',
+    'Director Andy SP | directorandysp.com | +971 58 811 8994'
+  ].map(line => ascii(line).slice(0, 105));
+  const stream = ['BT', '/F1 17 Tf', '55 790 Td'];
+  values.forEach((line, index) => {
+    if (index === 0) stream.push(`(${pdfEscape(line)}) Tj`, '/F1 10 Tf');
+    else stream.push(`0 -22 Td (${pdfEscape(line)}) Tj`);
+  });
+  stream.push('ET');
+  const body = stream.join('\n');
+  const objects = [
+    '<< /Type /Catalog /Pages 2 0 R >>',
+    '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
+    '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 5 0 R >> >> /Contents 4 0 R >>',
+    `<< /Length ${body.length} >>\nstream\n${body}\nendstream`,
+    '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>'
+  ];
+  let pdf = '%PDF-1.4\n', offsets = [0];
+  objects.forEach((object, i) => { offsets.push(pdf.length); pdf += `${i + 1} 0 obj\n${object}\nendobj\n`; });
+  const xref = pdf.length;
+  pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n`;
+  offsets.slice(1).forEach(offset => { pdf += `${String(offset).padStart(10, '0')} 00000 n \n`; });
+  pdf += `trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`;
+  return new TextEncoder().encode(pdf);
+}
+
+async function listContent(env, url, admin) {
+  const type = clean(url.searchParams.get('type'), 20);
+  const conditions = [], values = [];
+  if (type && ['service', 'offer'].includes(type)) { conditions.push('content_type=?'); values.push(type); }
+  if (!admin) conditions.push("status='published'");
+  const result = await env.DB.prepare(`SELECT * FROM content_items ${conditions.length ? `WHERE ${conditions.join(' AND ')}` : ''} ORDER BY content_type,display_order,created_at`).bind(...values).all();
+  return json({ items: result.results.map(contentItem) });
+}
+
+async function createContent(request, env) {
+  const body = await request.json().catch(() => ({}));
+  const item = contentPayload(body);
+  if (!item.content_type || !item.title) return json({ error: 'Type and title are required.' }, 400);
+  const id = crypto.randomUUID(), now = new Date().toISOString();
+  await env.DB.prepare('INSERT INTO content_items (id,content_type,title,subtitle,price,description,features_json,status,display_order,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?)')
+    .bind(id, item.content_type, item.title, item.subtitle, item.price, item.description, JSON.stringify(item.features), item.status, item.display_order, now, now).run();
+  const row = await env.DB.prepare('SELECT * FROM content_items WHERE id=?').bind(id).first();
+  return json({ item: contentItem(row) }, 201);
+}
+
+async function updateContent(request, env, id) {
+  const current = await env.DB.prepare('SELECT * FROM content_items WHERE id=?').bind(id).first();
+  if (!current) return json({ error: 'Content not found.' }, 404);
+  const body = await request.json().catch(() => ({}));
+  const merged = contentPayload({ ...current, features: body.features ?? JSON.parse(current.features_json || '[]'), ...body });
+  await env.DB.prepare('UPDATE content_items SET content_type=?,title=?,subtitle=?,price=?,description=?,features_json=?,status=?,display_order=?,updated_at=? WHERE id=?')
+    .bind(merged.content_type, merged.title, merged.subtitle, merged.price, merged.description, JSON.stringify(merged.features), merged.status, merged.display_order, new Date().toISOString(), id).run();
+  return json({ updated: true });
+}
+
+async function deleteContent(env, id) {
+  const result = await env.DB.prepare('DELETE FROM content_items WHERE id=?').bind(id).run();
+  return result.meta.changes ? json({ deleted: true }) : json({ error: 'Content not found.' }, 404);
+}
+
+function contentPayload(body) {
+  const type = clean(body.content_type, 20);
+  return { content_type: ['service', 'offer'].includes(type) ? type : '', title: clean(body.title, 120), subtitle: clean(body.subtitle, 180), price: clean(body.price, 80), description: clean(body.description, 800), features: Array.isArray(body.features) ? body.features.map(x => clean(x, 180)).filter(Boolean).slice(0, 12) : [], status: body.status === 'draft' ? 'draft' : 'published', display_order: Math.max(0, Math.min(999, Number(body.display_order) || 0)) };
+}
+function contentItem(row) { return { ...row, features: JSON.parse(row.features_json || '[]') }; }
+function ascii(value) { return String(value ?? '').normalize('NFKD').replace(/[^\x20-\x7E]/g, ''); }
+function pdfEscape(value) { return String(value).replace(/([\\()])/g, '\\$1'); }
+function bytesToBase64(bytes) { let binary = ''; for (let i = 0; i < bytes.length; i += 0x8000) binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000)); return btoa(binary); }
 
 async function serveMedia(request, env, encodedKey) {
   if (!['GET', 'HEAD'].includes(request.method)) return new Response('Method not allowed', { status: 405 });

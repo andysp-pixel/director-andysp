@@ -45,3 +45,37 @@ Open `/admin/` after deployment. Uploads are saved in the `director-andy-media` 
 - `GET /admin/api/analytics?period=30d`: returns visitors, page views and project media views; it is protected by Cloudflare Access.
 
 The dashboard accepts one to five files per submission. Each file becomes its own project and can be published, unpublished or permanently deleted.
+# Director Andy SP — deployment checklist
+
+The project now includes portfolio uploads, website analytics, offer bookings,
+PDF confirmations, booking email notifications and editable Services/Offers.
+
+## Required Cloudflare bindings
+
+- D1 binding: `DB`
+- R2 binding: `MEDIA`
+- Static assets binding: `ASSETS`
+- Send Email binding: `BOOKING_EMAIL`, restricted to `damoryandy@gmail.com`
+
+Enable Cloudflare Email Routing for `directorandysp.com` and verify the destination
+`damoryandy@gmail.com`. The booking sender used by the Worker is
+`bookings@directorandysp.com`.
+
+## Deploy
+
+```bash
+npm install
+npx wrangler login
+npm run db:init
+npm run deploy
+```
+
+Protect `admin.directorandysp.com` with Cloudflare Access and allow only the
+administrator Gmail address. Set these Worker variables in Cloudflare:
+
+- `CF_ACCESS_TEAM_DOMAIN`
+- `CF_ACCESS_AUD`
+- `ADMIN_EMAIL`
+
+The public website must remain accessible without Access. Only the admin
+subdomain should be protected.

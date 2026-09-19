@@ -22,5 +22,11 @@
       "bucket_name": "director-andy-media"
     }
   ],
+  "send_email": [
+    {
+      "name": "BOOKING_EMAIL",
+      "destination_address": "damoryandy@gmail.com"
+    }
+  ],
   "observability": { "enabled": true }
 }

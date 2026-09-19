@@ -1,21 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html data-theme="light" lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="Current music video editing and digital distribution offers from Director Andy SP."><meta name="theme-color" content="#0B132B">
-  <script id="theme-boot">
-    (function(){
-      try {
-        var saved = localStorage.getItem('director-andy-theme');
-        var theme = saved || 'light';
-        document.documentElement.setAttribute('data-theme', theme);
-        var meta = document.querySelector('meta[name="theme-color"]');
-        if (meta) meta.setAttribute('content', theme === 'dark' ? '#080D20' : '#F4F4F8');
-      } catch (error) {
-        document.documentElement.setAttribute('data-theme', 'light');
-      }
-    })();
-  </script><title>Offers — Director Andy SP</title>
+  <title>Offers — Director Andy SP</title>
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/css/styles.css">
 
   <style id="footer-unified-styles">
@@ -29,11 +17,7 @@
   </style>
 </head>
 <body>
-  <header class="site-header"><div class="container nav-wrap"><a class="brand" href="index.html"><span class="brand-mark"></span><span class="brand-name">Director<br>Andy SP</span></a><button class="menu-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">Menu</button><nav class="nav-links"><a href="index.html">Home</a><a href="portfolio.html">Portfolio</a><a href="services.html">Services</a><a class="active" href="offers.html">Offers</a><a href="about.html">About</a><a class="nav-book" href="book.html">Book a project</a><button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
-  <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
-  <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.42"/></svg>
-  <span class="theme-toggle-text">Dark</span>
-</button></nav></div></header>
+  <header class="site-header"><div class="container nav-wrap"><a class="brand" href="index.html"><span class="brand-mark"></span><span class="brand-name">Director<br>Andy SP</span></a><button class="menu-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">Menu</button><nav class="nav-links"><a href="index.html">Home</a><a href="portfolio.html">Portfolio</a><a href="services.html">Services</a><a class="active" href="offers.html">Offers</a><a href="about.html">About</a><a class="nav-book" href="book.html">Book a project</a></nav></div></header>
   <main>
     <section class="page-hero offers-hero"><div class="container"><div class="orb" aria-hidden="true"></div><p class="eyebrow">Current offers</p><h1 class="h1">Professional results.<br>Clear packages.</h1><p class="lede">Explore limited packages for artists and labels. More offers can be added to this page as they become available.</p></div></section>
 
@@ -51,7 +35,8 @@
             <div class="music-package-price"><small>AED</small><b>300</b></div>
             <p>Complete editing package</p>
             <ul><li>Client-provided footage</li><li>Professional video editing</li><li>Colour grading</li><li>Lyrics</li><li>Title design</li><li>Cover / thumbnail</li></ul>
-            <a href="book.html">Book 1 song <span>↗</span></a>
+            <button class="offer-book-button" type="button" data-offer-key="music-edit-1" data-offer="1 Song — Music Video Editing" data-price="AED 300">Book 1 song <span>↗</span></button>
+            <a class="offer-whatsapp" data-whatsapp-offer="1 Song — Music Video Editing (AED 300)" href="#">WhatsApp</a>
           </article>
 
           <article class="music-package music-package-featured">
@@ -60,7 +45,8 @@
             <div class="music-package-price"><small>AED</small><b>700</b></div>
             <p>Complete editing package</p>
             <ul><li>Client-provided footage</li><li>Professional video editing</li><li>Colour grading</li><li>Lyrics</li><li>Title design</li><li>Cover / thumbnail</li><li>YouTube upload</li></ul>
-            <a href="book.html">Book 3 songs <span>↗</span></a>
+            <button class="offer-book-button" type="button" data-offer-key="music-edit-3" data-offer="3 Songs — Music Video Editing" data-price="AED 700">Book 3 songs <span>↗</span></button>
+            <a class="offer-whatsapp" data-whatsapp-offer="3 Songs — Music Video Editing (AED 700)" href="#">WhatsApp</a>
           </article>
 
           <article class="music-package music-distribution-card">
@@ -69,12 +55,39 @@
             <div class="music-platforms" aria-label="Supported platforms"><span>TikTok</span><span>Instagram</span><span>Facebook</span><span>Snapchat</span><span>Spotify</span><span>Boomplay</span><span>Deezer</span><span>&amp; more</span></div>
             <div class="music-distribution-prices"><div><span>1 song</span><strong>AED 100 <small>+ cover</small></strong></div><div><span>5 songs</span><strong>AED 400 <small>+ cover</small></strong></div></div>
             <p class="music-distribution-note">Professional delivery support for artists releasing singles or multi-song projects.</p>
-            <a href="book.html">Distribute music <span>↗</span></a>
+            <button class="offer-book-button" type="button" data-offer-key="music-distribution" data-offer="Digital Music Distribution" data-price="From AED 100 + cover">Book distribution <span>↗</span></button>
+            <a class="offer-whatsapp" data-whatsapp-offer="Digital Music Distribution (from AED 100 + cover)" href="#">WhatsApp</a>
           </article>
         </div>
 
-        <div class="music-book-bar"><div><small>Ready to begin?</small><strong>Send your footage. Send your song. We edit it.</strong></div><div class="music-book-actions"><a href="book.html">Book now</a><a href="https://wa.me/971554600587" target="_blank" rel="noopener noreferrer">WhatsApp +971 55 460 0587</a></div></div>
+        <div class="music-book-bar"><div><small>Ready to begin?</small><strong>Choose an offer above and send your booking here.</strong></div><div class="music-book-actions"><button class="offer-book-button" type="button" data-offer-key="custom" data-offer="Custom music project" data-price="Custom quote">Book now</button><a data-whatsapp-offer="Custom music project" href="#">WhatsApp +971 58 811 8994</a></div></div>
         <p class="music-note"><strong>Note:</strong> Prices are based on client-provided footage. Additional charges may apply for extensive footage, advanced VFX or major revisions.</p>
+      </div>
+    </section>
+
+    <section class="section offer-booking-section" id="offer-booking">
+      <div class="container offer-booking-layout">
+        <div class="offer-booking-intro reveal">
+          <p class="eyebrow">Direct booking</p>
+          <h2 class="h2">Book without leaving this page.</h2>
+          <p class="lede">Your selected package is filled automatically. Submit once and your request is saved, emailed to Director Andy and prepared as a PDF confirmation.</p>
+          <div class="booking-contact-card"><strong>Need a quick answer?</strong><a id="booking-whatsapp" href="https://wa.me/971588118994" target="_blank" rel="noopener">Continue on WhatsApp →</a></div>
+        </div>
+        <form class="offer-booking-form reveal" id="offer-booking-form">
+          <input type="hidden" name="offer_key" value="custom">
+          <div class="selected-offer"><small>Selected package</small><strong id="selected-offer-name">Custom music project</strong><span id="selected-offer-price">Custom quote</span></div>
+          <div class="offer-form-grid">
+            <label>Full name<input name="client_name" autocomplete="name" required></label>
+            <label>Email address<input name="client_email" type="email" autocomplete="email" required></label>
+            <label>Phone / WhatsApp<input name="phone" type="tel" autocomplete="tel" required></label>
+            <label>Preferred project date<input name="project_date" type="date"></label>
+            <label class="full-field">Footage or reference link<input name="footage_link" type="url" placeholder="Google Drive, Dropbox or WeTransfer link"></label>
+            <label class="full-field">Project notes<textarea name="notes" rows="5" placeholder="Tell us about your song, deadline and creative direction."></textarea></label>
+          </div>
+          <label class="booking-consent"><input type="checkbox" required> I confirm that these details are correct.</label>
+          <button class="offer-submit" type="submit">Send booking &amp; get PDF <span>↗</span></button>
+          <p class="booking-status" id="booking-status" role="status" aria-live="polite"></p>
+        </form>
       </div>
     </section>
   </main>
@@ -132,5 +145,7 @@
   </div>
 </footer>
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/offers.js"></script>
+  <script src="assets/js/content-manager.js"></script>
 </body>
 </html>

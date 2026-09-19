@@ -23,8 +23,9 @@
         <button class="nav-item" data-view="projects"><span>▦</span>Projects</button>
         <button class="nav-item" data-view="upload"><span>＋</span>Upload content</button>
         <button class="nav-item" data-view="categories"><span>◫</span>Categories</button>
+        <button class="nav-item" data-view="content"><span>✦</span>Services &amp; Offers</button>
         <p>Manage</p>
-        <button class="nav-item" data-view="messages"><span>✉</span>Messages <b>3</b></button>
+        <button class="nav-item" data-view="bookings"><span>✉</span>Bookings <b id="booking-count">0</b></button>
         <button class="nav-item" data-view="settings"><span>⚙</span>Settings</button>
       </nav>
 
@@ -64,6 +65,7 @@
             <article class="stat-card navy"><div><small>Categories</small><strong>14</strong><p>Video & photography</p></div><span class="stat-icon">◫</span></article>
             <article class="stat-card violet"><div><small>Total views</small><strong id="stat-views">—</strong><p>Portfolio media views</p></div><span class="stat-icon">◉</span></article>
             <article class="stat-card blue"><div><small>Visitors</small><strong id="stat-visitors">—</strong><p>Unique website visitors</p></div><span class="stat-icon">♙</span></article>
+            <article class="stat-card mint"><div><small>Bookings</small><strong id="stat-bookings">—</strong><p>Offer requests received</p></div><span class="stat-icon">✉</span></article>
           </div>
 
           <div class="dashboard-grid">
@@ -103,8 +105,15 @@
         <section class="view" id="view-projects"><div class="page-heading"><div><p class="eyebrow">Content</p><h1>Projects</h1><p>Search, publish, review views or delete uploaded work.</p></div><button class="primary-button" data-open-upload>＋ Add project</button></div><div class="project-tools"><input id="project-search" type="search" placeholder="Search by title or category…" aria-label="Search projects"><select id="project-status" aria-label="Filter project status"><option value="all">All statuses</option><option value="published">Published</option><option value="draft">Draft</option></select></div><div class="empty-panel"><span>▦</span><h2>Project manager is ready.</h2><p>Your uploaded projects will appear here.</p></div></section>
         <section class="view" id="view-upload"><div class="page-heading"><div><p class="eyebrow">Create</p><h1>Upload content</h1><p>Add a new image or video to the portfolio.</p></div></div><div id="upload-form-slot"></div></section>
         <section class="view" id="view-categories"><div class="page-heading"><div><p class="eyebrow">Organize</p><h1>Categories</h1><p>Videography and photography categories used on your website.</p></div></div><div class="category-admin-grid" id="category-list"></div></section>
-        <section class="view" id="view-messages"><div class="page-heading"><div><p class="eyebrow">Inbox</p><h1>Messages</h1><p>Booking enquiries will appear here after the backend is connected.</p></div></div><div class="empty-panel"><span>✉</span><h2>No connected messages yet.</h2><p>Your current WhatsApp booking remains unchanged.</p></div></section>
-        <section class="view" id="view-settings"><div class="page-heading"><div><p class="eyebrow">Account</p><h1>Settings</h1><p>Admin identity and website publishing preferences.</p></div></div><div class="settings-panel"><div><strong>Authentication</strong><span>Cloudflare Access + Gmail</span><i>Ready to connect</i></div><div><strong>Storage</strong><span>Cloudflare R2</span><i>Not connected</i></div><div><strong>Database</strong><span>Cloudflare D1</span><i>Not connected</i></div></div></section>
+        <section class="view" id="view-content">
+          <div class="page-heading"><div><p class="eyebrow">Website content</p><h1>Services &amp; Offers</h1><p>Add, publish or remove service and offer information.</p></div><button class="primary-button" type="button" id="new-content">＋ Add item</button></div>
+          <form class="content-editor" id="content-form" hidden>
+            <input name="id" type="hidden"><label>Content type<select name="content_type" required><option value="service">Service</option><option value="offer">Offer</option></select></label><label>Title<input name="title" required placeholder="Example: Corporate videography"></label><label>Subtitle<input name="subtitle" placeholder="Short category line"></label><label>Price<input name="price" placeholder="Example: AED 500"></label><label class="full-field">Description<textarea name="description" rows="4"></textarea></label><label class="full-field">Features — one per line<textarea name="features" rows="6" placeholder="Professional editing&#10;Colour grading&#10;Fast delivery"></textarea></label><label>Display order<input name="display_order" type="number" min="0" value="0"></label><label>Status<select name="status"><option value="published">Published</option><option value="draft">Draft</option></select></label><div class="editor-actions full-field"><button class="primary-button" type="submit">Save item</button><button class="secondary-button" id="cancel-content" type="button">Cancel</button></div>
+          </form>
+          <div class="content-admin-grid" id="content-list"></div>
+        </section>
+        <section class="view" id="view-bookings"><div class="page-heading"><div><p class="eyebrow">Inbox</p><h1>Bookings</h1><p>Requests sent directly from the Offers page.</p></div></div><div class="panel recent-panel"><div class="booking-admin-list" id="booking-list"></div></div></section>
+        <section class="view" id="view-settings"><div class="page-heading"><div><p class="eyebrow">Account</p><h1>Settings</h1><p>Admin identity and website publishing preferences.</p></div></div><div class="settings-panel"><div><strong>Authentication</strong><span>Cloudflare Access + Gmail</span><i>Protected</i></div><div><strong>Storage</strong><span>Cloudflare R2</span><i>Connected</i></div><div><strong>Database</strong><span>Cloudflare D1</span><i>Connected</i></div><div><strong>Booking email</strong><span>damoryandy@gmail.com</span><i>Cloudflare Email Routing</i></div></div></section>
       </main>
     </div>
   </div>
@@ -117,5 +126,6 @@
   </template>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="../assets/js/admin.js"></script>
+  <script src="../assets/js/admin-content.js"></script>
 </body>
 </html>
