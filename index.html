@@ -1112,181 +1112,135 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     </div>
   </div>
 </footer>
+
+
+<!-- DIRECTOR ANDY SP — MUSIC OFFER POPUP -->
+<style>
+#dspMusicOffer{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s ease,visibility .35s ease}
+#dspMusicOffer.dsp-show{opacity:1;visibility:visible;pointer-events:auto}
+#dspMusicOffer .dsp-modal{position:relative;width:min(940px,100%);max-height:92vh;overflow:auto;background:#f4f0e8;color:#111;border:1px solid rgba(0,0,0,.15);box-shadow:0 30px 100px rgba(0,0,0,.45);transform:translateY(28px) scale(.96);transition:transform .45s cubic-bezier(.2,.8,.2,1);font-family:Arial,Helvetica,sans-serif}
+#dspMusicOffer.dsp-show .dsp-modal{transform:translateY(0) scale(1)}
+#dspMusicOffer .dsp-close{position:absolute;right:14px;top:12px;width:38px;height:38px;border:1px solid #bbb;background:transparent;color:#111;font-size:26px;line-height:1;cursor:pointer;z-index:2}
+#dspMusicOffer .dsp-inner{padding:34px 38px 26px}
+#dspMusicOffer .dsp-kicker{display:flex;justify-content:space-between;border-bottom:1px solid #d2cdc3;padding-bottom:14px;font-size:9px;letter-spacing:.18em;font-weight:700;text-transform:uppercase}
+#dspMusicOffer .dsp-title{padding:26px 0 22px}
+#dspMusicOffer .dsp-script{display:block;font:italic 21px Georgia,serif;color:#b94e1d;margin-bottom:4px}
+#dspMusicOffer h2{margin:0;font-size:clamp(44px,7vw,78px);line-height:.82;letter-spacing:-.055em;font-weight:900}
+#dspMusicOffer h2 span{color:#c85a22}
+#dspMusicOffer .dsp-sub{max-width:600px;margin:18px 0 0;color:#555;font-size:13px;line-height:1.55}
+#dspMusicOffer .dsp-packages{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#dspMusicOffer .dsp-card{position:relative;background:#fff;border:1px solid #d8d2c8;padding:23px}
+#dspMusicOffer .dsp-card.dark{background:#111;color:#fff;border-color:#111}
+#dspMusicOffer .dsp-save{position:absolute;top:13px;right:13px;background:#c85a22;color:#fff;padding:6px 9px;font-size:8px;font-weight:800;letter-spacing:.1em}
+#dspMusicOffer .dsp-num{color:#c85a22;font-size:42px;font-weight:900;line-height:1}
+#dspMusicOffer .dsp-price{font-size:54px;font-weight:900;letter-spacing:-.06em;line-height:.9;margin-top:8px}
+#dspMusicOffer .dsp-price small{font-size:12px;letter-spacing:0;margin-right:4px}
+#dspMusicOffer .dsp-card h3{font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin:15px 0 10px}
+#dspMusicOffer .dsp-card ul{list-style:none;padding:0;margin:0 0 18px}
+#dspMusicOffer .dsp-card li{font-size:11px;padding:5px 0;border-bottom:1px solid #e7e2da}
+#dspMusicOffer .dsp-card.dark li{border-color:#333}
+#dspMusicOffer .dsp-card li:before{content:'—';color:#c85a22;margin-right:8px}
+#dspMusicOffer .dsp-book{width:100%;padding:13px;border:1px solid #111;background:transparent;color:#111;font-size:9px;font-weight:800;letter-spacing:.13em;cursor:pointer}
+#dspMusicOffer .dsp-card.dark .dsp-book{border-color:#fff;color:#fff}
+#dspMusicOffer .dsp-book:hover{background:#c85a22!important;border-color:#c85a22!important;color:#fff!important}
+#dspMusicOffer .dsp-dist{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;background:#fff;border:1px solid #d8d2c8;padding:22px;margin-top:12px}
+#dspMusicOffer .dsp-dist-label{font-size:9px;font-weight:800;letter-spacing:.15em}
+#dspMusicOffer .dsp-dist h3{font-size:23px;line-height:1;margin:8px 0}
+#dspMusicOffer .dsp-dist h3 em{font-family:Georgia,serif;font-weight:400}
+#dspMusicOffer .dsp-dist p{font-size:10px;color:#777;line-height:1.5;margin:0}
+#dspMusicOffer .dsp-dist-prices{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#dspMusicOffer .dsp-dist-prices button{border:1px solid #d8d2c8;background:#f5f1e9;padding:14px;text-align:left;cursor:pointer;color:#111}
+#dspMusicOffer .dsp-dist-prices button:hover{background:#111;color:#fff}
+#dspMusicOffer .dsp-dist-prices strong{display:block;font-size:25px}
+#dspMusicOffer .dsp-dist-prices span{font-size:8px;letter-spacing:.1em}
+#dspMusicOffer .dsp-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #d2cdc3;margin-top:12px;padding-top:17px;font-size:10px}
+#dspMusicOffer .dsp-footer strong{display:block;margin-top:3px}
+#dspMusicOffer .dsp-footer a{color:#111;text-decoration:none}
+@media(max-width:680px){#dspMusicOffer{padding:8px}#dspMusicOffer .dsp-inner{padding:25px 18px 20px}#dspMusicOffer .dsp-packages,#dspMusicOffer .dsp-dist{grid-template-columns:1fr}#dspMusicOffer .dsp-title{padding:23px 0 18px}#dspMusicOffer h2{font-size:47px}#dspMusicOffer .dsp-price{font-size:45px}#dspMusicOffer .dsp-footer{align-items:flex-start;gap:8px;flex-direction:column}}
+</style>
+
+<div id="dspMusicOffer" aria-hidden="true">
+  <div class="dsp-modal" role="dialog" aria-modal="true" aria-label="Music Video Editing Offer">
+    <button class="dsp-close" id="dspMusicClose" type="button" aria-label="Close offer">&times;</button>
+    <div class="dsp-inner">
+      <div class="dsp-kicker"><span>DIRECTOR ANDY SP</span><span>MUSIC SERVICES</span></div>
+      <div class="dsp-title">
+        <span class="dsp-script">Gukora amavidewo yawe</span>
+        <h2>MUSIC VIDEO<br><span>EDITING</span></h2>
+        <p class="dsp-sub">Turakoresha footage yawe tukayihindura Music Video iboneka neza kandi isa n'iy'umwuga.</p>
+      </div>
+
+      <div class="dsp-packages">
+        <div class="dsp-card">
+          <div class="dsp-num">01</div>
+          <div class="dsp-price"><small>AED</small>300</div>
+          <h3>Indirimbo 1</h3>
+          <ul><li>Amavidewo utanga</li><li>Video Editing</li><li>Color Grading</li><li>Lyrics</li><li>Title Design</li><li>Cover / Thumbnail</li></ul>
+          <button class="dsp-book" type="button" data-service="Music Video Editing — 1 Song — AED 300">BOOK NOW &rarr;</button>
+        </div>
+        <div class="dsp-card dark">
+          <div class="dsp-save">SAVE AED 200</div>
+          <div class="dsp-num">03</div>
+          <div class="dsp-price"><small>AED</small>700</div>
+          <h3>Indirimbo 3</h3>
+          <ul><li>Amavidewo utanga</li><li>Video Editing</li><li>Color Grading</li><li>Lyrics</li><li>Title Design</li><li>Cover / Thumbnail</li><li>YouTube Upload</li></ul>
+          <button class="dsp-book" type="button" data-service="Music Video Editing — 3 Songs — AED 700">BOOK NOW &rarr;</button>
+        </div>
+      </div>
+
+      <div class="dsp-dist">
+        <div>
+          <div class="dsp-dist-label">DIGITAL MUSIC DISTRIBUTION</div>
+          <h3>Shira indirimbo zawe <em>kuri platforms zikomeye.</em></h3>
+          <p>TikTok &middot; Instagram &middot; Facebook &middot; Snapchat &middot; Spotify &middot; Boomplay &middot; Deezer &amp; more</p>
+        </div>
+        <div class="dsp-dist-prices">
+          <button type="button" data-service="Digital Distribution — 1 Song — AED 100 + Cover"><strong>AED 100</strong><span>1 SONG + COVER</span></button>
+          <button type="button" data-service="Digital Distribution — 5 Songs — AED 400 + Cover"><strong>AED 400</strong><span>5 SONGS + COVER</span></button>
+        </div>
+      </div>
+
+      <div class="dsp-footer"><div><span>BOOK YOUR PROJECT</span><strong>+971 55 460 0587</strong></div><a href="https://www.directorandysp.com">directorandysp.com</a></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var overlay = document.getElementById('dspMusicOffer');
+  var close = document.getElementById('dspMusicClose');
+  if (!overlay) return;
+
+  function openOffer() {
+    overlay.classList.add('dsp-show');
+    overlay.setAttribute('aria-hidden', 'false');
+  }
+  function closeOffer() {
+    overlay.classList.remove('dsp-show');
+    overlay.setAttribute('aria-hidden', 'true');
+  }
+
+  // Show automatically whenever the Home Page loads.
+  window.setTimeout(openOffer, 700);
+
+  close.addEventListener('click', closeOffer);
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) closeOffer();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeOffer();
+  });
+
+  overlay.querySelectorAll('[data-service]').forEach(function (button) {
+    button.addEventListener('click', function () {
+      var service = button.getAttribute('data-service');
+      var message = 'Hello Director Andy SP 👋\n\nI would like to book your Music Service.\n\nService: ' + service + '\n\nArtist Name: [My name]\nSong Name: [Song name]\n\nI have my footage ready.\n\nPlease send me the next steps and availability.';
+      window.open('https://wa.me/971554600587?text=' + encodeURIComponent(message), '_blank', 'noopener,noreferrer');
+    });
+  });
+})();
+</script>
+
   <script src="assets/js/main.js"></script>
 </body>
 </html>
-<!-- MUSIC OFFER POPUP -->
-<div class="music-offer-overlay" id="musicOffer">
-
-  <div class="music-offer-modal">
-
-    <!-- CLOSE -->
-    <button class="music-offer-close" id="musicOfferClose" aria-label="Close">
-      ×
-    </button>
-
-    <!-- TOP -->
-    <div class="music-offer-top">
-      <span>DIRECTOR ANDY SP</span>
-      <span>MUSIC SERVICES</span>
-    </div>
-
-    <!-- TITLE -->
-    <div class="music-offer-title">
-
-      <span class="offer-script">
-        Gukora amafoto yawe
-      </span>
-
-      <h2>
-        MUSIC VIDEO<br>
-        <span>EDITING</span>
-      </h2>
-
-      <p>
-        Turikora iyo footage yawe tukayihindura
-        Music Video isa n'iy'umwuga.
-      </p>
-
-    </div>
-
-
-    <!-- PACKAGES -->
-    <div class="music-offer-packages">
-
-      <!-- 1 SONG -->
-      <div class="offer-package">
-
-        <div class="offer-number">01</div>
-
-        <div class="offer-package-content">
-
-          <div class="offer-price">
-            <small>AED</small>
-            <strong>300</strong>
-          </div>
-
-          <h3>INDIRIMBO 1</h3>
-
-          <ul>
-            <li>Amavidewo utanga</li>
-            <li>Video Editing</li>
-            <li>Color Grading</li>
-            <li>Lyrics</li>
-            <li>Title Design</li>
-            <li>Cover / Thumbnail</li>
-          </ul>
-
-          <button
-            class="offer-book-btn"
-            onclick="bookMusicOffer('1 Song — AED 300')">
-            BOOK NOW →
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <!-- 3 SONGS -->
-      <div class="offer-package offer-featured">
-
-        <div class="offer-save">
-          SAVE AED 200
-        </div>
-
-        <div class="offer-number">03</div>
-
-        <div class="offer-package-content">
-
-          <div class="offer-price">
-            <small>AED</small>
-            <strong>700</strong>
-          </div>
-
-          <h3>INDIRIMBO 3</h3>
-
-          <ul>
-            <li>Amavidewo utanga</li>
-            <li>Video Editing</li>
-            <li>Color Grading</li>
-            <li>Lyrics</li>
-            <li>Title Design</li>
-            <li>Cover / Thumbnail</li>
-            <li>YouTube Upload</li>
-          </ul>
-
-          <button
-            class="offer-book-btn"
-            onclick="bookMusicOffer('3 Songs — AED 700')">
-            BOOK NOW →
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <!-- DISTRIBUTION -->
-    <div class="offer-distribution">
-
-      <div>
-        <span class="offer-small-title">
-          DIGITAL MUSIC DISTRIBUTION
-        </span>
-
-        <h3>
-          Shira indirimbo zawe
-          <em>kuri platforms zikomeye.</em>
-        </h3>
-
-        <p>
-          TikTok · Instagram · Facebook · Snapchat ·
-          Spotify · Boomplay · Deezer & more
-        </p>
-      </div>
-
-      <div class="distribution-prices">
-
-        <button
-          onclick="bookMusicOffer('Digital Distribution — 1 Song — AED 100 + Cover')">
-
-          <strong>AED 100</strong>
-          <span>1 SONG + COVER</span>
-
-        </button>
-
-        <button
-          onclick="bookMusicOffer('Digital Distribution — 5 Songs — AED 400 + Cover')">
-
-          <strong>AED 400</strong>
-          <span>5 SONGS + COVER</span>
-
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <!-- FOOTER -->
-    <div class="offer-footer">
-
-      <div>
-        <span>BOOK YOUR PROJECT</span>
-        <strong>+971 55 460 0587</strong>
-      </div>
-
-      <a
-        href="https://www.directorandysp.com"
-        target="_blank">
-        directorandysp.com
-      </a>
-
-    </div>
-
-  </div>
-
-</div>
