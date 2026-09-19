@@ -2643,3 +2643,142 @@ html[data-theme="dark"] select option {
   color: #fbfffe;
   background: #101a3a;
 }
+
+/* Music editing and distribution */
+.music-services{padding:clamp(76px,9vw,130px) 0;color:#0b132b;background:#f5f4f0}
+.music-services-head{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:clamp(30px,7vw,110px);align-items:end;margin-bottom:45px}
+.music-kicker{margin:0 0 13px;color:#f58b2a;font-size:.72rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase}
+.music-services-head h2{margin:0;font-size:clamp(2.4rem,5.5vw,5.6rem);line-height:.92;letter-spacing:-.055em}
+.music-services-head>p{margin:0;color:#657083;line-height:1.75}
+.music-edit-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.music-package{position:relative;display:flex;min-height:560px;flex-direction:column;padding:clamp(28px,4vw,48px);overflow:hidden;border:1px solid #dddcd7;border-radius:24px;background:#fff;box-shadow:0 20px 50px rgba(11,19,43,.07)}
+.music-package-featured{color:#fff;border-color:#0b132b;background:#0b132b}
+.music-saving{position:absolute;top:24px;right:-39px;width:160px;padding:8px;color:#0b132b;background:#f58b2a;font-size:.67rem;font-weight:900;text-align:center;text-transform:uppercase;transform:rotate(35deg)}
+.music-package-top{display:flex;align-items:center;gap:15px;padding-bottom:20px;border-bottom:1px solid rgba(11,19,43,.14)}
+.music-package-featured .music-package-top{border-color:rgba(255,255,255,.2)}
+.music-package-top span{display:grid;width:38px;height:38px;place-items:center;border-radius:50%;color:#0b132b;background:#f58b2a;font-size:.68rem;font-weight:900}
+.music-package-top strong{font-size:1rem;letter-spacing:.08em;text-transform:uppercase}
+.music-package-price{display:flex;align-items:flex-start;gap:10px;margin:34px 0 22px}
+.music-package-price small{padding-top:8px;color:#f58b2a;font-weight:900}
+.music-package-price b{font-size:clamp(4rem,7vw,7rem);line-height:.8;letter-spacing:-.07em}
+.music-package>p{margin:0 0 20px;color:#6d7583;font-size:.72rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+.music-package-featured>p{color:rgba(255,255,255,.7)}
+.music-package ul{display:grid;gap:12px;margin:0 0 32px;padding:0;list-style:none}
+.music-package li{display:flex;gap:10px;font-size:.9rem}
+.music-package li:before{content:"✓";color:#f58b2a;font-weight:900}
+.music-package>a{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding:16px 20px;border-radius:999px;color:#fff;background:#0b132b;font-size:.74rem;font-weight:900;letter-spacing:.08em;text-decoration:none;text-transform:uppercase}
+.music-package-featured>a{color:#0b132b;background:#f58b2a}
+.music-distribution{display:grid;grid-template-columns:1.1fr .9fr;gap:35px;margin-top:22px;padding:clamp(30px,5vw,60px);border-radius:24px;background:#fff}
+.music-distribution h3{max-width:650px;margin:0;font-size:clamp(1.8rem,4vw,3.6rem);line-height:1;letter-spacing:-.04em}
+.music-platforms{display:flex;flex-wrap:wrap;gap:9px;margin-top:30px}
+.music-platforms span{padding:9px 13px;border:1px solid #dfe1e5;border-radius:999px;font-size:.7rem;font-weight:800}
+.music-distribution-prices{display:grid;gap:12px}
+.music-distribution-prices article{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:22px;border:1px solid #e2e3e6;border-radius:16px}
+.music-distribution-prices span{padding:8px 12px;border-radius:9px;background:#f58b2a;font-size:.72rem;font-weight:900;text-transform:uppercase}
+.music-distribution-prices strong{font-size:1.25rem}.music-distribution-prices small{font-size:.72rem}
+.music-book-bar{display:flex;align-items:center;justify-content:space-between;gap:25px;margin-top:22px;padding:28px 32px;border-radius:20px;color:#fff;background:#0b132b}
+.music-book-bar>div:first-child{display:grid;gap:5px}.music-book-bar small{color:#f58b2a;font-weight:900;text-transform:uppercase}.music-book-bar strong{font-size:1rem}
+.music-book-actions{display:flex;flex-wrap:wrap;gap:10px}.music-book-actions a{padding:13px 17px;border:1px solid rgba(255,255,255,.3);border-radius:999px;color:#fff;font-size:.7rem;font-weight:800;text-decoration:none}.music-book-actions a:first-child{border-color:#f58b2a;color:#0b132b;background:#f58b2a}
+.music-note{margin:18px 0 0;color:#6e7684;font-size:.72rem;line-height:1.6}
+html[data-theme="dark"] .music-services{color:#fff;background:#080d20}
+html[data-theme="dark"] .music-services-head>p,html[data-theme="dark"] .music-note{color:rgba(255,255,255,.68)}
+html[data-theme="dark"] .music-package,html[data-theme="dark"] .music-distribution{border-color:rgba(255,255,255,.14);color:#fff;background:#101831}
+html[data-theme="dark"] .music-package-featured,html[data-theme="dark"] .music-book-bar{background:#050918}
+html[data-theme="dark"] .music-package>p{color:rgba(255,255,255,.68)}
+html[data-theme="dark"] .music-package>a{color:#0b132b;background:#f58b2a}
+html[data-theme="dark"] .music-platforms span,html[data-theme="dark"] .music-distribution-prices article{border-color:rgba(255,255,255,.16)}
+@media(max-width:850px){.music-services-head,.music-distribution{grid-template-columns:1fr}.music-book-bar{align-items:flex-start;flex-direction:column}}
+@media(max-width:680px){.music-services{padding:72px 0}.music-edit-grid{grid-template-columns:1fr}.music-package{min-height:auto;padding:28px 22px;border-radius:18px}.music-distribution{padding:28px 22px}.music-distribution-prices article{align-items:flex-start;flex-direction:column}.music-book-bar{padding:24px 20px}.music-book-actions{width:100%}.music-book-actions a{width:100%;text-align:center}}
+
+/* Three-card music offer */
+.music-offer-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
+.music-promise{display:flex;flex-wrap:wrap;gap:8px;margin:-20px 0 28px}.music-promise span{padding:9px 13px;border-left:3px solid #f58b2a;background:rgba(255,255,255,.7);font-size:.65rem;font-weight:900;letter-spacing:.13em;text-transform:uppercase}
+html[data-theme="dark"] .music-promise span{background:rgba(255,255,255,.06)}
+.music-offer-grid .music-package{min-height:650px}
+.music-offer-grid .music-package-price b{font-size:clamp(3.8rem,6vw,6.3rem)}
+.music-distribution-card h3{margin:34px 0 0;font-size:clamp(2rem,3.4vw,3.5rem);line-height:.96;letter-spacing:-.045em}
+.music-distribution-card .music-platforms{margin:25px 0}
+.music-distribution-card .music-platforms span{background:#f7f7f7}
+.music-distribution-card .music-distribution-prices{display:grid;gap:10px;margin-bottom:20px}
+.music-distribution-card .music-distribution-prices>div{display:grid;gap:8px;padding:18px;border:1px solid #e2e3e6;border-radius:15px}
+.music-distribution-card .music-distribution-prices span{width:max-content}
+.music-distribution-card .music-distribution-prices strong{font-size:1.4rem}
+.music-distribution-note{margin:0 0 26px!important;color:#6d7583!important;font-size:.78rem!important;font-weight:500!important;letter-spacing:0!important;line-height:1.6;text-transform:none!important}
+html[data-theme="dark"] .music-distribution-card .music-platforms span{color:#fff;background:rgba(255,255,255,.07)}
+html[data-theme="dark"] .music-distribution-card .music-distribution-prices>div{border-color:rgba(255,255,255,.16)}
+html[data-theme="dark"] .music-distribution-note{color:rgba(255,255,255,.7)!important}
+@media(max-width:1080px){.music-offer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.music-distribution-card{grid-column:1/-1;min-height:auto!important}}
+@media(max-width:680px){.music-offer-grid{grid-template-columns:1fr}.music-offer-grid .music-package,.music-distribution-card{grid-column:auto;min-height:auto}}
+
+/* Match music cards to the main Standard / Premiere pricing system */
+.music-services{background:#f4f4f8}
+.music-kicker{color:#18b7a0}
+.music-promise span{border-left-color:#18b7a0}
+.music-offer-grid{gap:22px}
+.music-offer-grid .music-package{
+  min-height:690px;
+  padding:clamp(30px,3.2vw,48px);
+  border:1px solid #dfe1e7;
+  border-radius:24px;
+  color:#0b132b;
+  background:#fff;
+  box-shadow:none;
+}
+.music-offer-grid .music-package-featured{
+  border-color:#18b7a0;
+  color:#fff;
+  background:#0b132b;
+}
+.music-package-top{gap:16px;padding:0 0 24px;border-bottom:0}
+.music-package-top span{
+  width:46px;
+  height:46px;
+  border:1px solid #d5d9e1;
+  color:#0b132b;
+  background:transparent;
+}
+.music-package-featured .music-package-top span{border-color:rgba(255,255,255,.34);color:#fff}
+.music-package-top strong{font-size:1rem;letter-spacing:0;text-transform:none}
+.music-package-price{align-items:flex-start;margin:72px 0 30px;padding-bottom:34px;border-bottom:1px solid #dfe1e7}
+.music-package-featured .music-package-price{border-bottom-color:rgba(255,255,255,.22)}
+.music-package-price small{padding-top:10px;color:#18b7a0}
+.music-offer-grid .music-package-price b{font-size:clamp(4.2rem,6vw,6.7rem)}
+.music-package>p{color:#748197}
+.music-package-featured>p{color:rgba(255,255,255,.68)}
+.music-package li:before{color:#18b7a0}
+.music-package>a{
+  min-height:55px;
+  padding:0 21px;
+  border:1px solid #0b132b;
+  color:#fff;
+  background:#0b132b;
+}
+.music-package-featured>a{border-color:#18b7a0;color:#0b132b;background:#18b7a0}
+.music-saving{
+  top:0;
+  right:46px;
+  width:auto;
+  padding:15px 23px;
+  border-radius:0 0 14px 14px;
+  color:#0b132b;
+  background:#18b7a0;
+  font-size:.65rem;
+  letter-spacing:.08em;
+  transform:none;
+}
+.music-distribution-card h3{margin-top:72px}
+.music-distribution-card .music-platforms span{border-color:#dfe1e7;background:#f7f8fa}
+.music-distribution-card .music-distribution-prices>div{border-color:#dfe1e7}
+.music-distribution-card .music-distribution-prices span{color:#0b132b;background:#18b7a0}
+.music-book-actions a:first-child{border-color:#18b7a0;background:#18b7a0}
+html[data-theme="dark"] .music-services{background:#080d20}
+html[data-theme="dark"] .music-offer-grid .music-package{border-color:rgba(255,255,255,.14);color:#fff;background:#101831}
+html[data-theme="dark"] .music-offer-grid .music-package-featured{border-color:#18b7a0;background:#050918}
+html[data-theme="dark"] .music-package-top span{border-color:rgba(255,255,255,.3);color:#fff}
+html[data-theme="dark"] .music-package-price{border-bottom-color:rgba(255,255,255,.18)}
+html[data-theme="dark"] .music-package>a{border-color:#18b7a0;color:#0b132b;background:#18b7a0}
+@media(max-width:680px){
+  .music-offer-grid .music-package{min-height:auto;padding:30px 23px}
+  .music-package-price,.music-distribution-card h3{margin-top:50px}
+  .music-saving{right:22px}
+}
