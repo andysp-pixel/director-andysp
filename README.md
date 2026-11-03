@@ -1,4 +1,4 @@
-# TenKraft Media — Light Premium Creative Studio Website
+# TenKraft Media — Creative Production, Marketing & Digital Studio
 
 A responsive, multi-page static website with editorial layout, light color palette, subtle animations, service filters, a community match **concept demo**, and a contact email enquiry flow.
 
@@ -33,3 +33,9 @@ Light ivory, mint, lilac, light blue and coral; Manrope and DM Sans (Google Font
 ## Deploy
 
 The folder can be deployed as static files to Cloudflare Pages, GitHub Pages or Netlify. Cloudflare Pages configuration: framework preset **None**, build command **none**, output directory **/** (root directory).
+
+## November 2026 positioning update
+- The public-facing brand is **TenKraft Media** only.
+- Added **Website & App Development** across Home, Services, Work, Contact and Training (responsive sites, ecommerce, booking systems, dashboards, iOS/Android mobile concepts).
+- The former broad Community/matching concept has been replaced with a **marketing partner collaboration** page. TenKraft Media coordinates introductions when a client brief needs complementary skills. No public member accounts, open directories or automated matching are advertised.
+- All portfolio visuals remain illustrative until replaced with approved TenKraft projects.
