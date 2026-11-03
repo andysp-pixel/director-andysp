@@ -44,3 +44,6 @@ The folder can be deployed as static files to Cloudflare Pages, GitHub Pages or 
 ## TenKraft Client Network (November 2026)
 
 The header now features a distinct **Join Community** action on desktop and mobile, linking to `/community.html#join`. The community is a curated **client and business network** under TenKraft Media, not a separate company or public client database. The page includes a business-introduction form that prepares an email addressed to TenKraft Media. **Important:** this is an email-based request, not a live member account system or automatically stored registration; the visitor needs to press Send in their email client. For a full client portal, add a consent-aware backend, database and authentication.
+
+## Official logo and social proof (November 2026)
+The supplied TenKraft Media brand logo replaces the temporary Tk icon in the header and footer. Files: assets/tenkraft-logo.png, assets/tenkraft-icon.png. Homepage now includes client-logo placeholders and a real-feedback section, pending permission and verified client testimonials. The review form creates a mailto email draft; it does NOT publish or store reviews.
