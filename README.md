@@ -39,3 +39,8 @@ The folder can be deployed as static files to Cloudflare Pages, GitHub Pages or 
 - Added **Website & App Development** across Home, Services, Work, Contact and Training (responsive sites, ecommerce, booking systems, dashboards, iOS/Android mobile concepts).
 - The former broad Community/matching concept has been replaced with a **marketing partner collaboration** page. TenKraft Media coordinates introductions when a client brief needs complementary skills. No public member accounts, open directories or automated matching are advertised.
 - All portfolio visuals remain illustrative until replaced with approved TenKraft projects.
+
+
+## TenKraft Client Network (November 2026)
+
+The header now features a distinct **Join Community** action on desktop and mobile, linking to `/community.html#join`. The community is a curated **client and business network** under TenKraft Media, not a separate company or public client database. The page includes a business-introduction form that prepares an email addressed to TenKraft Media. **Important:** this is an email-based request, not a live member account system or automatically stored registration; the visitor needs to press Send in their email client. For a full client portal, add a consent-aware backend, database and authentication.
