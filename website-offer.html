@@ -1,0 +1,89 @@
+<!doctype html>
+<html data-theme="light" lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0B132B"><meta name="description" content="Director Andy SP end-of-year website offer: professional websites for $150, limited to 10 clients.">
+<title>Website Offer — Director Andy SP</title>
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/styles.css">
+<style>
+:root{--offer-navy:#0B132B;--offer-teal:#009FB7;--offer-coral:#FE4A49}
+.offer-stage{min-height:calc(100vh - 140px);padding:clamp(44px,6vw,90px) 0;background:radial-gradient(ellipse at 15% 20%,rgba(0,159,183,.14),transparent 40%),#f4f4f8}
+.offer-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(340px,490px);align-items:center;gap:clamp(28px,6vw,90px)}
+.offer-tag{color:#006b7d;text-transform:uppercase;letter-spacing:.2em;font-size:.74rem;font-weight:900}
+.offer-intro h1{margin:18px 0;font-size:clamp(3.3rem,6vw,6.8rem);line-height:.96;letter-spacing:-.075em;text-transform:uppercase}
+.offer-intro h1 em{font-style:normal;color:#009fb7}
+.offer-intro>p{max-width:570px;color:#46516a;font-size:1.08rem;line-height:1.75}
+.offer-chips{display:flex;flex-wrap:wrap;gap:9px;margin:26px 0}
+.offer-chips span{padding:8px 12px;border:1px solid #ccd4df;border-radius:999px;font-size:.8rem;font-weight:700}
+.offer-card{color:white;position:relative;isolation:isolate;overflow:hidden;border:1px solid rgba(255,255,255,.12);border-radius:28px;background:#0b132b;padding:clamp(25px,4vw,38px);box-shadow:0 28px 75px rgba(11,19,43,.25);animation:card-enter .8s cubic-bezier(.2,.7,.2,1) both}
+.offer-card::before{content:"";position:absolute;z-index:-1;width:360px;height:360px;right:-180px;top:-190px;border-radius:50%;background:radial-gradient(circle,rgba(0,159,183,.42),transparent 70%);animation:glow-drift 8s ease-in-out infinite alternate}
+.offer-card::after{content:"";pointer-events:none;position:absolute;inset:0;border-radius:inherit;border:1px solid rgba(0,159,183,.3)}
+.offer-card:hover{transform:translateY(-5px);box-shadow:0 35px 90px rgba(11,19,43,.31);transition:transform .3s,box-shadow .3s}
+.offer-card-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:.75rem;font-weight:800;letter-spacing:.08em}
+.offer-card-top .limited{padding:8px 12px;border-radius:999px;background:rgba(0,159,183,.16);color:#86eaf2}
+.offer-card h2{font-size:clamp(1.8rem,3.3vw,2.7rem);line-height:1.1;letter-spacing:-.05em;margin:27px 0 10px}
+.offer-price{display:flex;align-items:baseline;gap:15px;margin:22px 0}
+.offer-price strong{font-size:clamp(4.5rem,7vw,6rem);line-height:1;letter-spacing:-.08em}
+.offer-price del{color:#a5b0c4;font-size:1.35rem}
+.offer-saving{color:#80e0d6;font-weight:800;font-size:.8rem}
+.offer-card ul{margin:24px 0;padding:22px 0;list-style:none;border-top:1px solid #344157;border-bottom:1px solid #344157;display:grid;gap:13px}
+.offer-card li{font-size:.92rem;color:#edf1f8}
+.offer-card li::before{content:"✓";color:#67e3d4;font-weight:bold;margin-right:12px}
+.offer-countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:12px 0 22px}
+.offer-time{border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#1b2840;padding:10px 4px;text-align:center}
+.offer-time b{display:block;font-size:1.45rem;font-variant-numeric:tabular-nums}
+.offer-time small{display:block;color:#aab8ca;letter-spacing:.08em;font-size:.6rem}
+.offer-cta{width:100%;border:0;display:flex;justify-content:center;align-items:center;gap:12px;padding:17px 18px;border-radius:999px;background:#009fb7;color:#fff;font-size:.96rem;font-weight:900;cursor:pointer;transition:background .2s,transform .2s}
+.offer-cta:hover{background:#00869b;transform:translateY(-2px)}
+.offer-card-foot{text-align:center;color:#aab8ca;font-size:.75rem;margin-top:14px}
+.offer-form-zone{padding:clamp(52px,7vw,96px) 0;background:#fff}
+.offer-form-shell{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(24px,5vw,80px)}
+.offer-form-shell h2{font-size:clamp(2.3rem,4vw,4rem);letter-spacing:-.05em;line-height:1.03;margin:10px 0 20px}
+.offer-form-shell p{color:#556179}
+.offer-conditions{padding-left:18px;color:#556179;line-height:1.8}
+.offer-form{display:grid;grid-template-columns:1fr 1fr;gap:17px;background:#f4f4f8;border:1px solid #e3e6ec;border-radius:22px;padding:clamp(22px,4vw,36px)}
+.offer-form label{font-size:.82rem;font-weight:800;display:flex;flex-direction:column;gap:7px}
+.offer-form label.wide,.offer-form .wide{grid-column:1/-1}
+.offer-form input,.offer-form select,.offer-form textarea{width:100%;min-height:48px;padding:12px 13px;color:#0b132b;background:white;border:1px solid #ced4df;border-radius:9px;outline-offset:2px}
+.offer-form textarea{min-height:118px;resize:vertical}
+.offer-form .consent{font-size:.78rem;font-weight:500;display:block;color:#46516a}
+.offer-form .consent input{width:auto;min-height:auto;margin-right:7px}
+.offer-form button{background:#0b132b;color:white;border:0;padding:16px 20px;border-radius:999px;font-weight:800;cursor:pointer}
+.offer-form button:hover{background:#009fb7}
+.offer-contact{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+.offer-contact a{font-weight:800;text-decoration:underline;text-underline-offset:4px}
+@keyframes card-enter{from{opacity:0;transform:translateY(30px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes glow-drift{to{transform:translate(-45px,45px)}}
+@media(max-width:850px){.offer-layout,.offer-form-shell{grid-template-columns:1fr}.offer-card{max-width:540px;width:100%;margin:auto}.offer-intro h1{max-width:600px}}
+@media(max-width:560px){.offer-stage{padding:34px 0 56px}.offer-intro h1{font-size:clamp(2.75rem,13vw,4.5rem)}.offer-form{grid-template-columns:1fr}.offer-form label.wide,.offer-form .wide{grid-column:1}.offer-card{border-radius:21px}}
+@media(prefers-reduced-motion:reduce){.offer-card,.offer-card::before{animation:none!important}.offer-card:hover{transform:none}}
+</style>
+</head><body>
+<div class="offer-announcement" data-offer-announcement><a href="website-offer.html"><span class="offer-announcement-scroll"><strong>END OF YEAR OFFER</strong> &nbsp; Website $499 → $150 &nbsp; • &nbsp; 10 clients only &nbsp; • &nbsp; <span data-offer-banner-countdown>15 days left</span> &nbsp; • &nbsp; Claim your spot ↗</span></a></div>
+<header class="site-header"><div class="container nav-wrap"><a class="brand" href="index.html" aria-label="Director Andy SP home"><span class="brand-mark" aria-hidden="true"></span><span class="brand-name">Director<br>Andy SP</span></a><button class="menu-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">Menu</button><nav class="nav-links" aria-label="Main navigation"><a href="index.html">Home</a><a href="portfolio.html">Portfolio</a><a href="services.html">Services</a><a class="active" href="website-offer.html">Offer</a><a href="offers.html">Other Offers</a><a href="about.html">About</a><a class="nav-book" href="book.html">Book a project</a></nav></div></header>
+<main>
+<section class="offer-stage"><div class="container offer-layout">
+<div class="offer-intro"><span class="offer-tag">Director Andy SP · Limited offer</span><h1>Your next website.<br><em>Only $150.</em></h1><p>Make your business stand out with a professional website. Built for brands, restaurants, portfolios and bookings — thoughtfully designed, mobile-ready, and launched with your own domain.</p><div class="offer-chips"><span>Business Profile</span><span>Portfolio</span><span>Restaurant</span><span>Booking Website</span><span>Personal Brand</span></div><p>Fill in the registration form below to tell us about the website you want.</p></div>
+<article class="offer-card" aria-label="Limited website offer"><div class="offer-card-top"><span>END-OF-YEAR SPECIAL</span><span class="limited">ONLY 10 CLIENTS</span></div><h2>A professional website.<br>At a better price.</h2><div class="offer-price"><strong>$150</strong><del>$499</del></div><div class="offer-saving">Save $349 · 70% OFF</div>
+<ul><li>Professional responsive website</li><li>Domain + hosting included for 1 year</li><li>Business, restaurant, portfolio or booking</li><li>Up to 2 minor change requests within 6 months</li></ul>
+<p style="font-size:.78rem;letter-spacing:.12em;color:#afbed0;font-weight:800">PROMOTION ENDS IN</p>
+<div class="offer-countdown" aria-label="Time remaining"><div class="offer-time"><b data-offer-days>00</b><small>DAYS</small></div><div class="offer-time"><b data-offer-hours>00</b><small>HOURS</small></div><div class="offer-time"><b data-offer-minutes>00</b><small>MINUTES</small></div><div class="offer-time"><b data-offer-seconds>00</b><small>SECONDS</small></div></div>
+<a class="offer-cta" href="#apply" id="offer-apply-cta">Claim your website <span>↗</span></a><p class="offer-card-foot">Lumicash · Bank Transfer · eNoti</p></article>
+</div></section>
+<section id="apply" class="offer-form-zone"><div class="container offer-form-shell">
+<div><span class="offer-tag">Apply for your website</span><h2>Tell us what<br>you have in mind.</h2><p>Send us your details and preferred payment method. We will contact you to review the scope and payment instructions before work begins.</p><h3>Offer conditions</h3><ul class="offer-conditions"><li>Limited promotion for up to 10 clients, subject to confirmation.</li><li>One domain and hosting are included for the first year; renewal after one year is not included.</li><li>Up to 2 minor content change requests can be made during the first 6 months after launch.</li><li>After 6 months, new changes are quoted separately at an affordable rate.</li><li>Complex booking integrations, advanced custom features or substantial redesigns may require a separate quote.</li><li>No payment is collected by this form; confirmed clients receive payment instructions.</li></ul><div class="offer-contact"><a href="mailto:booking@directorandysp.com">booking@directorandysp.com</a><a href="https://wa.me/971588118994" target="_blank" rel="noopener">WhatsApp ↗</a></div></div>
+<form class="offer-form" action="https://formsubmit.co/booking@directorandysp.com" method="POST">
+<input type="hidden" name="_subject" value="New $150 Website Offer Application — Director Andy SP"><input type="hidden" name="_captcha" value="true"><input type="hidden" name="Offer" value="End-of-Year Website Offer — USD 150"><input type="hidden" name="_template" value="table">
+<label>Full name *<input type="text" name="Full name" autocomplete="name" required maxlength="120"></label>
+<label>Business / brand name<input type="text" name="Business name" maxlength="160"></label>
+<label>Email address *<input type="email" name="Email" autocomplete="email" required></label>
+<label>WhatsApp number *<input type="tel" name="WhatsApp" autocomplete="tel" required></label>
+<label class="wide">What type of website do you need? *<select name="Website type" required><option value="" disabled selected>Select website type</option><option>Business Profile</option><option>Portfolio</option><option>Restaurant</option><option>Booking Website</option><option>Personal Brand</option><option>Other</option></select></label>
+<label class="wide">Describe the website you want *<textarea name="Project description" required maxlength="3000" placeholder="What should your website include? What pages or features do you need?"></textarea></label>
+<label class="wide">Preferred payment method *<select name="Payment method" required><option value="" disabled selected>Choose a payment method</option><option>Lumicash</option><option>Bank Transfer</option><option>eNoti</option></select></label>
+<label class="wide consent"><input type="checkbox" required> I understand this is a request, not a confirmed reservation, and agree to the offer conditions.</label>
+<button class="wide" type="submit">Send my application ↗</button><p class="wide" style="font-size:.74rem;margin:0">We reply by email or WhatsApp. Payment details are shared after your application is reviewed.</p>
+</form></div></section></main>
+<footer class="site-footer"><div class="container" style="display:flex;justify-content:space-between;gap:15px;align-items:center;flex-wrap:wrap"><strong>DIRECTOR ANDY SP</strong><span>© 2026 Director Andy SP · All rights reserved.</span><a href="index.html">Back to home ↗</a></div></footer>
+<script src="assets/js/main.js"></script><script src="assets/js/website-offer.js"></script></body></html>
