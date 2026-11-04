@@ -1,0 +1,9 @@
+/* Website offer announcement — shared between portfolio pages */
+.offer-announcement{position:relative;z-index:55;overflow:hidden;min-height:36px;display:flex;align-items:center;background:#0B132B;color:#fff;border-bottom:1px solid rgba(255,255,255,.12);font-size:.75rem;font-weight:700;letter-spacing:.03em}
+.offer-announcement a{display:block;width:100%;color:inherit;text-decoration:none}
+.offer-announcement-scroll{display:block;white-space:nowrap;text-align:center;padding:10px 14px;animation:offer-ticker-in 1.2s ease-out both}
+.offer-announcement strong{color:#72e0de}
+.offer-announcement a:hover{text-decoration:underline;text-underline-offset:3px}
+@keyframes offer-ticker-in{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:620px){.offer-announcement-scroll{font-size:.68rem;animation:offer-marquee 17s linear infinite;padding-left:100%}.offer-announcement a{width:max-content;min-width:100%}@keyframes offer-marquee{to{transform:translateX(-100%)}}}
+@media(prefers-reduced-motion:reduce){.offer-announcement-scroll{animation:none!important;white-space:normal;text-align:center;padding:10px 14px}}
